@@ -15,14 +15,20 @@ lat<-rep(0,n.places)
 long<-rep(0,n.places)
 
 
-for(i in 1:n.places){
+for(i in 130:n.places){
 
-   q<-GNsearch(q=placedat$Comune[i],maxRows=1,style="SHORT",
+   this.place<-placedat$Comune[i]
+
+   if(grep("è",this.place)>0){
+      this.place<-gsub("è","%E8",this.place)
+   }
+
+   q<-GNsearch(q=this.place,maxRows=1,style="SHORT",
                warn=FALSE,country="IT",featureCode="ADM3")
    lat[i]<-q$lat
    long[i]<-q$lng
 
-   if(i%%100){
+   if(i%%100==0){
       Sys.sleep(30)
    }
    
