@@ -1,3 +1,7 @@
+# code to grab the latitude/longitude from the data Luca
+# gave us. Uses geonames lookup. Sys.sleep is used to make
+# sure that the website doesn't chuck us off.
+
 # load some libraries
 library(rjson)
 library(geonames)
