@@ -14,24 +14,33 @@ n.places<-length(placedat[,1])
 lat<-rep(0,n.places)
 long<-rep(0,n.places)
 
+ind<-1:n.places
+ind<-ind[-130]
+ind<-ind[-225]
 
-for(i in 130:n.places){
+# error counter
+err<-1
+
+for(i in ind){
 
    this.place<-placedat$Comune[i]
 
-   if(grep("è",this.place)>0){
-      this.place<-gsub("è","%E8",this.place)
-   }
-
    q<-GNsearch(q=this.place,maxRows=1,style="SHORT",
                warn=FALSE,country="IT",featureCode="ADM3")
-   lat[i]<-q$lat
-   long[i]<-q$lng
 
-   if(i%%100==0){
-      Sys.sleep(30)
+   if(length(q)){
+      lat[i]<-q$lat
+      long[i]<-q$lng
+   }else{
+      cat(err,as.character(this.place),"\n")
+      err<-err+1
    }
-   
+
+   # hourly limit is 5000 requests, so
+   if((i %% 4000) == 0){
+      Sys.sleep(3601)
+   }
+
 }
 
 
