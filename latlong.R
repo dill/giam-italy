@@ -15,10 +15,9 @@ lat<-rep(0,n.places)
 long<-rep(0,n.places)
 
 ind<-1:n.places
-ind<-ind[-130]
-ind<-ind[-225]
 
 # error counter
+errors<-rep("",500)
 err<-1
 
 for(i in ind){
@@ -32,8 +31,10 @@ for(i in ind){
       lat[i]<-q$lat
       long[i]<-q$lng
    }else{
-      cat(err,as.character(this.place),"\n")
+      errors[i]<-as.character(this.place)
       err<-err+1
+      lat[i]<-NA
+      long[i]<-NA
    }
 
    # hourly limit is 5000 requests, so
@@ -43,6 +44,7 @@ for(i in ind){
 
 }
 
+latlong<-list(lat=lat,long=long)
 
 
 
