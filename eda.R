@@ -1,0 +1,65 @@
+# EDA for the Italian data
+
+# load the map package
+library(maps)
+# adehabitat for grids
+library(adehabitat)
+
+# load the data
+latlong<-read.csv("latlong.csv")
+latlong<-data.frame(lat=latlong$lat,long=latlong$long)
+placedat<-read.csv("italy.csv")
+
+
+# want to create a matrix to use with image
+
+
+# first find the minimum distance between points in both
+# directions
+#longmin<-min(sort(diff(
+
+# use adehabitat to make the grid for us...
+grid.res<-100
+# make a matrix of the latitudes and longitudes
+itmat<-matrix(c(latlong$long,latlong$lat),length(latlong$lat),2)
+it.asc<-ascgen(itmat,nrcol=grid.res)
+
+# now extract the grid
+gridcuts<-attr(it.asc,"dimnames")
+gridcuts$x<-gsub("\\(","",gridcuts$x)
+gridcuts$x<-gsub("\\]","",gridcuts$x)
+gridcuts$y<-gsub("\\(","",gridcuts$y)
+gridcuts$y<-gsub("\\]","",gridcuts$y)
+
+gridcuts$x<-t(matrix(as.numeric(unlist(strsplit(gridcuts$x,",",extended=TRUE)),2,grid.res),2,grid.res))
+gridcuts$y<-t(matrix(as.numeric(unlist(strsplit(gridcuts$y,",",extended=TRUE)),2,grid.res),2,grid.res))
+
+x.start<-gridcuts$x[,1]
+x.stop <-gridcuts$x[,2]
+y.start<-gridcuts$y[,1]
+y.stop <-gridcuts$y[,2]
+
+# image matrix
+im.mat<-matrix(NA,grid.res,grid.res)
+
+
+for(i in 1:length(x.start)){
+   for(j in 1:length(y.start)){
+
+      ind<-latlong$lat>=y.start[j] & latlong$lat<y.stop[j] &
+                 latlong$long>=x.start[i] & latlong$long<x.stop[i]
+
+      sq<-mean(placedat$stranieri_100[ind],na.rm=T)
+
+      im.mat[i,j]<-sq
+
+   }
+}
+
+image(z=im.mat,x=seq(x.start[1],x.stop[length(x.stop)],len=grid.res),
+               y=seq(y.start[1],y.stop[length(y.stop)],len=grid.res),
+      col=rev(heat.colors(100)),xlab="Longitude",ylab="Latitude")
+map('italy',add=TRUE)
+
+
+
