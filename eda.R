@@ -59,10 +59,15 @@ for(i in 1:length(x.start)){
    }
 }
 
+
+# create the grid sequences
+lats<-seq(x.start[1],x.stop[length(x.stop)],len=grid.res)
+longs<-seq(y.start[1],y.stop[length(y.stop)],len=grid.res)
+
 # plot with map overlay
-image(z=im.mat,x=seq(x.start[1],x.stop[length(x.stop)],len=grid.res),
-               y=seq(y.start[1],y.stop[length(y.stop)],len=grid.res),
-      col=rev(heat.colors(100)),xlab="Longitude",ylab="Latitude",main="aggregate data")
+image(z=im.mat,x=lats,y=longs,
+      col=rev(heat.colors(100)),xlab="Longitude",ylab="Latitude",
+      main="aggregate data",asp=1)
 map('italy',add=TRUE)
 
 
