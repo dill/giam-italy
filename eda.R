@@ -43,12 +43,15 @@ y.stop <-gridcuts$y[,2]
 im.mat<-matrix(NA,grid.res,grid.res)
 
 
+# put the observations into the grid
 for(i in 1:length(x.start)){
    for(j in 1:length(y.start)){
 
       ind<-latlong$lat>=y.start[j] & latlong$lat<y.stop[j] &
                  latlong$long>=x.start[i] & latlong$long<x.stop[i]
 
+      # take the mean of the standardised proportion of foreign
+      # population, ignoring NAs
       sq<-mean(placedat$stranieri_100[ind],na.rm=T)
 
       im.mat[i,j]<-sq
@@ -56,9 +59,10 @@ for(i in 1:length(x.start)){
    }
 }
 
+# plot with map overlay
 image(z=im.mat,x=seq(x.start[1],x.stop[length(x.stop)],len=grid.res),
                y=seq(y.start[1],y.stop[length(y.stop)],len=grid.res),
-      col=rev(heat.colors(100)),xlab="Longitude",ylab="Latitude")
+      col=rev(heat.colors(100)),xlab="Longitude",ylab="Latitude",main="aggregate data")
 map('italy',add=TRUE)
 
 
