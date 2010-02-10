@@ -6,10 +6,14 @@ library(maps)
 library(adehabitat)
 
 # load the data
-latlong<-read.csv("latlong.csv")
-latlong<-data.frame(lat=latlong$lat,long=latlong$long)
-placedat<-read.csv("italy.csv")
+#latlong<-read.csv("latlong.csv")
+#latlong<-data.frame(lat=latlong$lat,long=latlong$long)
+#placedat<-read.csv("italy.csv")
 
+it2003<-read.csv(file="database/database_2003.csv")
+
+latlong<-data.frame(lat=it2003$latitude,long=it2003$longitude)
+placedat<-data.frame(stranieri_100=it2003$share_100)
 
 # want to create a matrix to use with image
 
