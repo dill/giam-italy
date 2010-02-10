@@ -1,26 +1,19 @@
 # EDA for the Italian data
 
+#### RUN FROM newdb.R ONLY!
+
 # load the map package
 library(maps)
 # adehabitat for grids
 library(adehabitat)
 
-# load the data
-#latlong<-read.csv("latlong.csv")
-#latlong<-data.frame(lat=latlong$lat,long=latlong$long)
-#placedat<-read.csv("italy.csv")
-
-it2003<-read.csv(file="database/database_2003.csv")
-
-latlong<-data.frame(lat=it2003$latitude,long=it2003$longitude)
-placedat<-data.frame(stranieri_100=it2003$share_100)
+latlong<-data.frame(lat=fulldat$lat,long=fulldat$long)
+placedat<-data.frame(stranieri_100=fulldat$share_100)
 
 # want to create a matrix to use with image
 
-
 # first find the minimum distance between points in both
 # directions
-#longmin<-min(sort(diff(
 
 # use adehabitat to make the grid for us...
 grid.res<-100
@@ -71,7 +64,7 @@ longs<-seq(y.start[1],y.stop[length(y.stop)],len=grid.res)
 # plot with map overlay
 image(z=im.mat,x=lats,y=longs,
       col=rev(heat.colors(100)),xlab="Longitude",ylab="Latitude",
-      main="aggregate data",asp=1)
+      main="EDA aggregate data",asp=1)
 map('italy',add=TRUE)
 
 
