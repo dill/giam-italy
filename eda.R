@@ -7,8 +7,8 @@ library(maps)
 # adehabitat for grids
 library(adehabitat)
 
-latlong<-data.frame(lat=fulldat$lat,long=fulldat$long)
-placedat<-data.frame(stranieri_100=fulldat$share_100)
+latlong<-data.frame(lat=fullll$lat,long=fullll$long)
+placedat<-data.frame(stranieri_100=fullll$share_100)
 
 # want to create a matrix to use with image
 
@@ -63,7 +63,7 @@ longs<-seq(y.start[1],y.stop[length(y.stop)],len=grid.res)
 
 # plot with map overlay
 image(z=im.mat,x=lats,y=longs,
-      col=rev(heat.colors(100)),xlab="Longitude",ylab="Latitude",
+      col=heat.colors(100),xlab="Longitude",ylab="Latitude",
       main="EDA aggregate data",asp=1)
 map('italy',add=TRUE)
 

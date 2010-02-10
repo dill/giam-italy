@@ -58,13 +58,23 @@ fix_it_data<-function(data){
    # also return the boundary in km
    it.map<-latlong2km(it.map$x,it.map$y,11.5,44)
 
-
    ### Sicily
    sc.dat<-data
    sc.map<-map('worldHires',regions='Sicily',plot=FALSE,exact=TRUE,boundary=TRUE)
    ind<-c(1:length(sc.map$x))
    onoff<-inSide(sc.map,sc.dat$longitude,sc.dat$latitude)
    sc.dat<-pe(sc.dat,onoff)
+   ne.km<-latlong2km(sc.dat$longitude,sc.dat$latitude,11.5,44)
+
+   # add the northings and eastings into the dataframe 
+   sc.dat$km.e<-ne.km$km.e
+   sc.dat$km.n<-ne.km$km.n
+
+   # make share_100 work with the log link
+   sc.dat$share_100<-sc.dat$share_100+1e-6
+
+   # also return the boundary in km
+   sc.map<-latlong2km(sc.map$x,sc.map$y,11.5,44)
 
    ### Sardinia
    sa.dat<-data
@@ -72,6 +82,17 @@ fix_it_data<-function(data){
    ind<-c(1:length(sa.map$x))
    onoff<-inSide(sa.map,sa.dat$longitude,sa.dat$latitude)
    sa.dat<-pe(sa.dat,onoff)
+
+   # add the northings and eastings into the dataframe 
+   ne.km<-latlong2km(sa.dat$longitude,sa.dat$latitude,11.5,44)
+   sa.dat$km.e<-ne.km$km.e
+   sa.dat$km.n<-ne.km$km.n
+
+   # make share_100 work with the log link
+   sa.dat$share_100<-sa.dat$share_100+1e-6
+
+   # also return the boundary in km
+   sa.map<-latlong2km(sa.map$x,sa.map$y,11.5,44)
 
    return(list(italy=list(dat=it.dat,map=it.map),
                sicily=list(dat=sc.dat,map=sc.map),
@@ -83,7 +104,7 @@ fix_it_data<-function(data){
 fixdat<-fix_it_data(it2003)
 
 # run the eda file first sticking all the data together
-fulldat<-data.frame(lat= c(fixdat$italy$dat$latitude,
+fullll<-data.frame(lat= c(fixdat$italy$dat$latitude,
                            fixdat$sicily$dat$latitude,
                            fixdat$sardinia$dat$latitude),
                     long=c(fixdat$italy$dat$longitude,
@@ -93,25 +114,51 @@ fulldat<-data.frame(lat= c(fixdat$italy$dat$latitude,
                                 fixdat$sicily$dat$share_100,
                                 fixdat$sardinia$dat$share_100))
 
-source("eda.R")
+fulldat<-data.frame(km.e=c(fixdat$italy$dat$km.e,
+                           fixdat$sicily$dat$km.e,
+                           fixdat$sardinia$dat$km.e),
+                    km.n=c(fixdat$italy$dat$km.n,
+                           fixdat$sicily$dat$km.n,
+                           fixdat$sardinia$dat$km.n),
+                    share_100=c(fixdat$italy$dat$share_100,
+                                fixdat$sicily$dat$share_100,
+                                fixdat$sardinia$dat$share_100))
 
 
+# fit the models
 
+# first the full model (italy+sardinia+sicily)
+full.b<-gam(share_100~s(km.e,km.n,k=100),family=Gamma(link="log"),data=fulldat)
 
-#plot(it2003$km.e,it2003$km.n)
-
-# fit the model
-#it.b<-gam(share_100~s(km.e,km.n,k=100),family=Gamma(link="log"),data=it2003)
-
+# italy
+it.b<-gam(share_100~s(km.e,km.n,k=100),family=Gamma(link="log"),data=fixdat$italy$dat)
+# sicily
+sc.b<-gam(share_100~s(km.e,km.n,k=100),family=Gamma(link="log"),data=fixdat$sicily$dat)
+# sardinia
+sa.b<-gam(share_100~s(km.e,km.n,k=100),family=Gamma(link="log"),data=fixdat$sardinia$dat)
 
 # time for some plots
-#par(mfrow=c(1,2))
+par(mfrow=c(2,3))
 
 # plot the raw data
-#source("eda.R")
+source("eda.R")
+n.grid<-100
 
-#vis.gam(it.b,plot.type="contour",n.grid=100,contour.col=rev(heat.colors(100)))
-#lines(it.map$km.e,it.map$km.n)
+vis.gam(full.b,plot.type="contour",n.grid=n.grid,contour.col=rev(heat.colors(100)),too.far=0.05,type="response",asp=1)
+lines(fixdat$italy$map$km.e,fixdat$italy$map$km.n)
+lines(fixdat$sicily$map$km.e,fixdat$sicily$map$km.n)
+lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n)
+
+vis.gam(it.b,plot.type="contour",n.grid=n.grid,contour.col=rev(heat.colors(100)),too.far=0.01,type="response",asp=1)
+lines(fixdat$italy$map$km.e,fixdat$italy$map$km.n)
+
+vis.gam(sc.b,plot.type="contour",n.grid=n.grid,contour.col=rev(heat.colors(100)),too.far=0.1,type="response",asp=1)
+lines(fixdat$sicily$map$km.e,fixdat$sicily$map$km.n)
+
+vis.gam(sa.b,plot.type="contour",n.grid=n.grid,contour.col=rev(heat.colors(100)),too.far=0.1,type="response",asp=1)
+lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n)
+
+
 
 
 
