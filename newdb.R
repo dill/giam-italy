@@ -8,6 +8,7 @@ library(soap)
 # extra scripts
 source("pe.R")
 source("latlong2km.R")
+soource("makesoapgrid.R")
 
 # first read in the csv for 2003 and 2008 for the whole of italy
 it2003<-read.csv(file="database/database_2003.csv")
@@ -125,7 +126,7 @@ fulldat<-data.frame(km.e=c(fixdat$italy$dat$km.e,
                                 fixdat$sardinia$dat$share_100))
 
 
-# fit the models
+# fit the thin plate spline models 
 
 # first the full model (italy+sardinia+sicily)
 full.b<-gam(share_100~s(km.e,km.n,k=100),family=Gamma(link="log"),data=fulldat)
@@ -144,22 +145,28 @@ par(mfrow=c(2,3))
 source("eda.R")
 n.grid<-100
 
-vis.gam(full.b,plot.type="contour",n.grid=n.grid,contour.col=rev(heat.colors(100)),too.far=0.05,type="response",asp=1)
+vis.gam(full.b,plot.type="contour",n.grid=n.grid,contour.col=rev(heat.colors(100)),too.far=0.01,type="TPRS Italy+Sicily+Sardinia",asp=1)
 lines(fixdat$italy$map$km.e,fixdat$italy$map$km.n)
 lines(fixdat$sicily$map$km.e,fixdat$sicily$map$km.n)
 lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n)
 
-vis.gam(it.b,plot.type="contour",n.grid=n.grid,contour.col=rev(heat.colors(100)),too.far=0.01,type="response",asp=1)
+vis.gam(it.b,plot.type="contour",n.grid=n.grid,contour.col=rev(heat.colors(100)),too.far=0.01,type="TPRS Italy",asp=1)
 lines(fixdat$italy$map$km.e,fixdat$italy$map$km.n)
 
-vis.gam(sc.b,plot.type="contour",n.grid=n.grid,contour.col=rev(heat.colors(100)),too.far=0.1,type="response",asp=1)
+vis.gam(sc.b,plot.type="contour",n.grid=n.grid,contour.col=rev(heat.colors(100)),too.far=0.1,type="TPRS Sicily",asp=1)
 lines(fixdat$sicily$map$km.e,fixdat$sicily$map$km.n)
 
-vis.gam(sa.b,plot.type="contour",n.grid=n.grid,contour.col=rev(heat.colors(100)),too.far=0.1,type="response",asp=1)
+vis.gam(sa.b,plot.type="contour",n.grid=n.grid,contour.col=rev(heat.colors(100)),too.far=0.1,type="TPRS Sardinia",asp=1)
 lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n)
 
 
+# now using soap
+# first create a grid
+
+sg<-make_soap_grid(bnd=list(x=fixdat$italy$map$km.e,y=fixdat$italy$map$km.n),n.grid=100)
 
 
-
+all.list<-list(list(x=fixdat$italy$map$km.e,y=fixdat$italy$map$km.n),
+               list(x=fixdat$sicily$map$km.e,y=fixdat$sicily$map$km.n),
+               list(x=fixdat$sardinia$map$km.e,y=fixdat$sardinia$map$km.n))
 

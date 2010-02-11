@@ -65,7 +65,7 @@ longs<-seq(y.start[1],y.stop[length(y.stop)],len=grid.res)
 image(z=im.mat,x=lats,y=longs,
       col=heat.colors(100),xlab="Longitude",ylab="Latitude",
       main="EDA aggregate data",asp=1)
-map('italy',add=TRUE)
+map('worldHires',regions=c("Italy","Sardinia","Sicily"),add=TRUE)
 
 
 
