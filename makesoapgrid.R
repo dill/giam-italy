@@ -12,19 +12,10 @@ make_soap_grid<-function(bnd,n.grid){
    }
 
    # min and max values of the boundary
-
-   if(!is.list(bnd[[1]])){
-      xmin<-min(bnd$x)
-      ymin<-min(bnd$y)
-      xmax<-max(bnd$x)
-      ymax<-max(bnd$y)
-   }else{
-      # handles the case with multiple boundaries where bnd is a list of lists
-      xmin<-min(unlist(pe(bnd,"x")))
-      ymin<-min(unlist(pe(bnd,"y")))
-      xmax<-max(unlist(pe(bnd,"x")))
-      ymax<-max(unlist(pe(bnd,"y")))
-   }
+   xmin<-min(bnd$x,na.rm=TRUE)
+   ymin<-min(bnd$y,na.rm=TRUE)
+   xmax<-max(bnd$x,na.rm=TRUE)
+   ymax<-max(bnd$y,na.rm=TRUE)
 
    # create the grid
    xm <- seq(xmin,xmax,length=m)

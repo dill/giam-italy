@@ -163,10 +163,13 @@ lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n)
 # now using soap
 # first create a grid
 
-sg<-make_soap_grid(bnd=list(x=fixdat$italy$map$km.e,y=fixdat$italy$map$km.n),n.grid=100)
+all.list<-list(x=c(fixdat$italy$map$km.e,NA,
+                   fixdat$sicily$map$km.e,NA,
+                   fixdat$sardinia$map$km.e),
+               y=c(fixdat$italy$map$km.n,NA,
+                   fixdat$sicily$map$km.n,NA,
+                   fixdat$sardinia$map$km.n))
 
+all.soap<-gam(share_100~s(km.e,km.n,k=100,bs=soap),family=Gamma(link="log"),data=fulldat)
 
-all.list<-list(list(x=fixdat$italy$map$km.e,y=fixdat$italy$map$km.n),
-               list(x=fixdat$sicily$map$km.e,y=fixdat$sicily$map$km.n),
-               list(x=fixdat$sardinia$map$km.e,y=fixdat$sardinia$map$km.n))
 
