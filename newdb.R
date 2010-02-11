@@ -8,7 +8,7 @@ library(soap)
 # extra scripts
 source("pe.R")
 source("latlong2km.R")
-soource("makesoapgrid.R")
+source("makesoapgrid.R")
 
 # first read in the csv for 2003 and 2008 for the whole of italy
 it2003<-read.csv(file="database/database_2003.csv")
@@ -38,6 +38,9 @@ fix_it_data<-function(data){
    
    it.map<-list(x=c(it.map$x[!is.na(it.map$x)],it.map$x[1]),
                 y=c(it.map$y[!is.na(it.map$x)],it.map$y[1]))
+
+   # simplify the boundary
+   it.map<-pe(it.map,c(seq(1,length(it.map$x),100),1))
    
    # find the mainland
    onoff<-inSide(it.map,it.dat$longitude,it.dat$latitude)
@@ -145,18 +148,18 @@ par(mfrow=c(2,3))
 source("eda.R")
 n.grid<-100
 
-vis.gam(full.b,plot.type="contour",n.grid=n.grid,contour.col=rev(heat.colors(100)),too.far=0.01,type="TPRS Italy+Sicily+Sardinia",asp=1)
+vis.gam(full.b,plot.type="contour",n.grid=n.grid,too.far=0.01,type="response",main="TPRS Italy+Sicily+Sardinia",asp=1)
 lines(fixdat$italy$map$km.e,fixdat$italy$map$km.n)
 lines(fixdat$sicily$map$km.e,fixdat$sicily$map$km.n)
 lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n)
 
-vis.gam(it.b,plot.type="contour",n.grid=n.grid,contour.col=rev(heat.colors(100)),too.far=0.01,type="TPRS Italy",asp=1)
+vis.gam(it.b,plot.type="contour",n.grid=n.grid,too.far=0.01,type="response",main="TPRS Italy",asp=1)
 lines(fixdat$italy$map$km.e,fixdat$italy$map$km.n)
 
-vis.gam(sc.b,plot.type="contour",n.grid=n.grid,contour.col=rev(heat.colors(100)),too.far=0.1,type="TPRS Sicily",asp=1)
+vis.gam(sc.b,plot.type="contour",n.grid=n.grid,too.far=0.1,type="response",main="TPRS Sicily",asp=1)
 lines(fixdat$sicily$map$km.e,fixdat$sicily$map$km.n)
 
-vis.gam(sa.b,plot.type="contour",n.grid=n.grid,contour.col=rev(heat.colors(100)),too.far=0.1,type="TPRS Sardinia",asp=1)
+vis.gam(sa.b,plot.type="contour",n.grid=n.grid,too.far=0.1,type="response",main="TPRS Sardinia",asp=1)
 lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n)
 
 
@@ -165,33 +168,34 @@ lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n)
 
 # for the sake of simpicity switch from km.e and km.n to x and y for soap
 
-all.list<-list(x=c(fixdat$italy$map$km.e,NA,
-                   fixdat$sicily$map$km.e,NA,
-                   fixdat$sardinia$map$km.e),
-               y=c(fixdat$italy$map$km.n,NA,
-                   fixdat$sicily$map$km.n,NA,
-                   fixdat$sardinia$map$km.n))
-
-all.knots<-make_soap_grid(all.list,c(20,30))
-all.knots<-pe(all.knots,-c(13,14,29,30,31,58,126))
-
-# same boundary as above but in a different format
-all.bnd<-list(list(x=fixdat$italy$map$km.e,y=fixdat$italy$map$km.n),
-              list(x=fixdat$sicily$map$km.e,y=fixdat$sicily$map$km.n),
-              list(x=fixdat$sardinia$map$km.e,y=fixdat$sardinia$map$km.n))
-               
-fulldat$x<-fulldat$km.e
-fulldat$y<-fulldat$km.n
-
-all.soap<-gam(share_100~s(x,y,k=30,bs="so",xt=list(bnd=all.bnd)),family=Gamma(link="log"),data=fulldat,knots=all.knots)
+#all.list<-list(x=c(fixdat$italy$map$km.e,NA,
+#                   fixdat$sicily$map$km.e,NA,
+#                   fixdat$sardinia$map$km.e),
+#               y=c(fixdat$italy$map$km.n,NA,
+#                   fixdat$sicily$map$km.n,NA,
+#                   fixdat$sardinia$map$km.n))
+#
+#all.knots<-make_soap_grid(all.list,c(20,30))
+#all.knots<-pe(all.knots,-c(13,14,29,30,31,58,126))
+#
+## same boundary as above but in a different format
+#all.bnd<-list(list(x=fixdat$italy$map$km.e,y=fixdat$italy$map$km.n),
+#              list(x=fixdat$sicily$map$km.e,y=fixdat$sicily$map$km.n),
+#              list(x=fixdat$sardinia$map$km.e,y=fixdat$sardinia$map$km.n))
+#               
+#fulldat$x<-fulldat$km.e
+#fulldat$y<-fulldat$km.n
+#
+#all.soap<-gam(share_100~s(x,y,k=30,bs="so",xt=list(bnd=all.bnd)),family=Gamma(link="log"),data=fulldat,knots=all.knots)
 
 
 # try italy...
 it.bnd<-list(x=fixdat$italy$map$km.e,
-     y=fixdat$italy$map$km.n)
+             y=fixdat$italy$map$km.n)
+
 
 italy.knots<-make_soap_grid(it.bnd,c(20,30))
-italy.knots<-pe(italy.knots,-c(13,44,50,109,120))
+italy.knots<-pe(italy.knots,-c(11,32,47,121))
 
 fixdat$italy$dat$x<-fixdat$italy$dat$km.e
 fixdat$italy$dat$y<-fixdat$italy$dat$km.n
@@ -199,4 +203,6 @@ fixdat$italy$dat$y<-fixdat$italy$dat$km.n
 
 it.soap<-gam(share_100~s(x,y,k=30,bs="so",xt=list(bnd=list(it.bnd))),family=Gamma(link="log"),data=fixdat$italy$dat,knots=italy.knots)
 
+vis.gam(it.soap,plot.type="contour",n.grid=n.grid,too.far=0.01,type="response",main="soap Italy",asp=1)
+lines(fixdat$italy$map$km.e,fixdat$italy$map$km.n)
 
