@@ -163,6 +163,8 @@ lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n)
 # now using soap
 # first create a grid
 
+# for the sake of simpicity switch from km.e and km.n to x and y for soap
+
 all.list<-list(x=c(fixdat$italy$map$km.e,NA,
                    fixdat$sicily$map$km.e,NA,
                    fixdat$sardinia$map$km.e),
@@ -170,6 +172,31 @@ all.list<-list(x=c(fixdat$italy$map$km.e,NA,
                    fixdat$sicily$map$km.n,NA,
                    fixdat$sardinia$map$km.n))
 
-all.soap<-gam(share_100~s(km.e,km.n,k=100,bs=soap),family=Gamma(link="log"),data=fulldat)
+all.knots<-make_soap_grid(all.list,c(20,30))
+all.knots<-pe(all.knots,-c(13,14,29,30,31,58,126))
+
+# same boundary as above but in a different format
+all.bnd<-list(list(x=fixdat$italy$map$km.e,y=fixdat$italy$map$km.n),
+              list(x=fixdat$sicily$map$km.e,y=fixdat$sicily$map$km.n),
+              list(x=fixdat$sardinia$map$km.e,y=fixdat$sardinia$map$km.n))
+               
+fulldat$x<-fulldat$km.e
+fulldat$y<-fulldat$km.n
+
+all.soap<-gam(share_100~s(x,y,k=30,bs="so",xt=list(bnd=all.bnd)),family=Gamma(link="log"),data=fulldat,knots=all.knots)
+
+
+# try italy...
+it.bnd<-list(x=fixdat$italy$map$km.e,
+     y=fixdat$italy$map$km.n)
+
+italy.knots<-make_soap_grid(it.bnd,c(20,30))
+italy.knots<-pe(italy.knots,-c(13,44,50,109,120))
+
+fixdat$italy$dat$x<-fixdat$italy$dat$km.e
+fixdat$italy$dat$y<-fixdat$italy$dat$km.n
+
+
+it.soap<-gam(share_100~s(x,y,k=30,bs="so",xt=list(bnd=list(it.bnd))),family=Gamma(link="log"),data=fixdat$italy$dat,knots=italy.knots)
 
 
