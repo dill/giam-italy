@@ -238,3 +238,5 @@ it2008<-read.csv(file="database/database_2008.csv")
 fixdat<-fix_it_data(it2008)
 dave_is_great(fixdat,150)
 
+#dev.copy(postscript,"filename",width=20,height=20)
+#dev.off()
