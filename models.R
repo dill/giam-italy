@@ -112,8 +112,7 @@ fix_it_data<-function(data){
 
 
 
-dave_is_great<-function(fixdat,n.grid){
-   # run the eda file first sticking all the data together
+run_mods<-function(fixdat,n.grid,plot.it=FALSE,year=""){
    fullll<-data.frame(lat= c(fixdat$italy$dat$latitude,
                               fixdat$sicily$dat$latitude,
                               fixdat$sardinia$dat$latitude),
@@ -140,41 +139,48 @@ dave_is_great<-function(fixdat,n.grid){
    # first the full model (italy+sardinia+sicily)
    full.b<-gam(share_100~s(km.e,km.n,k=100),family=Gamma(link="log"),data=fulldat)
    
-   # italy
-   it.b<-gam(share_100~s(km.e,km.n,k=100),family=Gamma(link="log"),data=fixdat$italy$dat)
-   # sicily
-   sc.b<-gam(share_100~s(km.e,km.n,k=100),family=Gamma(link="log"),data=fixdat$sicily$dat)
-   # sardinia
-   sa.b<-gam(share_100~s(km.e,km.n,k=100),family=Gamma(link="log"),data=fixdat$sardinia$dat)
+#   # italy
+#   it.b<-gam(share_100~s(km.e,km.n,k=100),family=Gamma(link="log"),data=fixdat$italy$dat)
+#   # sicily
+#   sc.b<-gam(share_100~s(km.e,km.n,k=100),family=Gamma(link="log"),data=fixdat$sicily$dat)
+#   # sardinia
+#   sa.b<-gam(share_100~s(km.e,km.n,k=100),family=Gamma(link="log"),data=fixdat$sardinia$dat)
    
    # time for some plots
-   par(mfrow=c(2,3))
+   #par(mfrow=c(2,3))
    
+   zlim<-c(0,10)
+
    # plot the raw data
-   eda_rets<-do_eda(fullll)   
+   eda_rets<-do_eda(fullll,plot.it=plot.it,zlim=zlim,year=year)
 
    xlim<-eda_rets$xlim
    ylim<-eda_rets$ylim
 
-   # vis.gam plots!
-   vis.gam(full.b,plot.type="contour",n.grid=n.grid,too.far=0.01,type="response",
-           main="TPRS Italy+Sicily+Sardinia",asp=1,color="topo",xlim=xlim,ylim=ylim)
-   lines(fixdat$italy$map$km.e,fixdat$italy$map$km.n)
-   lines(fixdat$sicily$map$km.e,fixdat$sicily$map$km.n)
-   lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n)
-   
-   vis.gam(it.b,plot.type="contour",n.grid=n.grid,too.far=0.01,type="response",
-           main="TPRS Italy",asp=1,color="topo",xlim=xlim,ylim=ylim)
-   lines(fixdat$italy$map$km.e,fixdat$italy$map$km.n)
-   
-   vis.gam(sc.b,plot.type="contour",n.grid=n.grid,too.far=0.1,type="response",
-           main="TPRS Sicily",asp=1,color="topo",xlim=xlim,ylim=ylim)
-   lines(fixdat$sicily$map$km.e,fixdat$sicily$map$km.n)
-   
-   vis.gam(sa.b,plot.type="contour",n.grid=n.grid,too.far=0.1,type="response",
-           main="TPRS Sardinia",asp=1,color="topo",xlim=xlim,ylim=ylim)
-   lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n)
-   
+   if(plot.it){
+      # vis.gam plots!
+      vis.gam(full.b,plot.type="contour",n.grid=n.grid,too.far=0.01,type="response",
+              main=paste("TPRS",year),asp=1,color="topo",xlim=xlim,ylim=ylim,zlim=zlim,
+              xlab="km (e)",ylab="km (n)",cex.main=1.3,cex.lab=1.3,cex.axis=1.3)
+      lines(fixdat$italy$map$km.e,fixdat$italy$map$km.n)
+      lines(fixdat$sicily$map$km.e,fixdat$sicily$map$km.n)
+      lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n)
+      
+#      vis.gam(it.b,plot.type="contour",n.grid=n.grid,too.far=0.01,type="response",
+#              main="TPRS Italy",asp=1,color="topo",xlim=xlim,ylim=ylim,zlim=zlim,
+#              xlab="km (e)",ylab="km (n)")
+#      lines(fixdat$italy$map$km.e,fixdat$italy$map$km.n)
+#      
+#      vis.gam(sc.b,plot.type="contour",n.grid=n.grid,too.far=0.1,type="response",
+#              main="TPRS Sicily",asp=1,color="topo",xlim=xlim,ylim=ylim,zlim=zlim,
+#              xlab="km (e)",ylab="km (n)")
+#      lines(fixdat$sicily$map$km.e,fixdat$sicily$map$km.n)
+#      
+#      vis.gam(sa.b,plot.type="contour",n.grid=n.grid,too.far=0.1,type="response",
+#              main="TPRS Sardinia",asp=1,color="topo",xlim=xlim,ylim=ylim,zlim=zlim,
+#              xlab="km (e)",ylab="km (n)")
+#      lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n)
+   }
    
    # now using soap
    # first create a grid
@@ -187,25 +193,11 @@ dave_is_great<-function(fixdat,n.grid){
                   y=c(fixdat$italy$map$km.n,NA,
                       fixdat$sicily$map$km.n,NA,
                       fixdat$sardinia$map$km.n))
-   #
-   #all.knots<-make_soap_grid(all.list,c(20,30))
-   #all.knots<-pe(all.knots,-c(13,14,29,30,31,58,126))
-   #
+
    ## same boundary as above but in a different format
    all.bnd<-list(list(x=fixdat$italy$map$km.e,y=fixdat$italy$map$km.n),
                  list(x=fixdat$sicily$map$km.e,y=fixdat$sicily$map$km.n),
                  list(x=fixdat$sardinia$map$km.e,y=fixdat$sardinia$map$km.n))
-   #               
-   #fulldat$x<-fulldat$km.e
-   #fulldat$y<-fulldat$km.n
-   #
-   #all.soap<-gam(share_100~s(x,y,k=30,bs="so",xt=list(bnd=all.bnd)),family=Gamma(link="log"),data=fulldat,knots=all.knots)
-   
-   
-   # try italy...
-   #it.bnd<-list(x=fixdat$italy$map$km.e,
-   #             y=fixdat$italy$map$km.n)
-   
    
    soap.knots<-make_soap_grid(all.list,c(20,30))
    soap.knots<-pe(soap.knots,-c(2,14,41,48,64,128))
@@ -215,28 +207,16 @@ dave_is_great<-function(fixdat,n.grid){
    b.soap<-gam(share_100~s(x,y,k=50,bs="so",xt=list(bnd=all.bnd)),
                 family=Gamma(link="log"),data=fulldat,knots=soap.knots)
    
-   vis.gam(b.soap,plot.type="contour",n.grid=n.grid,too.far=0.01,type="response",
-           main="soap Italy",asp=1,color="topo",xlim=xlim,ylim=ylim)
-   lines(fixdat$italy$map$km.e,fixdat$italy$map$km.n)
-   lines(fixdat$sicily$map$km.e,fixdat$sicily$map$km.n)
-   lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n)
+   if(plot.it){
+      vis.gam(b.soap,plot.type="contour",n.grid=n.grid,too.far=0.01,type="response",
+              main=paste("soap",year),asp=1,color="topo",xlim=xlim,ylim=ylim,zlim=zlim,
+              xlab="km (e)",ylab="km (n)",cex.main=1.3,cex.lab=1.3,cex.axis=1.3)
+      lines(fixdat$italy$map$km.e,fixdat$italy$map$km.n)
+      lines(fixdat$sicily$map$km.e,fixdat$sicily$map$km.n)
+      lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n)
+   }
+
+   # return the models
+   return(list(tprs.mod=full.b,soap.mod=b.soap))
 
 }
-
-
-
-
-
-# first read in the csv for 2003 and 2008 for the whole of italy
-it2003<-read.csv(file="database/database_2003.csv")
-it2008<-read.csv(file="database/database_2008.csv")
-
-# run the data formatter for the 2003 data set
-#fixdat<-fix_it_data(it2003)
-#dave_is_great(fixdat,150)
-
-fixdat<-fix_it_data(it2008)
-dave_is_great(fixdat,150)
-
-#dev.copy(postscript,"filename",width=20,height=20)
-#dev.off()

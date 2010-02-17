@@ -2,7 +2,7 @@
 
 #### RUN FROM newdb.R ONLY!
 
-do_eda<-function(fullll){
+do_eda<-function(fullll,plot.it,zlim,year){
    # want to create a matrix to use with image
    
    # first find the minimum distance between points in both
@@ -70,13 +70,16 @@ do_eda<-function(fullll){
    xs<-seq(x.start[1],x.stop[length(x.stop)],len=seqlen)
    ys<-seq(y.start[1],y.stop[length(y.stop)],len=grid.res)
    
-   # plot with map overlay
-   image(z=im.copy,x=xs,y=ys,
-         col=topo.colors(100),xlab="km(e)",ylab="km(n)",
-         main="EDA aggregate data",asp=1)
-   lines(fixdat$italy$map$km.e,fixdat$italy$map$km.n)
-   lines(fixdat$sicily$map$km.e,fixdat$sicily$map$km.n)
-   lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n)
+   if(plot.it){
+      # plot with map overlay
+      image(z=im.copy,x=xs,y=ys,
+            col=topo.colors(100),xlab="km (e)",ylab="km (n)",
+            main=paste("Raw data",year),asp=1,zlim=zlim,cex.main=1.3,
+            cex.lab=1.3,cex.axis=1.3)
+      lines(fixdat$italy$map$km.e,fixdat$italy$map$km.n)
+      lines(fixdat$sicily$map$km.e,fixdat$sicily$map$km.n)
+      lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n)
+   }
 
    # xlim and ylim   
    xlim=c(xs[1],xs[length(xs)])
