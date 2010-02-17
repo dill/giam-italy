@@ -161,7 +161,7 @@ run_mods<-function(fixdat,n.grid,plot.it=FALSE,year=""){
       # vis.gam plots!
       vis.gam(full.b,plot.type="contour",n.grid=n.grid,too.far=0.01,type="response",
               main=paste("TPRS",year),asp=1,color="topo",xlim=xlim,ylim=ylim,zlim=zlim,
-              xlab="km (e)",ylab="km (n)",cex.main=1.4,cex.lab=1.4,cex.axis=1.3)
+              xlab="km (e)",ylab="km (n)",cex.main=1.4,cex.lab=1.4,cex.axis=1.3,lwd=0.7)
       lines(fixdat$italy$map$km.e,fixdat$italy$map$km.n)
       lines(fixdat$sicily$map$km.e,fixdat$sicily$map$km.n)
       lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n)
@@ -209,8 +209,8 @@ run_mods<-function(fixdat,n.grid,plot.it=FALSE,year=""){
    
    if(plot.it){
       vis.gam(b.soap,plot.type="contour",n.grid=n.grid,too.far=0.01,type="response",
-              main=paste("soap",year),asp=1,color="topo",xlim=xlim,ylim=ylim,zlim=zlim,
-              xlab="km (e)",ylab="km (n)",cex.main=1.4,cex.lab=1.4,cex.axis=1.3)
+              main=paste("Soap film smoother",year),asp=1,color="topo",xlim=xlim,ylim=ylim,zlim=zlim,
+              xlab="km (e)",ylab="km (n)",cex.main=1.4,cex.lab=1.4,cex.axis=1.3,lwd=0.7)
       lines(fixdat$italy$map$km.e,fixdat$italy$map$km.n)
       lines(fixdat$sicily$map$km.e,fixdat$sicily$map$km.n)
       lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n)

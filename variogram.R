@@ -39,3 +39,5 @@ make_variogram<-function(model,fitres=FALSE){
 
 }
 
+make_variogram(mod_2003$soap.mod,fitres=TRUE)
+
