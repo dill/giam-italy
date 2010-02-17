@@ -74,8 +74,8 @@ do_eda<-function(fullll,plot.it,zlim,year){
       # plot with map overlay
       image(z=im.copy,x=xs,y=ys,
             col=topo.colors(100),xlab="km (e)",ylab="km (n)",
-            main=paste("Raw data",year),asp=1,zlim=zlim,cex.main=1.3,
-            cex.lab=1.3,cex.axis=1.3)
+            main=paste("Raw data",year),asp=1,zlim=zlim,cex.main=1.4,
+            cex.lab=1.4,cex.axis=1.3)
       lines(fixdat$italy$map$km.e,fixdat$italy$map$km.n)
       lines(fixdat$sicily$map$km.e,fixdat$sicily$map$km.n)
       lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n)
