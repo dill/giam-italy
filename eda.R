@@ -1,7 +1,5 @@
 # EDA for the Italian data
 
-#### RUN FROM newdb.R ONLY!
-
 do_eda<-function(fullll,plot.it,zlim,year){
    # want to create a matrix to use with image
    
@@ -69,21 +67,22 @@ do_eda<-function(fullll,plot.it,zlim,year){
    # create the grid sequences
    xs<-seq(x.start[1],x.stop[length(x.stop)],len=seqlen)
    ys<-seq(y.start[1],y.stop[length(y.stop)],len=grid.res)
+
+   # xlim and ylim   
+   xlim=c(xs[1]-25,xs[length(xs)]+25)
+   ylim=c(ys[1]-25,ys[length(ys)]+25)
    
    if(plot.it){
       # plot with map overlay
       image(z=im.copy,x=xs,y=ys,
             col=topo.colors(100),xlab="km (e)",ylab="km (n)",
             main=paste("Raw data",year),asp=1,zlim=zlim,cex.main=1.4,
-            cex.lab=1.4,cex.axis=1.3)
+            cex.lab=1.4,cex.axis=1.3,xlim=xlim,ylim=ylim)
       lines(fixdat$italy$map$km.e,fixdat$italy$map$km.n)
       lines(fixdat$sicily$map$km.e,fixdat$sicily$map$km.n)
       lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n)
    }
 
-   # xlim and ylim   
-   xlim=c(xs[1],xs[length(xs)])
-   ylim=c(ys[1],ys[length(ys)])
 
 
    return(list(xlim=xlim,ylim=ylim))
