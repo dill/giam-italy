@@ -1,4 +1,4 @@
-# using the new database now...
+# testing the model with altimetry and as.factor(Regions) 
 
 # packages
 library(maps)

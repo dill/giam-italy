@@ -139,6 +139,7 @@ run_mods<-function(fixdat,n.grid,plot.it=FALSE,year=""){
    # first the full model (italy+sardinia+sicily)
    full.b<-gam(share_100~s(km.e,km.n,k=100),family=Gamma(link="log"),data=fulldat)
    
+## individual models for Italy, Sicily, Sardinia
 #   # italy
 #   it.b<-gam(share_100~s(km.e,km.n,k=100),family=Gamma(link="log"),data=fixdat$italy$dat)
 #   # sicily
@@ -166,6 +167,7 @@ run_mods<-function(fixdat,n.grid,plot.it=FALSE,year=""){
       lines(fixdat$sicily$map$km.e,fixdat$sicily$map$km.n)
       lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n)
       
+## individual plots for Italy, Sicily, Sardinia
 #      vis.gam(it.b,plot.type="contour",n.grid=n.grid,too.far=0.01,type="response",
 #              main="TPRS Italy",asp=1,color="topo",xlim=xlim,ylim=ylim,zlim=zlim,
 #              xlab="km (e)",ylab="km (n)")
