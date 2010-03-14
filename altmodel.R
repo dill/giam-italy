@@ -13,22 +13,22 @@ source("latlong2km.R")
 source("makesoapgrid.R")
 source("eda.R")
 
-run_altmods<-function(fixdat,n.grid,plot.it=FALSE,year=""){
-   fullll<-data.frame(lat= c(fixdat$italy$dat$latitude,
-                              fixdat$sicily$dat$latitude,
-                              fixdat$sardinia$dat$latitude),
-                       long=c(fixdat$italy$dat$longitude,
-                              fixdat$sicily$dat$longitude,
-                              fixdat$sardinia$dat$longitude),
+#run_altmods<-function(fixdat,n.grid,plot.it=FALSE,year=""){
+   fullll<-data.frame(lat= c(fixdat$italy$dat$lat,
+                              fixdat$sicily$dat$lat,
+                              fixdat$sardinia$dat$lat),
+                       long=c(fixdat$italy$dat$long,
+                              fixdat$sicily$dat$long,
+                              fixdat$sardinia$dat$long),
                        share_100=c(fixdat$italy$dat$share_100,
                                    fixdat$sicily$dat$share_100,
                                    fixdat$sardinia$dat$share_100),
                        altimetry=c(fixdat$italy$dat$altimetry,
                                    fixdat$sicily$dat$altimetry,
-                                   fixdat$sardinia$dat$altimetry),
-                       Regions=c(fixdat$italy$dat$Regions,
-                                   fixdat$sicily$dat$Regions,
-                                   fixdat$sardinia$dat$Regions))
+                                   fixdat$sardinia$dat$altimetry))#,
+#                       Regions=c(fixdat$italy$dat$Regions,
+#                                   fixdat$sicily$dat$Regions,
+#                                   fixdat$sardinia$dat$Regions))
    
    fulldat<-data.frame(km.e=c(fixdat$italy$dat$km.e,
                               fixdat$sicily$dat$km.e,
@@ -41,10 +41,10 @@ run_altmods<-function(fixdat,n.grid,plot.it=FALSE,year=""){
                                    fixdat$sardinia$dat$share_100),
                        altimetry=c(fixdat$italy$dat$altimetry,
                                    fixdat$sicily$dat$altimetry,
-                                   fixdat$sardinia$dat$altimetry),
-                       Regions=c(fixdat$italy$dat$Regions,
-                                   fixdat$sicily$dat$Regions,
-                                   fixdat$sardinia$dat$Regions))
+                                   fixdat$sardinia$dat$altimetry))#,
+ #                      Regions=c(fixdat$italy$dat$Regions,
+ #                                  fixdat$sicily$dat$Regions,
+ #                                  fixdat$sardinia$dat$Regions))
    
    zlim<-c(0,12)
 
@@ -69,7 +69,7 @@ run_altmods<-function(fixdat,n.grid,plot.it=FALSE,year=""){
    soap.knots<-make_soap_grid(all.list,c(20,30))
    soap.knots<-pe(soap.knots,-c(2,14,41,48,64,128))
    
-   names(fulldat)<-c("x","y","share_100","altimetry","Regions")
+   names(fulldat)<-c("x","y","share_100","altimetry")#,"Regions")
    
 #   b.soap<-gam(share_100~te(x,y,altimetry,k=c(50,10),d=c(2,1),bs=c("so","tp"),xt=list(bnd=all.bnd))+
 #                         as.factor(Regions),
@@ -84,28 +84,33 @@ run_altmods<-function(fixdat,n.grid,plot.it=FALSE,year=""){
 #
 
 
-#   fulldat<-data.frame(x=fixdat$italy$dat$km.e,
-#                       y=fixdat$italy$dat$km.n,
-#                       share_100=fixdat$italy$dat$share_100,
-#                       altimetry=fixdat$italy$dat$altimetry,
-#                       Regions=fixdat$italy$dat$Regions)
-#
-#   it<-list(x=fixdat$italy$map$km.e,y=fixdat$italy$map$km.n)
-#
+   fulldat<-data.frame(x=fixdat$italy$dat$km.e,
+                       y=fixdat$italy$dat$km.n,
+                       share_100=fixdat$italy$dat$share_100,
+                       altimetry=fixdat$italy$dat$altimetry)
+
+   it<-list(x=fixdat$italy$map$km.e,y=fixdat$italy$map$km.n)
 #
 #
-#   soap.knots<-make_soap_grid(list(x=fixdat$italy$map$km.e,y=fixdat$italy$map$km.n),c(20,30))
-##   soap.knots<-pe(soap.knots,-c(2,14,41,48,64,128))
+#
+   soap.knots<-make_soap_grid(list(x=fixdat$italy$map$km.e,y=fixdat$italy$map$km.n),c(20,30))
+   soap.knots<-pe(soap.knots,-c(11,32,47,121))
 #
 #   b.soap<-gam(share_100~te(x,y,altimetry,d=c(2,1),k=c(25,4),bs=c("sf","cr"),xt=list(bnd=it))+
 #                         te(x,y,altimetry,d=c(2,1),k=c(25,4),bs=c("sw","cr"),xt=list(bnd=it))+
 #                         as.factor(Regions),
 #                family=Gamma(link="log"),data=fulldat,knots=soap.knots)
 
-   b.soap<-gam(share_100~s(x,y,k=50,bs="so",xt=list(bnd=all.bnd))+
-                         #s(altimetry,k=20,bs="tp"),#+
-                           as.factor(Regions),
-                family=Gamma(link="log"),data=fulldat,knots=soap.knots)
+#   b.soap<-gam(share_100~s(x,y,k=50,bs="so",xt=list(bnd=all.bnd))+
+#                         s(altimetry,k=20,bs="tp"),
+#                family=Gamma(link="log"),data=fulldat,knots=soap.knots)
+
+
+   b.soap<- gam(share_100~ 
+      te(x,y,altimetry,bs=c("sf","cr"),k=c(25,4),d=c(2,1),xt=list(list(bnd=list(it)),NULL))+
+      te(x,y,altimetry,bs=c("sw","cr"),k=c(25,4),d=c(2,1),xt=list(list(bnd=list(it)),NULL))
+               ,knots=soap.knots,data=fulldat,family=Gamma(link="log"))
+
 
    if(plot.it){
       vis.gam(b.soap,plot.type="contour",n.grid=n.grid,too.far=0.01,type="response",
@@ -119,4 +124,4 @@ run_altmods<-function(fixdat,n.grid,plot.it=FALSE,year=""){
    # return the models
    return(b.soap)
 
-}
+#}
