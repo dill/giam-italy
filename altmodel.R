@@ -116,38 +116,42 @@ source("eda.R")
       xx<-xx[onoff];yy<-yy[onoff]
       pred.mat<-matrix(NA,m,n)
 
-      
-      # plains
+      # do all the predictions here
       pred.grid.131<-list(x=xx,y=yy,altimetry=rep(131,length(xx)))
       z.131<-predict(b.soap,newdata=pred.grid.131,type="response")
+      pred.grid.431<-list(x=xx,y=yy,altimetry=rep(431,length(xx)))
+      z.431<-predict(b.soap,newdata=pred.grid.431,type="response")
+      pred.grid.838<-list(x=xx,y=yy,altimetry=rep(838,length(xx)))
+      z.838<-predict(b.soap,newdata=pred.grid.838,type="response")
+
+      zlim<-c(0,20)
+
+      # now the plots
+      # plains
       pred.mat[onoff]<-z.131
-      image(xm,yn,pred.mat,col=topo.colors(100),
-                 main=paste("Soap film smoother (2008), altimetry=131"),asp=1,
+      image(xm,yn,pred.mat,col=topo.colors(1000),
+                 main="2008, plain",asp=1,
                  xlim=xlim,ylim=ylim,zlim=zlim,xlab="km (e)",ylab="km (n)",cex.main=1.4,
                  cex.lab=1.4,cex.axis=1.3,lwd=0.7)
-      contour(xm,yn,pred.mat,levels=seq(min(z.131),max(z.131),by=0.75),add=TRUE)
+      contour(xm,yn,pred.mat,levels=seq(zlim[1],zlim[2],by=1),col="red",add=TRUE)
       lines(it,lwd=2)
 
       # hills
-      pred.grid.431<-list(x=xx,y=yy,altimetry=rep(431,length(xx)))
-      z.431<-predict(b.soap,newdata=pred.grid.431,type="response")
       pred.mat[onoff]<-z.431
-      image(xm,yn,pred.mat,col=topo.colors(100),
-                 main=paste("Soap film smoother (2008), altimetry=431"),asp=1,
+      image(xm,yn,pred.mat,col=topo.colors(1000),
+                 main="2008, hill",asp=1,
                  xlim=xlim,ylim=ylim,zlim=zlim,xlab="km (e)",ylab="km (n)",cex.main=1.4,
                  cex.lab=1.4,cex.axis=1.3,lwd=0.7)
-      contour(xm,yn,pred.mat,levels=seq(min(z.431),max(z.431),by=0.75),add=TRUE)
+      contour(xm,yn,pred.mat,levels=seq(zlim[1],zlim[2],by=1),col="red",add=TRUE)
       lines(it,lwd=2)
 
-      # plains
-      pred.grid.838<-list(x=xx,y=yy,altimetry=rep(838,length(xx)))
-      z.838<-predict(b.soap,newdata=pred.grid.838,type="response")
+      # mountains
       pred.mat[onoff]<-z.838
-      image(xm,yn,pred.mat,col=topo.colors(100),
-                 main=paste("Soap film smoother (2008), altimetry=838"),asp=1,
+      image(xm,yn,pred.mat,col=topo.colors(1000),
+                 main="2008, mountain",asp=1,
                  xlim=xlim,ylim=ylim,zlim=zlim,xlab="km (e)",ylab="km (n)",cex.main=1.4,
                  cex.lab=1.4,cex.axis=1.3,lwd=0.7)
-      contour(xm,yn,pred.mat,levels=seq(min(z.838),max(z.838),by=0.75),add=TRUE)
+      contour(xm,yn,pred.mat,levels=seq(zlim[1],zlim[2],by=1),col="red",add=TRUE)
       lines(it,lwd=2)
 
 
