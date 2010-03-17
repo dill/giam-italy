@@ -75,7 +75,7 @@ source("eda.R")
    fulldat<-data.frame(x=fixdat$italy$dat$km.e,
                        y=fixdat$italy$dat$km.n,
                        share_100=fixdat$italy$dat$share_100,
-                       altimetry=fixdat$italy$dat$altimetry)
+                       year=fixdat$italy$dat$year)
 
    it<-list(x=fixdat$italy$map$km.e,y=fixdat$italy$map$km.n)
 
