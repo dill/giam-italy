@@ -82,11 +82,14 @@ source("eda.R")
    soap.knots<-make_soap_grid(list(x=fixdat$italy$map$km.e,y=fixdat$italy$map$km.n),c(20,30))
    soap.knots<-pe(soap.knots,-c(11,32,47,121))
 
-   b.soap<- gam(share_100~ 
-      te(x,y,year,bs=c("sf","cr"),k=c(25,4),d=c(2,1),xt=list(list(bnd=list(it)),NULL))+
-      te(x,y,year,bs=c("sw","cr"),k=c(25,4),d=c(2,1),xt=list(list(bnd=list(it)),NULL))
-               ,knots=soap.knots,data=fulldat,family=Gamma(link="log"))
+#   b.soap<- gam(share_100~ 
+#      te(x,y,year,bs=c("sf","cr"),k=c(25,4),d=c(2,1),xt=list(list(bnd=list(it)),NULL))+
+#      te(x,y,year,bs=c("sw","cr"),k=c(25,4),d=c(2,1),xt=list(list(bnd=list(it)),NULL))
+#               ,knots=soap.knots,data=fulldat,family=Gamma(link="log"))
 
+   b.soap<- gam(share_100~ 
+      s(x,y,bs=c("so"),k=c(100),xt=list(bnd=list(it)))
+               ,knots=soap.knots,data=fulldat,family=Gamma(link="log"))
 
    if(plot.it){
 
