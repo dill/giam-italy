@@ -1,6 +1,6 @@
 # EDA for the Italian data
 
-do_eda<-function(fullll,plot.it,zlim,year){
+do_eda<-function(fullll,plot.it=FALSE,zlim,year,dat.ret=FALSE){
    # want to create a matrix to use with image
    
    # first find the minimum distance between points in both
@@ -46,6 +46,7 @@ do_eda<-function(fullll,plot.it,zlim,year){
          # take the mean of the standardised proportion of foreign
          # population, ignoring NAs
          sq<-mean(fullll$share_100[ind],na.rm=T)
+         yr<-mean(fullll$year[ind],na.rm=T)
    
          im.mat[i,j]<-sq
    
@@ -83,8 +84,18 @@ do_eda<-function(fullll,plot.it,zlim,year){
       lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n)
    }
 
+   if(dat.ret){
+
+      dat<-data.frame(x=x.start+diff(x.start)[1],
+                      y=y.start+diff(y.start)[1],
+                      share_100=sq,
+                      year=yr)
+
+   }else{
+      dat<-NULL
+   }
 
 
-   return(list(xlim=xlim,ylim=ylim))
+   return(list(xlim=xlim,ylim=ylim,dat=dat))
    
 } 

@@ -49,10 +49,11 @@ source("eda.R")
    zlim<-c(0,12)
 
    # plot the raw data
-   eda_rets<-do_eda(fullll,plot.it=plot.it,zlim=zlim,year="")
+   eda_rets<-do_eda(fullll,plot.it=plot.it,zlim=zlim,year="",dat.ret=TRUE)
 
    xlim<-eda_rets$xlim
    ylim<-eda_rets$ylim
+   
 
    all.list<-list(x=c(fixdat$italy$map$km.e,NA,
                       fixdat$sicily$map$km.e,NA,
