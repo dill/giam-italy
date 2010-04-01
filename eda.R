@@ -35,7 +35,12 @@ do_eda<-function(fullll,plot.it=FALSE,zlim,year,dat.ret=FALSE){
    # image matrix
    im.mat<-matrix(NA,grid.res,grid.res)
    
+   #i+.mat<-matrix(NA,grid.res,grid.res)
    
+
+
+#   for(this.year in 
+
    # put the observations into the grid
    for(i in 1:length(x.start)){
       for(j in 1:length(y.start)){
@@ -49,21 +54,44 @@ do_eda<-function(fullll,plot.it=FALSE,zlim,year,dat.ret=FALSE){
          yr<-mean(fullll$year[ind],na.rm=T)
    
          im.mat[i,j]<-sq
-   
+         years<-c(years,yr)   
       }
    }
+
+   # need to speed this up...
+   #y.ind<-floor((ne.km$y-y.start[1])/diff(y.start)[1])
+   #x.ind<-floor((ne.km$x-x.start[1])/diff(x.start)[1])
+
+   #for(i in 1:length(x.start)){
+   #   for(j in 1:length(y.start)){
+   #
+   #      ind<-y.ind[j]+grid.res*x.ind[i]
+   #      
+   #      # take the mean of the standardised proportion of foreign
+   #      # population, ignoring NAs
+   #      sq<-mean(fullll$share_100[ind],na.rm=T)
+   #      yr<-mean(fullll$year[ind],na.rm=T)
+   #
+   #      im.mat[i,j]<-sq
+   #
+   #   }
+   #}
+
    
    im.copy<-im.mat
    im.copy[is.nan(im.copy)]<-0
-   seqlen<-sum(rowSums(im.copy)>0)
+   seqlen<-sum(rowSums(im.copy)>=0)
    
-   x.start<-x.start[rowSums(im.copy)>0]
+   x.start<-x.start[rowSums(im.copy)>=0]
    #y.start<-y.stop[rowSums(im.copy)>0]
-   x.stop<-x.start[rowSums(im.copy)>0]
+   x.stop<-x.start[rowSums(im.copy)>=0]
    #y.stop<-y.stop[rowSums(im.copy)>0]
-   im.copy<-im.copy[rowSums(im.copy)>0,]
+   im.copy<-im.copy[rowSums(im.copy)>=0,]
+
    
-   im.copy[im.copy==0]<-NA
+   #im.copy[im.copy==0]<-NA
+
+
    
    # create the grid sequences
    xs<-seq(x.start[1],x.stop[length(x.stop)],len=seqlen)
@@ -86,10 +114,19 @@ do_eda<-function(fullll,plot.it=FALSE,zlim,year,dat.ret=FALSE){
 
    if(dat.ret){
 
-      dat<-data.frame(x=x.start+diff(x.start)[1],
-                      y=y.start+diff(y.start)[1],
-                      share_100=sq,
-                      year=yr)
+      dat<-data.frame(y=rep(ys,length(xs)),
+                      x=rep(xs,rep(length(ys),length(xs))),
+                      share_100=as.vector(im.copy),
+                      year=years)
+
+      ins.it<-inSide(list(x=fixdat$italy$map$km.e,y=fixdat$italy$map$km.n),dat$x,dat$y)
+      #ins.sc<-inSide(list(x=fixdat$sicily$map$km.e,y=fixdat$sicily$map$km.n),dat$x,dat$y)
+      #ins.sa<-inSide(list(x=fixdat$sardinia$map$km.e,y=fixdat$sardinia$map$km.n),dat$x,dat$y)
+
+      ins<-ins.it #& ins.sc & ins.sa
+
+      dat<-pe(dat,ins)
+
 
    }else{
       dat<-NULL
