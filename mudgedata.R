@@ -13,7 +13,6 @@ source("makesoapgrid.R")
 source("eda.R")
 source("models.R")
 
-
 # load full data
 full<-read.csv(file="database/database_complete.csv")
 
@@ -74,7 +73,6 @@ years<-as.numeric(levels(as.factor(fullll$year)))
 
 # first loop over years
 for(year in years){
-   
    ydat<-pe(fullll,fullll$year==year)
 
    # image matrix
@@ -83,7 +81,6 @@ for(year in years){
    # put the observations into the grid
    for(i in 1:length(x.start)){
       for(j in 1:length(y.start)){
-   
          ind<-ydat$y>=y.start[j] & ydat$y<y.stop[j] &
                     ydat$x>=x.start[i] & ydat$x<x.stop[i]
    
@@ -104,11 +101,8 @@ for(year in years){
       
          # average share_100 value
          av.dat$share_100<-c(av.dat$share_100,sq)
-
-
       }
    }
-
 
    im.copy<-im.mat
    im.copy[is.nan(im.copy)]<-0
@@ -120,7 +114,7 @@ for(year in years){
 #   x.stop<-x.start[rowSums(im.copy)>0]
 #   #y.stop<-y.stop[rowSums(im.copy)>0]
 #   im.copy<-im.copy[rowSums(im.copy)>0,]
-   
+
    im.copy[im.copy==0]<-NA
    
 #   # create the grid sequences
