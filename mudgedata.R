@@ -21,11 +21,25 @@ fixdat<-fix_it_data(full)
 
 # just for italy at the moment
 
-fullll<-data.frame(lat=c(fixdat$italy$dat$lat),
-                   long=c(fixdat$italy$dat$long),
-                   share_100=c(fixdat$italy$dat$share_100),
-                   altimetry=c(fixdat$italy$dat$altimetry),
-                   year=c(fixdat$italy$dat$year))
+#fullll<-data.frame(lat=c(fixdat$italy$dat$lat),
+#                   long=c(fixdat$italy$dat$long),
+#                   share_100=c(fixdat$italy$dat$share_100),
+#                   altimetry=c(fixdat$italy$dat$altimetry),
+#                   year=c(fixdat$italy$dat$year))
+
+fullll<-data.frame(lat= c(fixdat$italy$dat$lat,
+                           fixdat$sicily$dat$lat,
+                           fixdat$sardinia$dat$lat),
+                   long=c(fixdat$italy$dat$long,
+                          fixdat$sicily$dat$long,
+                          fixdat$sardinia$dat$long),
+                   share_100=c(fixdat$italy$dat$share_100,
+                               fixdat$sicily$dat$share_100,
+                               fixdat$sardinia$dat$share_100),
+                   year=c(fixdat$italy$dat$year,
+                          fixdat$sicily$dat$year,
+                          fixdat$sardinia$dat$year))
+
 
 plot.it<-TRUE
 zlim<-c(0,12)
@@ -37,14 +51,18 @@ par(mfrow=c(2,3))
 
 ### build a grid   
 # use adehabitat to make the grid for us...
-grid.res<-150
+grid.res<-100
 
-# convert latlong to eastings and northings
+# convert latlong to eastings and northings, put them in the data frame
 ne.km<-latlong2km(fullll$long,fullll$lat,11.5,44)
 names(ne.km)<-c("x","y")
-
 fullll$x<-ne.km$x
 fullll$y<-ne.km$y
+
+# remove long and lat
+fullll$long<-NULL
+fullll$lat<-NULL
+
 
 # make a matrix of the latitudes and longitudes
 itmat<-matrix(c(ne.km$x,ne.km$y),length(ne.km$x),2)
@@ -66,7 +84,7 @@ y.start<-gridcuts$y[,1]
 y.stop <-gridcuts$y[,2]
    
 # build the data frame to keep everything in
-av.dat<-list(x=c(),y=c(),share_100=c(),year=c(),alt=c())
+av.dat<-list(x=c(),y=c(),share_100=c(),year=c())
 
 
 years<-as.numeric(levels(as.factor(fullll$year)))
@@ -109,26 +127,12 @@ for(year in years){
    im.copy[is.na(im.copy)]<-0
    seqlen<-sum(rowSums(im.copy)>0)
    
-#   x.start<-x.start[rowSums(im.copy)>0]
-#   #y.start<-y.stop[rowSums(im.copy)>0]
-#   x.stop<-x.start[rowSums(im.copy)>0]
-#   #y.stop<-y.stop[rowSums(im.copy)>0]
-#   im.copy<-im.copy[rowSums(im.copy)>0,]
-
    im.copy[im.copy==0]<-NA
-   
-#   # create the grid sequences
-#   xs<-seq(x.start[1],x.stop[length(x.stop)],len=seqlen)
-#   ys<-seq(y.start[1],y.stop[length(y.stop)],len=grid.res)
-#
-#   # xlim and ylim   
-#   xlim=c(xs[1]-25,xs[length(xs)]+25)
-#   ylim=c(ys[1]-25,ys[length(ys)]+25)
    
    if(plot.it){
       # plot with map overlay
       image(z=im.copy,#x=xs,y=ys,
-            col=topo.colors(100),xlab="km (e)",ylab="km (n)",
+            col=heat.colors(100),xlab="km (e)",ylab="km (n)",
             main=paste("Raw data",year),asp=1,zlim=zlim,cex.main=1.4,
             cex.lab=1.4,cex.axis=1.3)#,xlim=xlim,ylim=ylim)
       lines(fixdat$italy$map$km.e,fixdat$italy$map$km.n)
