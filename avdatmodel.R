@@ -42,8 +42,8 @@ onoff<-inSide(it,av.dat$x,av.dat$y)
 av.dat.it<-pe(av.dat,onoff)
 
 it.soap<- gam(share_100~
-   te(x,y,year,bs=c("sf","cr"),k=c(50,4),d=c(2,1),xt=list(list(bnd=list(it)),NULL))+
-   te(x,y,year,bs=c("sw","cr"),k=c(50,4),d=c(2,1),xt=list(list(bnd=list(it)),NULL))
+   te(x,y,year,bs=c("sf","cr"),k=c(50,20),d=c(2,1),xt=list(list(bnd=list(it)),NULL))+
+   te(x,y,year,bs=c("sw","cr"),k=c(50,20),d=c(2,1),xt=list(list(bnd=list(it)),NULL))
             ,knots=soap.knots,data=av.dat.it,family=Gamma(link="log"),method="REML")
 ##########################
 
