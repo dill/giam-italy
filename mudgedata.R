@@ -130,11 +130,23 @@ for(year in years){
    im.copy[im.copy==0]<-NA
    
    if(plot.it){
+
+      xm<-x.start
+      yn<-y.start
+
+      im.copy<-im.copy[1:(grid.res-sum(x.start>620)),]
+      xs<-xm[1:(grid.res-sum(x.start>620))]
+      ys<-yn
+   
+      xlim<-c(xs[1]-25,xs[length(xs)])
+      ylim<-c(ys[1]-25,ys[length(ys)]+25)
+      zlim<-c(0,12)
+
       # plot with map overlay
-      image(z=im.copy,#x=xs,y=ys,
+      image(z=im.copy,x=xs,y=ys,
             col=heat.colors(100),xlab="km (e)",ylab="km (n)",
             main=paste("Raw data",year),asp=1,zlim=zlim,cex.main=1.4,
-            cex.lab=1.4,cex.axis=1.3)#,xlim=xlim,ylim=ylim)
+            cex.lab=1.4,cex.axis=1.3,xlim=xlim,ylim=ylim)
       lines(fixdat$italy$map$km.e,fixdat$italy$map$km.n)
       lines(fixdat$sicily$map$km.e,fixdat$sicily$map$km.n)
       lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n)
