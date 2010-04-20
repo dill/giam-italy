@@ -46,13 +46,13 @@ it<-list(x=fixdat$italy$map$km.e,y=fixdat$italy$map$km.n)
 soap.knots<-make_soap_grid(it,c(20,25))
 soap.knots<-pe(soap.knots,-c(4,5,11,35,61,68,108))
 
-onoff<-inSide(it,av.dat$x,av.dat$y)
+onoff<-inSide(it,it2008$x,it2008$y)
 
-av.dat.it<-pe(av.dat,onoff)
+it2008<-pe(it2008,onoff)
 
 it.soap<- gam(share_100~
-   te(x,y,altimetry,bs=c("sf","cr"),k=c(50,20),d=c(2,1),xt=list(list(bnd=list(it)),NULL))+
-   te(x,y,altimetry,bs=c("sw","cr"),k=c(50,20),d=c(2,1),xt=list(list(bnd=list(it)),NULL))
+   te(x,y,altimetry,bs=c("sf","cr"),k=c(50,10),d=c(2,1),xt=list(list(bnd=list(it)),NULL))+
+   te(x,y,altimetry,bs=c("sw","cr"),k=c(50,10),d=c(2,1),xt=list(list(bnd=list(it)),NULL))
             ,knots=soap.knots,data=it2008,family=Gamma(link="log"),method="REML")
 
 
@@ -64,67 +64,67 @@ it.soap<- gam(share_100~
 
 
 
-   if(plot.it){
-
-      par(mfrow=c(2,2))
-
-      n.grid<-150   
-
-      # average fit
-      vis.gam(b.soap,plot.type="contour",n.grid=n.grid,too.far=0.01,type="response",
-              main=paste("Soap film smoother (2008)"),asp=1,color="topo",xlim=xlim,ylim=ylim,zlim=zlim,
-              xlab="km (e)",ylab="km (n)",cex.main=1.4,cex.lab=1.4,cex.axis=1.3,lwd=0.7)
-      lines(it,lwd=2)
-
-
-      m<-150;n<-150
-      xm <- seq(min(it$x),max(it$x),length=m);yn<-seq(min(it$y),max(it$y),length=n)
-      xx <- rep(xm,n);yy<-rep(yn,rep(m,n))
-      onoff<-inSide(it,xx,yy)
-      xx<-xx[onoff];yy<-yy[onoff]
-      pred.mat<-matrix(NA,m,n)
-
-      # do all the predictions here
-      pred.grid.131<-list(x=xx,y=yy,altimetry=rep(131,length(xx)))
-      z.131<-predict(b.soap,newdata=pred.grid.131,type="response")
-      pred.grid.431<-list(x=xx,y=yy,altimetry=rep(431,length(xx)))
-      z.431<-predict(b.soap,newdata=pred.grid.431,type="response")
-      pred.grid.838<-list(x=xx,y=yy,altimetry=rep(838,length(xx)))
-      z.838<-predict(b.soap,newdata=pred.grid.838,type="response")
-
-      zlim<-c(0,20)
-
-      # now the plots
-      # plains
-      pred.mat[onoff]<-z.131
-      image(xm,yn,pred.mat,col=topo.colors(1000),
-                 main="2008, plain",asp=1,
-                 xlim=xlim,ylim=ylim,zlim=zlim,xlab="km (e)",ylab="km (n)",cex.main=1.4,
-                 cex.lab=1.4,cex.axis=1.3,lwd=0.7)
-      contour(xm,yn,pred.mat,levels=seq(zlim[1],zlim[2],by=1),col="red",add=TRUE)
-      lines(it,lwd=2)
-
-      # hills
-      pred.mat[onoff]<-z.431
-      image(xm,yn,pred.mat,col=topo.colors(1000),
-                 main="2008, hill",asp=1,
-                 xlim=xlim,ylim=ylim,zlim=zlim,xlab="km (e)",ylab="km (n)",cex.main=1.4,
-                 cex.lab=1.4,cex.axis=1.3,lwd=0.7)
-      contour(xm,yn,pred.mat,levels=seq(zlim[1],zlim[2],by=1),col="red",add=TRUE)
-      lines(it,lwd=2)
-
-      # mountains
-      pred.mat[onoff]<-z.838
-      image(xm,yn,pred.mat,col=topo.colors(1000),
-                 main="2008, mountain",asp=1,
-                 xlim=xlim,ylim=ylim,zlim=zlim,xlab="km (e)",ylab="km (n)",cex.main=1.4,
-                 cex.lab=1.4,cex.axis=1.3,lwd=0.7)
-      contour(xm,yn,pred.mat,levels=seq(zlim[1],zlim[2],by=1),col="red",add=TRUE)
-      lines(it,lwd=2)
-
-
-
-   }
+#   if(plot.it){
+#
+#      par(mfrow=c(2,2))
+#
+#      n.grid<-150   
+#
+#      # average fit
+#      vis.gam(b.soap,plot.type="contour",n.grid=n.grid,too.far=0.01,type="response",
+#              main=paste("Soap film smoother (2008)"),asp=1,color="topo",xlim=xlim,ylim=ylim,zlim=zlim,
+#              xlab="km (e)",ylab="km (n)",cex.main=1.4,cex.lab=1.4,cex.axis=1.3,lwd=0.7)
+#      lines(it,lwd=2)
+#
+#
+#      m<-150;n<-150
+#      xm <- seq(min(it$x),max(it$x),length=m);yn<-seq(min(it$y),max(it$y),length=n)
+#      xx <- rep(xm,n);yy<-rep(yn,rep(m,n))
+#      onoff<-inSide(it,xx,yy)
+#      xx<-xx[onoff];yy<-yy[onoff]
+#      pred.mat<-matrix(NA,m,n)
+#
+#      # do all the predictions here
+#      pred.grid.131<-list(x=xx,y=yy,altimetry=rep(131,length(xx)))
+#      z.131<-predict(b.soap,newdata=pred.grid.131,type="response")
+#      pred.grid.431<-list(x=xx,y=yy,altimetry=rep(431,length(xx)))
+#      z.431<-predict(b.soap,newdata=pred.grid.431,type="response")
+#      pred.grid.838<-list(x=xx,y=yy,altimetry=rep(838,length(xx)))
+#      z.838<-predict(b.soap,newdata=pred.grid.838,type="response")
+#
+#      zlim<-c(0,20)
+#
+#      # now the plots
+#      # plains
+#      pred.mat[onoff]<-z.131
+#      image(xm,yn,pred.mat,col=topo.colors(1000),
+#                 main="2008, plain",asp=1,
+#                 xlim=xlim,ylim=ylim,zlim=zlim,xlab="km (e)",ylab="km (n)",cex.main=1.4,
+#                 cex.lab=1.4,cex.axis=1.3,lwd=0.7)
+#      contour(xm,yn,pred.mat,levels=seq(zlim[1],zlim[2],by=1),col="red",add=TRUE)
+#      lines(it,lwd=2)
+#
+#      # hills
+#      pred.mat[onoff]<-z.431
+#      image(xm,yn,pred.mat,col=topo.colors(1000),
+#                 main="2008, hill",asp=1,
+#                 xlim=xlim,ylim=ylim,zlim=zlim,xlab="km (e)",ylab="km (n)",cex.main=1.4,
+#                 cex.lab=1.4,cex.axis=1.3,lwd=0.7)
+#      contour(xm,yn,pred.mat,levels=seq(zlim[1],zlim[2],by=1),col="red",add=TRUE)
+#      lines(it,lwd=2)
+#
+#      # mountains
+#      pred.mat[onoff]<-z.838
+#      image(xm,yn,pred.mat,col=topo.colors(1000),
+#                 main="2008, mountain",asp=1,
+#                 xlim=xlim,ylim=ylim,zlim=zlim,xlab="km (e)",ylab="km (n)",cex.main=1.4,
+#                 cex.lab=1.4,cex.axis=1.3,lwd=0.7)
+#      contour(xm,yn,pred.mat,levels=seq(zlim[1],zlim[2],by=1),col="red",add=TRUE)
+#      lines(it,lwd=2)
+#
+#
+#
+#   }
 
    # return the models
 #   return(b.soap)
