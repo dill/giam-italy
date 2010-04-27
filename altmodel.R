@@ -80,8 +80,8 @@ sc2008<-pe(sc2008,onoff)
 sc.knots<-make_soap_grid(sc,c(10,10))
 
 sc.soap<- gam(share_100~
-   te(x,y,altimetry,bs=c("sf","cr"),k=c(20,10),d=c(2,1),xt=list(list(bnd=list(sc)),NULL))+
-   te(x,y,altimetry,bs=c("sw","cr"),k=c(20,10),d=c(2,1),xt=list(list(bnd=list(sc)),NULL))
+   te(x,y,altimetry,bs=c("sf","cr"),k=c(12,6),d=c(2,1),xt=list(list(bnd=list(sc)),NULL))+
+   te(x,y,altimetry,bs=c("sw","cr"),k=c(12,6),d=c(2,1),xt=list(list(bnd=list(sc)),NULL))
             ,knots=sc.knots,data=sc2008,family=Gamma(link="log"),method="REML")
 
 
@@ -106,10 +106,11 @@ sa2008<-pe(sa2008,onoff)
 
 # soap knots
 sa.knots<-make_soap_grid(sa,c(10,10))
+sa.knots<-pe(sa.knots,-47)
 
 sa.soap<- gam(share_100~
-   te(x,y,altimetry,bs=c("sf","cr"),k=c(20,10),d=c(2,1),xt=list(list(bnd=list(sa)),NULL))+
-   te(x,y,altimetry,bs=c("sw","cr"),k=c(20,10),d=c(2,1),xt=list(list(bnd=list(sa)),NULL))
+   te(x,y,altimetry,bs=c("sf","cr"),k=c(12,5),d=c(2,1),xt=list(list(bnd=list(sa)),NULL))+
+   te(x,y,altimetry,bs=c("sw","cr"),k=c(12,5),d=c(2,1),xt=list(list(bnd=list(sa)),NULL))
             ,knots=sa.knots,data=sa2008,family=Gamma(link="log"),method="REML")
 
 ############################
@@ -137,8 +138,6 @@ ylim<-c(yn[1]-25,yn[length(yn)]+25)
 zlim<-c(0,12)
 
 
-#onoff<-inSide(it,xx,yy)
-#xx<-xx[onoff];yy<-yy[onoff]
 pred.mat<-matrix(NA,m,n)
 
 
@@ -148,69 +147,78 @@ par(mfrow=c(2,2))
 
 n.grid<-150   
 
-# average fit
-#vis.gam(it.soap,plot.type="contour",n.grid=n.grid,too.far=0.01,type="response",
-#        main=paste("Soap film smoother (2008)"),asp=1,color="heat",xlim=xlim,ylim=ylim,zlim=zlim,
-#        xlab="km (e)",ylab="km (n)",cex.main=1.4,cex.lab=1.4,cex.axis=1.3,lwd=0.7)
-#lines(it,lwd=2)
+# altimetry average value
+#alt.avg<-c(it2008$altimetry,sc2008$altimetry,sa2008$altimetry)
+#alt.mode<-alt.mode[!is.na(alt.mode)]
+#hist(alt.mode,breaks=100)
 
 
 # make the prediciton grids 
 pred.grid.131<-list(x=xx,y=yy,altimetry=rep(131,length(xx)))
 pred.grid.431<-list(x=xx,y=yy,altimetry=rep(431,length(xx)))
 pred.grid.838<-list(x=xx,y=yy,altimetry=rep(838,length(xx)))
+#pred.grid.avg<-list(x=xx,y=yy,altimetry=rep(
 
 # actually do the prediction!
 it.z.131<-predict(it.soap,newdata=pred.grid.131,type="response")
 it.z.431<-predict(it.soap,newdata=pred.grid.431,type="response")
 it.z.838<-predict(it.soap,newdata=pred.grid.838,type="response")
+#it.z.avg<-predict(it.soap,newdata=pred.grid.avg,type="response")
 
 sa.z.131<-predict(sa.soap,newdata=pred.grid.131,type="response")
 sa.z.431<-predict(sa.soap,newdata=pred.grid.431,type="response")
 sa.z.838<-predict(sa.soap,newdata=pred.grid.838,type="response")
+#sa.z.avg<-predict(sa.soap,newdata=pred.grid.avg,type="response")
 
 sc.z.131<-predict(sc.soap,newdata=pred.grid.131,type="response")
 sc.z.431<-predict(sc.soap,newdata=pred.grid.431,type="response")
 sc.z.838<-predict(sc.soap,newdata=pred.grid.838,type="response")
+#sc.z.avg<-predict(sc.soap,newdata=pred.grid.avg,type="response")
+
+
 
 #####################################
 # plotting
 
 ## average model!!
 
-
-
 # plains
-pred.mat[inSide(it,xx,yy)]<-it.z.131
-pred.mat[inSide(sc,xx,yy)]<-sc.z.131
-pred.mat[inSide(sa,xx,yy)]<-sa.z.131
+pred.mat[inSide(it,xx,yy)]<-it.z.131[!is.na(it.z.131)]
+pred.mat[inSide(sc,xx,yy)]<-sc.z.131[!is.na(sc.z.131)]
+pred.mat[inSide(sa,xx,yy)]<-sa.z.131[!is.na(sa.z.131)]
 image(xm,yn,pred.mat,col=heat.colors(1000),
            main="2008, plain",asp=1,
            xlim=xlim,ylim=ylim,zlim=zlim,xlab="km (e)",ylab="km (n)",cex.main=1.4,
            cex.lab=1.4,cex.axis=1.3,lwd=0.7)
 contour(xm,yn,pred.mat,levels=seq(zlim[1],zlim[2],by=1),col="green",add=TRUE)
 lines(it,lwd=2)
+lines(sa,lwd=2)
+lines(sc,lwd=2)
 
 # hills
-pred.mat[inSide(it,xx,yy)]<-it.z.431
-pred.mat[inSide(sc,xx,yy)]<-sc.z.431
-pred.mat[inSide(sa,xx,yy)]<-sa.z.431
+pred.mat[inSide(it,xx,yy)]<-it.z.431[!is.na(it.z.431)]
+pred.mat[inSide(sc,xx,yy)]<-sc.z.431[!is.na(sc.z.431)]
+pred.mat[inSide(sa,xx,yy)]<-sa.z.431[!is.na(sa.z.431)]
 image(xm,yn,pred.mat,col=heat.colors(1000),
            main="2008, hill",asp=1,
            xlim=xlim,ylim=ylim,zlim=zlim,xlab="km (e)",ylab="km (n)",cex.main=1.4,
            cex.lab=1.4,cex.axis=1.3,lwd=0.7)
 contour(xm,yn,pred.mat,levels=seq(zlim[1],zlim[2],by=1),col="green",add=TRUE)
 lines(it,lwd=2)
+lines(sa,lwd=2)
+lines(sc,lwd=2)
 
 # mountains
-pred.mat[inSide(it,xx,yy)]<-it.z.838
-pred.mat[inSide(sc,xx,yy)]<-sc.z.838
-pred.mat[inSide(sa,xx,yy)]<-sa.z.838
+pred.mat[inSide(it,xx,yy)]<-it.z.838[!is.na(it.z.838)]
+pred.mat[inSide(sc,xx,yy)]<-sc.z.838[!is.na(sc.z.838)]
+pred.mat[inSide(sa,xx,yy)]<-sa.z.838[!is.na(sa.z.838)]
 image(xm,yn,pred.mat,col=heat.colors(1000),
            main="2008, mountain",asp=1,
            xlim=xlim,ylim=ylim,zlim=zlim,xlab="km (e)",ylab="km (n)",cex.main=1.4,
            cex.lab=1.4,cex.axis=1.3,lwd=0.7)
 contour(xm,yn,pred.mat,levels=seq(zlim[1],zlim[2],by=1),col="green",add=TRUE)
 lines(it,lwd=2)
+lines(sa,lwd=2)
+lines(sc,lwd=2)
 
 
