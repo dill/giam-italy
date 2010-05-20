@@ -18,9 +18,9 @@ inddat<-fix_it_data(inddat)
 it<-list(x=inddat$italy$map$km.e,y=inddat$italy$map$km.n)
 
 # setup the soap knots
-#20x25
-soap.knots<-make_soap_grid(it,c(20,25))
-soap.knots<-pe(soap.knots,-c(4,5,11,35,61,68,108))
+soap.knots<-make_soap_grid(it,c(20,15))
+#soap.knots<-pe(soap.knots,-c(4,5,11,35,61,68,108))
+soap.knots<-pe(soap.knots,-c(5))
 
 # fiddly
 it.inddat<-inddat$italy$dat
@@ -33,7 +33,7 @@ onoff<-inSide(it,it.inddat$x,it.inddat$y)
 
 it.inddat<-pe(it.inddat,onoff)
 
-k.it<-c(40,20)
+k.it<-c(10,5)
 
 it.soap<- gam(index~
    te(x,y,year,bs=c("sf","cr"),k=k.it,d=c(2,1),xt=list(list(bnd=list(it)),NULL))+
