@@ -171,4 +171,3 @@ for (year in years){
    lines(sc,lwd=2)
 
 }
-
