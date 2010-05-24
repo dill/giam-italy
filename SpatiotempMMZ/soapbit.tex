@@ -1,0 +1,44 @@
+% my bit on soap.
+
+As alluded to above, the smoother used for the spatial part of the model must take into account of the fact that the borders of Italy, Sicily and Sardinia represent both physical and administrative geographic features. Clearly a rather na•ve model would smooth over the bounding box encompassing all of the region we wish to draw inference on, this is not useful; first, because there are no immigrants in the sea (at best there are merely potential immigrants) and second, because smoothing over this whole area would cause leakage, as mentioned previously.
+
+
+
+Leakage occurs when a smoother inappropriately links two pats of a domain, this can happen when a two peninsulae jut out into the sea with different population densities on either side. Say one has a very high density, where as the other is significantly lower. Most smoothers will not respect that the two areas are different and should be treated so. Rather, the model will ``smooth across'' this gap, causing the high functional values to ``leak'' into the low valued peninsula and vice versa. 
+
+There are, of course, situations in which leakage is appropriate. For example, in a study of the propagation of a chemical through a river system, there are several mechanisms to transport the chemical (eg. surface water flow, animals) other than the river itself. Therefore there must be a motivation for why we wish to use a model that specifically prevents leakage. This is the case here, as there is no particular reason we should believe that immigration should be continuous across physical boundaries such as the Mediterranean Sea.
+
+
+THOUGHT: Might be worth including a Ramsay horseshoe if we're going to make a big deal of leakage?
+
+
+The soap film smoother (\cite{soap}) uses a rather simple physical model to prevent leakage from occurring. First, consider the domain boundary to be made of wire, then dip this wire into a bucket of soapy water, you will then have (provided it doesn't pop(!)) a soap film in the same of your boundary. Now consider the wire to lie in the $x-y$ plane and the height of the soap film at a given point to be the functional value of the model. This film is then distorted smoothly by moving it toward the data, while minimising the surface tension in the film. The domain ($\Omega$) is bounded by some polygon with boundary conditions estimated by a cyclic spline.
+
+Mathematically, the soap film smoother is constructed by first specifying a set of functions $\rho_k(x,y)$, which are each solutions to the Laplace equation in two dimensions:
+\be
+\frac{\partial^2\rho}{\partial x^2} + \frac{\partial^2\rho}{\partial y^2} = 0
+\ee
+except at one of the knots ($x^*_k,y^*_k$). Then, solving Poisson's equation in 2-dimensions:
+\be
+\frac{\partial^2 g_k}{\partial x^2} + \frac{\partial^2 g_k}{\partial y^2} = \rho
+\label{soap-poisson}
+\ee
+with $\rho=\rho_k(x,y)$, where $k$ indexes the knots, the set of basis functions for the soap film smoother, $g_k(x,y)$ is found, along with $a(x,y)$ (the solutions to \eqn{soap-poisson} when $\rho=0$). These bases are then summed to form:
+\be
+f(x,y)=a(x,y)+\sum_{k=1}^n \gamma_k g_k(x,y),
+\ee
+the soap film smoother, where the $\gamma_k$ are parameters to be estimated. The (isotropic) penalty term is:
+\be
+\int_\Omega \Big(\frac{\partial^2 f}{\partial x^2}+\frac{\partial^2 f}{\partial y^2} \Big)^2\text{d}x\text{d}y,
+\ee
+This differs from the standard thin plate regression spline penalty since: (\emph{i}) the integration occurs only over $\Omega$, (\emph{ii}) there is no mixed derivative term, and (\emph{iii}) the whole integrand is squared rather than each term individually. This allows the $x$ and $y$ term's derivatives to be traded off against each other so the nullspace of the penalty is infinite dimensional. This allows those functions in the nullspace to be sufficiently wiggly to meet any boundary conditions.
+
+THOUGHT: Take some time to say how shit Kriging is? :)
+
+
+
+PROBABLY DON'T NEED THIS:
+The solution of the PDEs above, yielding the basis and penalty, is the most computationally expensive part of the procedure. Knots to use for $x_k^*$ and $y_k^*$ must be specified, usually using a grid. Numerical problems occur when knots are placed in boundary cells in the PDE solution grid.
+
+
+Although mathematically elegant, the soap film smoother is a rather complex model. It also treats the boundary as a special case and uses a cyclic spline in order to approximate the boundary values. This treatment of the boundary seems rather unnatural and it may not always be physically realistic to consider the boundary in such a way.
