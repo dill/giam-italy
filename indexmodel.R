@@ -50,7 +50,7 @@ it.soap<- gam(index~
 #sa<-list(x=inddat$sardinia$map$km.e,y=inddat$sardinia$map$km.n)
 #
 ## setup the soap knots
-#soap.knots<-make_soap_grid(sa,c(3,4))
+#soap.knots<-make_soap_grid(sa,c(5,5))
 ##soap.knots<-pe(soap.knots,-c(47))
 #
 ## fiddly
@@ -111,33 +111,16 @@ sc.soap<- gam(index~
 grid.res<-100
 years<-as.numeric(levels(as.factor(inddat$italy$dat$year)))
 
-# setup the prediction grid
-ax<-c(it.inddat$x,sc.inddat$x)#,sa.inddat$x)
-ay<-c(it.inddat$y,sc.inddat$y)#,sa.inddat$y)
-itmat<-matrix(c(ax,ay),length(ax),2)
-it.asc<-ascgen(itmat,nrcol=grid.res)
+xmin<-min(sc$x,it$x)#,sa$x)
+xmax<-max(sc$x,it$x)#,sa$x)
+ymin<-min(sc$y,it$y)#,sa$y)
+ymax<-max(sc$y,it$y)#,sa$y)
 
-# now extract the grid
-gridcuts<-attr(it.asc,"dimnames")
-gridcuts$x<-gsub("\\(","",gridcuts$x)
-gridcuts$x<-gsub("\\]","",gridcuts$x)
-gridcuts$y<-gsub("\\(","",gridcuts$y)
-gridcuts$y<-gsub("\\]","",gridcuts$y)
-
-gridcuts$x<-t(matrix(as.numeric(unlist(strsplit(gridcuts$x,",",extended=TRUE)),2,grid.res),2,grid.res))
-gridcuts$y<-t(matrix(as.numeric(unlist(strsplit(gridcuts$y,",",extended=TRUE)),2,grid.res),2,grid.res))
-
-x.start<-gridcuts$x[,1]
-x.stop <-gridcuts$x[,2]
-y.start<-gridcuts$y[,1]
-y.stop <-gridcuts$y[,2]
-
-xm<-(x.start+x.stop)/2
-yn<-(y.start+y.stop)/2
+xm <- seq(xmin,xmax,length=grid.res)
+yn<-seq(ymin,ymax,length=grid.res)
 xx <- rep(xm,grid.res)
 yy<-rep(yn,rep(grid.res,grid.res))
 
-pred.grid<-list(x=xx,y=yy,year=rep(2003,length(xx)))
 
 im.mat<-matrix(NA,grid.res,grid.res)
 
@@ -162,20 +145,21 @@ for (year in years){
    im.it[inSide(it,xx,yy)]<-z[!is.na(z)]
 
 
-   im.it<-im.it[1:(grid.res-sum(x.start>620)),]
-   xs<-xm[1:(grid.res-sum(x.start>620))]
+#   im.it<-im.it[1:(grid.res-sum(x.start>620)),]
+#   xs<-xm[1:(grid.res-sum(x.start>620))]
+   xs<-xm
    ys<-yn
    
-   xlim<-c(xs[1]-25,xs[length(xs)])
-   ylim<-c(ys[1]-25,ys[length(ys)]+25)
-   zlim<-c(0,12)
+   xlim<-c(xs[1]-50,xs[length(xs)]-25)
+   ylim<-c(ys[1]-50,ys[length(ys)]+25)
+   zlim<-c(0,100)
 
    image(z=im.it,x=xs,y=ys,
          col=heat.colors(100),xlab="km (e)",ylab="km (n)",
          main=year,asp=1,cex.main=1.4,
          cex.lab=1.4,cex.axis=1.3,xlim=xlim,ylim=ylim,zlim=zlim)
 
-   contour(xs,ys,im.it,levels=seq(zlim[1],zlim[2],by=1),col="blue",add=TRUE)
+   contour(xs,ys,im.it,levels=seq(zlim[1],zlim[2],by=8),col="blue",add=TRUE)
 
    lines(it,lwd=2)
 #   lines(sa,lwd=2)
