@@ -56,7 +56,7 @@ for( i in 1:Nb){
    # insert the coefficicents into the object
    b$coefficients<-as.vector(bs)
    # do the prediction
-   ex<-matrix(predict(b,pred.grid),n.years,length(pred.grid$year)/n.years)
+   ex<-matrix(predict(b,pred.grid),n.years,length(pred.grid$year)/n.years,type="response")
 
    RES$all[,i]<-rowMeans(ex)
    RES$north[,i]<-rowMeans(ex[,north])
