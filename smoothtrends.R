@@ -23,7 +23,7 @@ s.meth  <- "svd"
 
 b<-it.soap
 # Nb - number of times we generate
-Nb<-50
+Nb<-1
 
 # temporal resolution
 n.years<-10
@@ -56,9 +56,13 @@ for( i in 1:Nb){
    # insert the coefficicents into the object
    b$coefficients<-as.vector(bs)
    # do the prediction
-   ex<-matrix(predict(b,pred.grid),n.years,length(pred.grid$year)/n.years,type="response")
+   pred<-predict(b,pred.grid,type="response")
+   ex<-matrix(pred,n.years,length(pred.grid$year)/n.years)
 
-   RES$all[,i]<-rowMeans(ex)
+
+   # do something smarter here, no matrix?
+
+   RES$all[,i]<-mean(ex)
    RES$north[,i]<-rowMeans(ex[,north])
    RES$centre[,i]<-rowMeans(ex[,centre])
    RES$south[,i]<-rowMeans(ex[,south])
