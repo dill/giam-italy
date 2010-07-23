@@ -38,9 +38,9 @@ pred.grid<-data.frame(x=rep(pred.grid$x[onoff],n.years),
                      )
 
 # create the indicators
-north <-(pred.grid$y > -20)[1:sum(onoff)]
-centre<-(pred.grid$y < -20 & pred.grid$y > -300)[1:sum(onoff)]
-south <-(pred.grid$y < -300)[1:sum(onoff)]
+north <-(pred.grid$y > -20)
+centre<-(pred.grid$y < -20 & pred.grid$y > -300)
+south <-(pred.grid$y < -300)
 
 # results matrix
 RES<-list(all=matrix(NA,n.years,Nb),
@@ -57,15 +57,20 @@ for( i in 1:Nb){
    b$coefficients<-as.vector(bs)
    # do the prediction
    pred<-predict(b,pred.grid,type="response")
-   ex<-matrix(pred,n.years,length(pred.grid$year)/n.years)
+   #ex<-matrix(pred,n.years,length(pred.grid$year)/n.years)
+   #ex<-matrix(pred,length(pred.grid$year)/n.years,n.years)
 
 
    # do something smarter here, no matrix?
 
-   RES$all[,i]<-mean(ex)
-   RES$north[,i]<-rowMeans(ex[,north])
-   RES$centre[,i]<-rowMeans(ex[,centre])
-   RES$south[,i]<-rowMeans(ex[,south])
+   #RES$all[,i]<-colMeans(ex)
+   #RES$north[,i]<-colMeans(ex[north,])
+   #RES$centre[,i]<-colMeans(ex[centre,])
+   #RES$south[,i]<-colMeans(ex[south,])
+   RES$all[,i]<-pred
+   RES$north[,i]<-pred[north]
+   RES$centre[,i]<-pred[centre]
+   RES$south[,i]<-pred[south]
 }
 
 
