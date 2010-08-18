@@ -24,7 +24,7 @@ b<-it.soap
 Xb<-model.matrix(b)
 
 # Nb - number of times we generate
-Nb<-10
+Nb<-200
 
 # create the indicators
 north <-(av.dat.it$y > -20)
