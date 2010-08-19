@@ -63,7 +63,7 @@ for( i in 1:Nb){
 
 save.image(file="trend.RData")
 
-par(mfrow=c(2,2))
+par(mfrow=c(2,2),las=1,mar=c(3.5,3,2,0.75),mgp=c(2,0.65,0))
 
 titles<-c("Mainland Italy","North","Centre","South")
 

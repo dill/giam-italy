@@ -175,7 +175,9 @@ The remainder of the article is organised as follows...
 
 The entry of foreigners from some countries of the European Union (EU) into Italy is regulated by the Schengen agreements. These allow for the elimination of border controls, hence creating a common area of free movement among the state members (e.g., Broeders 2007). Foreigners from a non-EU country must possess a visa or the necessary documents (for further details see the official website of the Ministry of the Interior http://www.interno.it). 
  
-At this point, we must distinguish between those individuals considered to be the resident foreign population and those considered to be immigrants. The foreign population includes all people (born in Italy or abroad), who declare their citizenship to not be Italian. The immigrant population, consists of all those born abroad who have declared to be foreigners or Italian by naturalisation ({\bf THIS is still unclear, are you saying this is anyone who is from abroad OR anyone who has been naturalised?ANSWER: source ISTAT: The foreign population includes all the persons born in Italy or abroad, who declared a citizenship other than the Italian one at the census, being thus in line with the definition adopted in the administrative surveys carried out in Italy. On the other hand, the immigrant population at the census includes all the persons born abroad who declared to be foreigner or Italian by naturalization; all foreigners born in Italy, as children born from foreign parents, are therefore excluded from immigrant population. Census data allow a great detail at territorial level, with reference to many socioeconomic information, such as housing conditions, household composition, educational level and professional status. Nevertheless, because of the complexity of Census operations, some under enumerations might occur especially with reference to foreign population.}). The foreigners born in Italy such as children born from foreign parents, are excluded from immigrant population. However, the population census of 2001 showed that foreigners and immigrants largely match ({\bf WHAT do you mean by match here?}SEE POINT 10 OF ATTACHED PDF). About $81\%$ og immigrants has been identified by foreign citizenship, and $88\%$ of foreigners are immigrants because they were born abroad.
+At this point, we must distinguish between those individuals considered to be the resident foreign population and those considered to be immigrants. The foreign population includes all people (born in Italy or abroad), who declare their citizenship to not be Italian. 
+
+The immigrant population, consists of all those born abroad who have declared to be foreigners or Italian by naturalisation (ie. those who declare themselves to be a nationality other than Italian on the census). The foreigners born in Italy such as children born from foreign parents, are excluded from immigrant population. However, the population census of 2001 showed that foreigners and immigrants largely match ({\bf WHAT do you mean by match here?}SEE POINT 10 OF ATTACHED PDF). About $81\%$ og immigrants has been identified by foreign citizenship, and $88\%$ of foreigners are immigrants because they were born abroad.
 
 In many countries, official statistics report the number resident foreigners, but not the number of immigrants(Coleman 2008). Currently, the dynamics of immigration to Italy still allows the acceptance of a definition which does not distinguish between these two groups. This simplification is reasonable in the first phase of the immigration process in a country, and when the majority of immigrants keep their own citizenship for a long period. Indeed, this is the case in Italy. The population census gives the best distinction between immigrants and foreigners. In this case the data can be analysed by birthplace, citizenship at birth, and citizenship at the census time. 
  
@@ -198,7 +200,7 @@ The phenomenon of illegal immigrants (e.g., Carter 1999; Hillman and Weiss 1999;
 
 Bijak et al. (2007) shows that in the absence of migration, many of the 27 European countries could see a decline in the resident population up to 2052. In particular, under this assumption, they estimate that the population of Italy could decrease from 57 million in 2002 to about 43 million in 2052. The main causes of population decline in Italy may be linked to: (i) an ageing population and (ii) a low fertility rate. 
 
-Looking population structure first, the ratio of old (over 64) to young (up to 14) in the total population was 143.4 at the end of 2008 (156.2 if we only consider individuals with Italian citizenship). The elderly population is about $43\%$ larger than the young population. Considering only resident foreign population the ratio is 11.2. \textbf{From this we conclude that there is a substantial difference in the age structures of population present in Italy, if we apply a distinction by citizenship of people.}
+Looking population structure first, the ratio of old (over 64) to young (up to 14) in the total population was 143.4 at the end of 2008 (156.2 if we only consider individuals with Italian citizenship). The elderly population is about $43\%$ larger than the young population. Considering only resident foreign population the ratio is 11.2. From this we conclude that there is a substantial difference in the age structures of population present in Italy, if we stratify by citizenship.
 
 As for the low fertility rate, the latest data from ISTAT puts the average number of children per Italian women of childbearing age (from 15 to 49 years) at 1.33; lower than the average of 2.05 children for foreign women living in Italy. Combining the fertility rate for both Italian and foreign women, we obtain an average of 1.41. Coleman (2008) states that ``typically, in low-mortality populations a total fertility of about 2.04 is regarded as the `replacement level', that is, a level sufficient to replace the population in the long-run, ignoring migration''. Given the impact of foreigners on the population structure, the measure of total fertility (and hence the level of replacement) must take into account the contribution of immigrants (Coleman 2008). The increasing presence of foreigners in Italy over recent years has contributed not only to population growth, but also to a reduction in average age and an improvement in the total fertility rate.
 
@@ -217,51 +219,55 @@ The model we employ belongs to the class of generalized additive models (GAMs, H
 \eeq
 for $i=1,\ldots,8094$ and $t=1,\ldots,6$. The log link function ensures positive fitted values. $\texttt{irf}_{it}$, $\texttt{n}_i$, and $\texttt{e}_i$ represent the variables percentage incidence of resident foreigners, Northing, and Easting, respectively. The function $f$ is a multidimensional smooth of \texttt{year}, \texttt{n}, and \texttt{e} which models the joint effect of these variables on \texttt{irf}. Northing and Easting are simply offsets in kilometres from a set point, thus ensuring that the spatial part of the smooth is isotropic (as opposed to using latitude and longitude). We want both the space and time dimension to have an optimal degree of smoothness in terms of the bias-variance trade-off; the chosen smoother has to be invariant to the relative scaling of space (km) and time (years). This can be achieved by using a multidimensional tensor product smooth combining a cubic regression spline basis for \texttt{year} and an \textit{isotropic} soap film spline basis for the two spatial dimensions \texttt{n} and \texttt{e}, since the smoother should not depend on the coordinate system used and account for the structure of the geographical domain under investigation (details are given in the next two sections). The smooth component in (\ref{PropM}) is subject to identifiability constraints; see Wood (2006) for more details.
 
+The next two sections cover the technical details of the construction of the smoothers. We first show how, in general a three-dimensional tensor product smoother can be constructed using a two-dimensional spatial smoother and a one-dimensional temporal smoother. We then go into the details of how the two-dimensional smoother is constructed in our case, to wit, the soap film smoother.
+
 \subsection{A three-dimensional tensor product smoother for time and space \label{3D}}
 
 The construction of a three-dimensional scale invariant tensor product smoother of time and space is based on a marginal one-dimensional spline basis for time and a two-dimensional marginal smooth for space, with associated quadratic penalties measuring their roughness. We omit the subscripts $i$ and $t$ for simplicity. Let us assume that we have two low-rank regression spline bases of any type to represent the smooth functions $f_\text{year}$ and $f_\text{space}$, we can write (e.g., Ruppert, Wand and Carroll 2003; Wood 2006)
 $$
-f_\text{year}(\texttt{year})=\sum_{l=1}^L \alpha_l a_l(\texttt{year})=\textbf{X}_\text{year}\bm\alpha \ \ \text{and} \ \ f_\text{space}(\texttt{n},\texttt{e})=\sum_{r=1}^R \gamma_r d_r(\texttt{n},\texttt{e})=\textbf{X}_\text{space}\bm\gamma,
+f_\text{year}(\texttt{year})=\sum_{l=1}^L \xi_l b_l(\texttt{year})=\textbf{X}_\text{year}\bm\xi \ \ \text{and} \ \ f_\text{space}(\texttt{n},\texttt{e})=\sum_{r=1}^R \varphi_r d_r(\texttt{n},\texttt{e})=\textbf{X}_\text{space}\bm\varphi,
 $$
-where the $a_l(\texttt{year})$ and $d_r(\texttt{n},\texttt{e})$ are known cubic regression spline and soap film basis functions, with corresponding parameters $\alpha_l$ and $\gamma_r$ and spline dimensions $L$ and $R$. $\textbf{X}_\text{year}$ and $\textbf{X}_\text{space}$ are marginal model matrices evaluating the basis functions with parameter vectors $\bm\alpha$ and $\bm\gamma$. 
+where the $b_l(\texttt{year})$ and $d_r(\texttt{n},\texttt{e})$ are known cubic regression spline and soap film basis functions, with corresponding parameters $\xi_l$ and $\varphi_r$ and spline dimensions $L$ and $R$. $\textbf{X}_\text{year}$ and $\textbf{X}_\text{space}$ are marginal model matrices evaluating the basis functions with parameter vectors $\bm\xi$ and $\bm\varphi$. 
 
-The expansion for $f_\text{space}$ and its roughness penalty do not correspond exactly to the expressions used to set up the model since, in this section, we are concerned with illustrating the construction of a three-dimensional scale invariant tensor product smoother. It is therefore convenient to keep the description of the two-dimensional marginal smooth for space and its quadratic penalty as simple as possible, leaving a rigorous description will be given in the next section. {\bf Probably want to be more assertive here, ie. ``this is what we're doing, it's best, deal with it.''}
+The expansion for $f_\text{space}$ and its roughness penalty do not correspond exactly to the expressions used to set up the model since, in this section, we are concerned with illustrating the construction of a three-dimensional scale invariant tensor product smoother. It is therefore convenient to keep the description of the two-dimensional marginal smooth for space and its quadratic penalty as simple as possible, leaving a rigorous description will be given in the next section. 
 
-\subsubsection{Tensor product smoothers}
-
-{\bf Maybe a better title, but you get the idea}
-
-In order to set up a three-dimensional tensor product smoother for time and space we need $f_\text{year}(\texttt{year})$ to vary smoothly within the space dimensions. This can be achieved by allowing the parameters $\alpha_l$ to vary smoothly with \texttt{n} and \texttt{e}. Using the spline set-up for $f_\text{space}(\texttt{n},\texttt{e})$ we may write (e.g., Wood 2006, p. 163)
+In order to set up a three-dimensional tensor product smoother for time and space we need $f_\text{year}(\texttt{year})$ to vary smoothly within the space dimensions. This can be achieved by allowing the parameters $\xi_l$ to vary smoothly with \texttt{n} and \texttt{e}. Using the spline set-up for $f_\text{space}(\texttt{n},\texttt{e})$ we may write (e.g., Wood 2006, p. 163)
 $$
-\alpha_l(\texttt{n},\texttt{e})=\sum_{r=1}^R \gamma_{lr} d_r(\texttt{n},\texttt{e})
+\xi_l(\texttt{n},\texttt{e})=\sum_{r=1}^R \varphi_{lr} d_r(\texttt{n},\texttt{e})
 $$    
 which results in
 $$
-f(\texttt{year},\texttt{n},\texttt{e})=\sum_{l=1}^L \sum_{r=1}^R \gamma_{lr} d_r(\texttt{n},\texttt{e}) a_l(\texttt{year}). 
+f(\texttt{year},\texttt{n},\texttt{e})=\sum_{l=1}^L \sum_{r=1}^R \varphi_{lr} d_r(\texttt{n},\texttt{e}) b_l(\texttt{year}). 
 $$
-For any particular set of observations of \texttt{year}, \texttt{n}, and \texttt{e}, there exists a simple relationship between the matrix $\textbf{X}$ evaluating the tensor product smooth at these observations, and the model matrices $\textbf{X}_\text{year}$ and $\textbf{X}_\text{space}$ evaluating the marginal smooths at the same observations. Ordering appropriately the parameters $\gamma_{lr}$ into a vector $\bm\theta$, the $i^{th}$ row of $\textbf{X}$ is given by $\textbf{X}_{i}=\textbf{X}_\text{year,i}\otimes\textbf{X}_\text{space,i}$, where $\otimes$ is the Kronecker product. 
+For any particular set of observations of \texttt{year}, \texttt{n}, and \texttt{e}, there exists a simple relationship between the matrix $\textbf{X}$ evaluating the tensor product smooth at these observations, and the model matrices $\textbf{X}_\text{year}$ and $\textbf{X}_\text{space}$ evaluating the marginal smooths at the same observations. Ordering appropriately the parameters $\varphi_{lr}$ into a vector $\bm\theta$, the $i^{th}$ row of $\textbf{X}$ is given by $\textbf{X}_{i}=\textbf{X}_\text{year,i}\otimes\textbf{X}_\text{space,i}$, where $\otimes$ is the Kronecker product. 
 
 In the GAM context, it is necessary to quantify the roughness of the smooth functions in the model so that over-fitting can be accounted for and hence avoided during the parameter estimation process (e.g., Marra and Radice 2010). As for the penalty associated with this tensor product basis, it is possible to start from roughness measures associated with the marginal smooths $f_\text{year}(\texttt{year})$ and $f_\text{space}(\texttt{n},\texttt{e})$. Suppose that functionals $Js$ measuring the roughness of the smooth terms are available, and that these can be written as quadratic forms in the marginal parameters, we have that
 $$
-J_\text{year}(f_\text{year})=\bm\alpha\ts\textbf{S}_\text{year}\bm\alpha \ \ \text{and} \ \ J_\text{space}(f_\text{space})=\bm\gamma\ts\textbf{S}_\text{space}\bm\gamma,
+J_\text{year}(f_\text{year})=\bm\xi\ts\textbf{S}_\text{year}\bm\xi \ \ \text{and} \ \ J_\text{space}(f_\text{space})=\bm\varphi\ts\textbf{S}_\text{space}\bm\varphi,
 $$
-where the $\textbf{S}$ matrices contain known coefficients whose values depend on the chosen bases for time and space. For instance, the second-order cubic spline penalty for $f_\text{year}(\texttt{year})$ evaluates $J_\text{year}(f_\text{year})=\int\left( \partial^2 f_\text{year}/\partial \texttt{year}^2 \right)^2 d\texttt{year}$, but it may be more complex (Wood 2006, 2008). Following, e.g., Zanin and Marra (2010), an overall penalty for the tensor product smooth can be obtained by applying the penalties of $f_\text{space}(\texttt{n},\texttt{e})$ to the varying coefficients of the marginal smooth $f_\text{year}(\texttt{year})$, $\alpha_l(\texttt{n},\texttt{e})$,
+where the $\textbf{S}$ matrices contain known coefficients whose values depend on the chosen bases for time and space. For instance, the second-order cubic spline penalty for $f_\text{year}(\texttt{year})$ evaluates $J_\text{year}(f_\text{year})=\int\left( \partial^2 f_\text{year}/\partial \texttt{year}^2 \right)^2 d\texttt{year}$, but it may be more complex (Wood 2006, 2008). Following, e.g., Zanin and Marra (2010), an overall penalty for the tensor product smooth can be obtained by applying the penalties of $f_\text{space}(\texttt{n},\texttt{e})$ to the varying coefficients of the marginal smooth $f_\text{year}(\texttt{year})$, $\xi_l(\texttt{n},\texttt{e})$,
 $$
-\sum_{l=1}^L J_\text{space}\left\{  \alpha_l(\texttt{n},\texttt{e}) \right\},
+\sum_{l=1}^L J_\text{space}\left\{  \xi_l(\texttt{n},\texttt{e}) \right\},
 $$ 
-and the penalties of $f_\text{year}(\texttt{year})$ to the varying coefficients of the marginal smooth $f_\text{space}(\texttt{n},\texttt{e})$, $\gamma_r(\texttt{year})$,  
+and the penalties of $f_\text{year}(\texttt{year})$ to the varying coefficients of the marginal smooth $f_\text{space}(\texttt{n},\texttt{e})$, $\varphi_r(\texttt{year})$,  
 $$
-\sum_{r=1}^R J_\text{year}\left\{  \gamma_r(\texttt{year}) \right\}.
+\sum_{r=1}^R J_\text{year}\left\{  \varphi_r(\texttt{year}) \right\}.
 $$ 
 It follows that the roughness penalty of $f(\texttt{year},\texttt{n},\texttt{e})$ can be measured as 
 $$
-J(f)=\lambda_\text{space} \sum_{l=1}^L J_\text{space}\left\{  \alpha_l(\texttt{n},\texttt{e}) \right\} + \lambda_\text{year} \sum_{r=1}^R J_\text{year}\left\{  \gamma_r(\texttt{year}) \right\},
+\lambda_\text{space} \sum_{l=1}^L J_\text{space}\left\{  \xi_l(\texttt{n},\texttt{e}) \right\} + \lambda_\text{year} \sum_{r=1}^R J_\text{year}\left\{  \varphi_r(\texttt{year}) \right\},
 $$
 which can also be written as
 $$
 \lambda_\text{space} \bm\theta\ts \textbf{I}_L \otimes \textbf{S}_\text{space} \bm\theta + \lambda_\text{year} \bm\theta\ts \textbf{S}_\text{year} \otimes \textbf{I}_R  \bm\theta,
 $$
 where, once again, the vector $\bm\theta$ contains the tensor product smooth parameters. The $\lambda$ are smoothing parameters controlling the trade-off between model fit and model smoothness. The next section shows how $f_\text{space}$ and $\textbf{S}_\text{space}$ can be constructed.   
+
+This expression gives the tensor product penalty in the most general terms. However, in order to have an expression which can be later related to the soap film smoother, we re-express the penalty as:
+$$
+\bm\theta\ts \textbf{I}_L \otimes \textbf{S}^*_\text{space} \bm\theta + \bm\theta\ts \textbf{S}^*_\text{year} \otimes \textbf{I}_R  \bm\theta,
+$$
+where $\textbf{S}^*_\text{space}=\lambda_\text{space} \textbf{S}_\text{space}$ and $\textbf{S}^*_\text{year}=\lambda_\text{year} \textbf{S}_\text{year}$.
 
 
 \subsubsection{Soap film \label{SF}}
@@ -274,9 +280,9 @@ The soap film smoother (Wood, Bravington and Hedley 2008) uses a rather simple p
 
 In order to perform soap film smoothing, we must first construct two sets of basis functions to form a smoother that conforms to the necessary boundary conditions. The first basis is used for the smoothing within the region of interest ($\Omega$); the second is for finding the values on the boundary (i.e., smoothing on $B$ itself). These bases are then summed to form
 \beq
-f_\text{space}(\texttt{n},\texttt{e})=\sum_{j=1}^J \alpha_j a_j(\texttt{n},\texttt{e}),+\sum_{k=1}^n \gamma_k g_k(\texttt{n},\texttt{e}),
+f_\text{space}(\texttt{n},\texttt{e})=\sum_{j=1}^J \alpha_j a_j(\texttt{n},\texttt{e}) + \sum_{k=1}^K \gamma_k g_k(\texttt{n},\texttt{e}),
 \eeq
-where the $\gamma_k$ and $\alpha_j$ are the parameters to be estimated. One can think of the $a_j(\texttt{n},\texttt{e})$ as an offset dictated by the estimated boundary conditions on $B$ (although it is important to note, they are not planes) and the sum of the $g_k(\texttt{n},\texttt{e})$ as the smooth to the data inside $\Omega$. We now show how these bases are constructed.
+where the $\gamma_k$ and $\alpha_j$ are the parameters to be estimated. One can think of the $a_j(\texttt{n},\texttt{e})$ as an offset dictated by the estimated boundary conditions on $B$ (although it is important to note, they are not planes) and the sum of the $g_k(\texttt{n},\texttt{e})$ as the smooth to the data inside $\Omega$. For convenience later, we label the second sum as $f_\text{int}$. We now show how these bases are constructed.
 
 For the internal part of the smooth we first find a set of functions $\rho_k(\texttt{n},\texttt{e})$, which are each solutions to the Laplace equation in two dimensions
 \beq
@@ -287,7 +293,7 @@ except at one of the knots ($\texttt{n}^*_k,\texttt{e}^*_k$). Then, we solve Poi
 \frac{\partial^2 g_k}{\partial \texttt{n}^2} + \frac{\partial^2 g_k}{\partial \texttt{e}^2} = \rho_k(\texttt{n},\texttt{e})
 \label{soap-poisson}
 \eeq
-for $k$ indexing the $n$ knots. When the boundary condition $\rho_k(\texttt{n},\texttt{e})=0$ is applied, the set of basis functions for the soap film smoother, $g_k(\texttt{n},\texttt{e})$ is found.  The PDEs are solved numerically using successive overrelaxation (see the appendix of Wood, Bravington and Hedley 2008 for further details).
+for $k$ indexing the $K$ knots. When the boundary condition $\rho_k(\texttt{n},\texttt{e})=0$ is applied, the set of basis functions for the soap film smoother, $g_k(\texttt{n},\texttt{e})$ is found.  The PDEs are solved numerically using successive overrelaxation (see the appendix of Wood, Bravington and Hedley 2008 for further details).
 
 To find the boundary basis we first take a a `boundary function', $f_\text{bnd}(r)$, using cyclic splines. The function evaluates the height of the function at each point around the boundary. $f_\text{bnd}(r)$ will have the expansion
 \beq
@@ -300,50 +306,44 @@ We have now found the set of basis functions for the inside of the domain and al
 
 As with the basis, the penalty is split into two parts: one for the cyclic smooth around the boundary and one for the internal smooth. Writing $\bm\beta$ as the vector of all smooth coefficients for the soap film, $\bm\gamma$ for the boundary smooth parameters and $\bm\alpha$ for the interior, we have
 $$
-\bm\beta^\text{T}\textbf{S}_\text{space}\bm{\beta} = \lambda_\text{bnd} \bm\gamma^\text{T}\textbf{S}_\text{bnd}\bm{\gamma} + \lambda_\text{int} \bm{\alpha}^\text{T}\textbf{S}_\text{int}\bm{\alpha},
+\bm\beta^\text{T}\textbf{S}^*_\text{space}\bm{\beta} = \lambda_\text{bnd} \bm\gamma^\text{T}\textbf{S}_\text{bnd}\bm{\gamma} + \lambda_\text{int} \bm{\alpha}^\text{T}\textbf{S}_\text{int}\bm{\alpha},
 $$
 where 
 $$
-\textbf{S}_\text{space} = \lambda_\text{bnd} \textbf{S}_\text{bnd} + \lambda_\text{int} \textbf{S}_\text{int}.
+\textbf{S}^*_\text{space} = \lambda_\text{bnd} \textbf{S}_\text{bnd} + \lambda_\text{int} \textbf{S}_\text{int}.
 $$
-$\textbf{S}_\text{space}$ is the total penalty for the spatial part of the smooth, $\textbf{S}_\text{int}$ is the interior penalty and $\textbf{S}_\text{bnd}$ is the cyclic spline boundary penalty. The $\lambda$ are the smoothing parameters for the boundary and interior smooths respectively. We now look at the two parts of the penalty individually. Letting,
-$$
-f_\text{int}=\sum_{k=1}^n \gamma_k g_k(\texttt{n},\texttt{e}),
-$$
-the isotropic interior penalty term is calculated as
+$\textbf{S}^*_\text{space}$ is the total penalty for the spatial part of the smooth, $\textbf{S}_\text{int}$ is the interior penalty and $\textbf{S}_\text{bnd}$ is the cyclic spline boundary penalty. Both are matrices of known coefficients depending on the chosen basis functions. The $\lambda$ are the smoothing parameters for the boundary and interior smooths respectively. As in the previous section, an asterisk indicates that the penalty matrices have been multiplied by the appropriate smoothing parameters, this is done for mathematical el. We now look at the two parts of the penalty individually. 
+
+The isotropic interior penalty term is calculated as
 $$
 \textbf{S}_\text{int} = \int_\Omega \Big(\frac{\partial^2 f_\text{int}}{\partial \texttt{n}^2}+\frac{\partial^2 f_\text{int}}{\partial \texttt{e}^2} 
 \Big)^2\text{d}\texttt{n}\text{d}\texttt{e},
 $$
-Note that the integration occurs only over $\Omega$, rather than over the whole of $\mathbb{R}^n$ as would usually be the case. Also, there is no mixed derivative term, and the whole integrand is squared rather than each term individually (in contrast with, say, a thin plate spline, see Wood (2003)). This allows the $\texttt{n}$ and $\texttt{e}$ term's derivatives to be traded off against each other so the nullspace of the penalty is infinite dimensional. This allows those functions in the nullspace to be sufficiently wiggly to meet any boundary conditions. The penalty for the cyclic spline running about the boundary, used to calculate the $\alpha_j$ is calculated as
+Note that the integration occurs only over $\Omega$, rather than over the whole of $\mathbb{R}^n$ as would usually be the case. Also, there is no mixed derivative term, and the whole integrand is squared rather than each term individually (in contrast with, say, a thin plate spline, see Wood (2003)). This allows the $\texttt{n}$ and $\texttt{e}$ term's derivatives to be traded off against each other so the nullspace of the penalty is infinite dimensional. This allows those functions in the nullspace to be sufficiently wiggly to meet any boundary conditions. 
+
+The penalty for the cyclic spline running about the boundary, used to calculate the $\alpha_j$ is calculated as
 \beq
 \textbf{S}_\text{bnd} = \int_B \Big(\frac{\partial^2 f_\text{bnd}}{\partial r^2}\Big)^2 \text{d}r.
 \eeq
+See Wood (2006) for further details.
 
-The solution of the PDEs above, yielding the basis and penalty, is the most computationally expensive part of the procedure. Knots to use for $\texttt{n}_k^*$ and $\texttt{e}_k^*$ must be specified, here we use a grid (further detail on our exact setup is given below). In summary, we now have both the basis functions $\textbf{A}_{ij}=a_j(\texttt{n}_i,\texttt{e}_i)$ and $\mathbf{G}_{ij}=g_j(\texttt{n}_i,\texttt{e}_i)$, and the penalties $\textbf{S}_\text{bnd}$ and $\textbf{S}_\text{int}$, forming $\textbf{S}_\text{space}$, for the soap film smoother. Suppose the response variable was assumed to be normally distributed, then we would have the following objective function:
-\beq
-\| \texttt{irf}_{it} -\textbf{A}\bm{\alpha}-\textbf{G}\bm{\gamma}\|^2 + \lambda_\text{bnd}\bm{\alpha}^\text{T}\textbf{S}_\text{bnd}\bm{\alpha}+ \lambda_\text{int}\bm{\gamma}^\text{T}\textbf{S}_\text{int}\bm{\gamma},
-\eeq
-to minimise with respect to $\bm{\gamma}$ and $\bm{\alpha}$ for the spatial part of the smooth.
-
+The solution of the PDEs above, yielding the basis and penalty, is the most computationally expensive part of the procedure. Knots to use for $\texttt{n}_k^*$ and $\texttt{e}_k^*$ must be specified, here we use a grid (further detail on our exact setup is given below). In summary, we now have both the basis functions $a_j(\texttt{n}_i,\texttt{e}_i)$ and $g_j(\texttt{n}_i,\texttt{e}_i)$, and the penalties $\textbf{S}_\text{bnd}$ and $\textbf{S}_\text{int}$, forming $\textbf{S}^*_\text{space}$, for the soap film smoother. 
 
 \subsection{Parameter estimation \label{PE}}
 
 In model (\ref{PropM}), replacing $f$ with its tensor product expression yields a generalized linear model (McCullagh and Nelder, 1989) whose design matrix contains the spline bases representing the smooth component in the model. In principle such a model can simply be estimated by maximum likelihood (ML). However, in a smoothing spline context, unpenalized parameter estimation is likely to result in smooth component estimates that are too `wiggly', hence undermining the utility of such a model. This can be overcome by penalized ML, where the use of penalties allows for the suppression of that part of smooth term complexity which has no support from the data (e.g., Marra and Radice 2010). Specifically, the model can be fitted by minimization of
 \beq
-D(\bm\theta) + \bm\theta\ts\textbf{S}\bm\theta \ \  \text{w.r.t.} \ \  \bm\theta,
+D(\bm\theta) + \bm\theta\ts\textbf{S}^*\bm\theta \ \  \text{w.r.t.} \ \  \bm\theta,
 \label{Dev}
 \eeq
-where $\bm\theta$ contains all tensor product smooth parameters associated with the one-dimensional spline basis for time and two-dimensional smooth for space, and $\textbf{S}=\sum_i \lambda_i \textbf{S}_i$, where the $\textbf{S}_i$ are matrices of known coefficients properly defined according to the results of the previous sections with associated smoothing parameters $\lambda_i$. The model deviance, $D$, is defined as $2\phi(l_{\text{sat}}-l)$, where $\phi$ is a dispersion parameter, $l$ is the log-likelihood of the model and $l_{\text{sat}}$ the maximum value for the log-likelihood of the model with one parameter per datum. 
-
-{\bf So, I know I'm being a pain in the arse here, but can we name the hat matrix something other than $\bm{A}$? Since we already have it as the matrix of the boundary smooth bases, $\bm{F}$ seems like a good option...}
+where $\bm\theta$ contains all tensor product smooth parameters associated with the one-dimensional spline basis for time and two-dimensional smooth for space, and $\textbf{S}^*=\sum_i \lambda_i \textbf{S}_i$, where the $\textbf{S}_i$ are matrices of known coefficients properly defined according to the results of the previous sections with associated smoothing parameters $\lambda_i$. The model deviance, $D$, is defined as $2\phi(l_{\text{sat}}-l)$, where $\phi$ is a dispersion parameter, $l$ is the log-likelihood of the model and $l_{\text{sat}}$ the maximum value for the log-likelihood of the model with one parameter per datum. 
 
 Given values for the $\lambda_i$, minimization of (\ref{Dev}) is straightforward. However, smoothing parameter estimation has to be addressed. This can be achieved by minimization of a prediction error estimate, such as the generalized cross-validation (GCV) (Craven and Wahba 1979), or by approximate restricted ML (REML) estimation (Wood 2010). Smoothing parameter selection via the GCV consists of minimizing 
 \beq
-V(\bm\lambda)=\frac{nD(\hat{\bm\theta})}{\left\{n-\text{tr}(\textbf{A})\right\}^2},
+V(\bm\lambda)=\frac{nD(\hat{\bm\theta})}{\left\{n-\text{tr}(\textbf{F})\right\}^2},
 \label{GCV1}
 \eeq
-where $\textbf{A}$ is the usual hat matrix, and $\text{tr}(\textbf{A})$ represents the effective degrees of freedom (edf) or number of estimated parameters of the penalized model. Wood (2006) described a computational procedure to estimate smoothing parameters on the basis of criterion (\ref{GCV1}). As an alternative, approximate REML can be employed. Within this framework, the penalized likelihood estimates, $\hat{\bm\theta}$, can be seen as the posterior modes of the distribution of $\bm\theta|{\bf y}$ if $\bm\theta \sim N(\textbf{0},\textbf{S}^{-1})$, where $\textbf{S}^{-1}$ is an appropriate generalized inverse. Viewing the spline parameters as random effects allows for the possibility to estimate the $\lambda_i$ via REML (Wahba 1985). The recent work by Reiss and Ogden (2009) shows that at finite sample sizes GCV is prone to undersmoothing and is more likely to develop multiple minima than REML. Therefore, we employ REML given its practical advantages for smoothing parameter selection. We use the \texttt{gam()} function of the \texttt{R} package \texttt{mgcv} since approximate REML optimization for GAMs is reliably and efficiently implemented (Wood 2010). During the model fitting process, a common shape parameter is assumed for all gamma distributions across all years (preliminary descriptive analysis suggested that this is the case).
+where $\textbf{F}$ is the usual hat matrix, and $\text{tr}(\textbf{F})$ represents the effective degrees of freedom (edf) or number of estimated parameters of the penalized model. Wood (2006) described a computational procedure to estimate smoothing parameters on the basis of criterion (\ref{GCV1}). As an alternative, approximate REML can be employed. Within this framework, the penalized likelihood estimates, $\hat{\bm\theta}$, can be seen as the posterior modes of the distribution of $\bm\theta|{\bf y}$ if $\bm\theta \sim N(\textbf{0},(\textbf{S}^*)^{-1})$, where ($\textbf{S}^*)^{-1}$ is an appropriate generalized inverse. Viewing the spline parameters as random effects allows for the possibility to estimate the $\lambda_i$ via REML (Wahba 1985). The recent work by Reiss and Ogden (2009) shows that at finite sample sizes GCV is prone to undersmoothing and is more likely to develop multiple minima than REML. Therefore, we employ REML given its practical advantages for smoothing parameter selection. We use the \texttt{gam()} function of the \texttt{R} package \texttt{mgcv} since approximate REML optimization for GAMs is reliably and efficiently implemented (Wood 2010). During the model fitting process, a common shape parameter is assumed for all gamma distributions across all years (preliminary descriptive analysis suggested that this is the case).
 
 Given the dimension of the dataset used here, we experienced some memory issues which could not be rectified. This was eventually dealt with by trying to find a compromise between tensor product basis dimension and dataset reduction. The final model was fitted on data obtained by averaging over a $150\times150$ grid for all years. The basis sizes (for the cubic regression splines and cyclic splines) and interior knots (for the soap film) are given in Table \ref{soap-basis-table}.
 
@@ -368,12 +368,12 @@ The spatiotemporal structure of model (\ref{PropM}) and the lack of availability
 
 \subsection{Variance estimation \label{VE}}
 
-Confidence intervals can be effectively constructed using the well known Bayesian credible intervals originally proposed by Wahba (1983) or Silverman (1985) in the univariate spline model context, and then generalized to the component-wise case when dealing with Gaussian and non-Gaussian data (e.g., Gu 2002; Gu and Wahba 1993; Ruppert, Wand, and Carroll 2003). The Bayesian model representation provides a self-consistent framework for constructing intervals since the posterior distribution of the model parameters is known. Also, because these intervals include both a bias and a variance component (Nychka 1988), they have good observed \textit{frequentist} coverage probabilities across the function as shown, for example, in the simulation experiments of Wang and Wahba (1995). The posterior distribution is given as
+Taking a Bayesian view we can construct intervals using the posterior distribution of the model parameters. This approach was originally proposed by Wahba (1983) or Silverman (1985) in the univariate spline model context, and then generalized to the component-wise case when dealing with Gaussian and non-Gaussian data (e.g., Gu 2002; Gu and Wahba 1993; Ruppert, Wand, and Carroll 2003). The features of these intervals which are interesting here are that they include both a bias and a variance component (Nychka 1988), they have good observed \textit{frequentist} coverage probabilities across the function as shown, for example, in the simulation experiments of Wang and Wahba (1995). The posterior distribution is given as
 \beq
 \bm\theta|{\bf y} \dot{\backsim} N( \hat{\bm\theta}, {\bf V}_{\bm\theta} ),
 \label{Poster}
 \eeq
-where $\hat{\bm\theta}$ is the maximum penalized likelihood estimate of $\bm\theta$ obtained as explained in the previous section, which is of the form $(\X\ts{\bf W}\X+{\bf S})^{-1}\X\ts{\bf W}{\bf z}$. ${\bf V}_{\bm\theta} = (\X\ts{\bf W}\X+{\bf S})^{-1}\phi$, $\X$ contains the columns associated with the regression spline bases used to set up the model, and ${\bf W}$ and $\mathbf{z}$ are the diagonal weight matrix and the pseudodata vector at convergence of the algorithm used to fit the penalized model (e.g., Wood 2006, 2010).
+where $\hat{\bm\theta}$ is the maximum penalized likelihood estimate of $\bm\theta$ obtained as explained in the previous section, which is of the form $(\X\ts{\bf W}\X+{\bf S}^*)^{-1}\X\ts{\bf W}{\bf z}$. ${\bf V}_{\bm\theta} = (\X\ts{\bf W}\X+{\bf S}^*)^{-1}\phi$, $\X$ contains the columns associated with the regression spline bases used to set up the model, and ${\bf W}$ and $\mathbf{z}$ are the diagonal weight matrix and the pseudodata vector at convergence of the algorithm used to fit the penalized model (e.g., Wood 2006, 2010).
 
 Given the result above, it is easy to find confidence intervals for linear functions of the parameters such as smooth components. Intervals for non-linear functions of the model coefficients can be efficiently obtained by simulation from the posterior distribution of $\bm\theta$. Result (\ref{Poster}) can also be used to produce trend estimates as discussed in the next section.
 
