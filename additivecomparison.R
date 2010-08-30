@@ -25,6 +25,22 @@ av.dat$year<-as.numeric(av.dat$year)
 #av.dat$share_100<-av.dat$share_100+1e-15
 av.dat$share_100<-av.dat$share_100+1e-5
 
+load("REMLfull.RData")
+
+cat("########### soap ##############\n")
+cat("Italy AIC=",AIC(it.soap),"\n")
+cat("Sardinia AIC=",AIC(sa.soap),"\n")
+cat("Sicily AIC=",AIC(sc.soap),"\n")
+
+
+cat("Italy BIC=",AIC(it.soap),"\n")
+cat("Sardinia BIC=",AIC(sa.soap),"\n")
+cat("Sicily BIC=",AIC(sc.soap),"\n")
+
+
+
+
+
 
 ########################
 # Italy
@@ -41,9 +57,9 @@ onoff<-inSide(it,av.dat$x,av.dat$y)
 
 av.dat.it<-pe(av.dat,onoff)
 
-it.soap<- gam(share_100~
-   te(x,y,year,bs=c("sf","cr"),k=c(50,20),d=c(2,1),xt=list(list(bnd=list(it)),NULL))+
-   te(x,y,year,bs=c("sw","cr"),k=c(50,20),d=c(2,1),xt=list(list(bnd=list(it)),NULL))
+it.ad<- gam(share_100~
+   s(x,y,bs="so",k=50,xt=list(bnd=list(it)))+
+   s(year,bs="cr",k=4,xt=list(bnd=list(it)))
             ,knots=soap.knots,data=av.dat.it,family=Gamma(link="log"),method="REML")
 ##########################
 
@@ -65,8 +81,8 @@ onoff<-inSide(sa,av.dat$x,av.dat$y)
 av.dat.sa<-pe(av.dat,onoff)
 
 sa.soap<- gam(share_100~
-   te(x,y,year,bs=c("sf","cr"),k=c(20,4),d=c(2,1),xt=list(list(bnd=list(sa)),NULL))+
-   te(x,y,year,bs=c("sw","cr"),k=c(20,4),d=c(2,1),xt=list(list(bnd=list(sa)),NULL))
+   s(x,y,bs="so",k=20,xt=list(bnd=list(sa)))+
+   s(year,bs="cr",k=4,xt=list(bnd=list(sa)))
             ,knots=soap.knots,data=av.dat.sa,family=Gamma(link="log"),method="REML")
 ##########################
 
@@ -88,86 +104,26 @@ onoff<-inSide(sc,av.dat$x,av.dat$y)
 av.dat.sc<-pe(av.dat,onoff)
 
 sc.soap<- gam(share_100~
-   te(x,y,year,bs=c("sf","cr"),k=c(20,4),d=c(2,1),xt=list(list(bnd=list(sc)),NULL))+
-   te(x,y,year,bs=c("sw","cr"),k=c(20,4),d=c(2,1),xt=list(list(bnd=list(sc)),NULL))
+   s(x,y,bs="so",k=20,xt=list(bnd=list(sc)))+
+   s(year,bs="cr",k=4,xt=list(bnd=list(sc)))
             ,knots=soap.knots,data=av.dat.sc,family=Gamma(link="log"),method="REML")
 ##########################
 
+# calculate AIC/BIC
+
+cat("########### additive ##############\n")
+cat("Italy AIC=",AIC(it.ad),"\n")
+cat("Sardinia AIC=",AIC(sa.ad),"\n")
+cat("Sicily AIC=",AIC(sc.ad),"\n")
 
 
-########################
-# now make the image plot
-
-# options
-grid.res<-100
-years<-as.numeric(levels(as.factor(av.dat$year)))
-
-# setup the prediction grid
-itmat<-matrix(c(av.dat$x,av.dat$y),length(av.dat$x),2)
-it.asc<-ascgen(itmat,nrcol=grid.res)
-
-# now extract the grid
-gridcuts<-attr(it.asc,"dimnames")
-gridcuts$x<-gsub("\\(","",gridcuts$x)
-gridcuts$x<-gsub("\\]","",gridcuts$x)
-gridcuts$y<-gsub("\\(","",gridcuts$y)
-gridcuts$y<-gsub("\\]","",gridcuts$y)
-
-gridcuts$x<-t(matrix(as.numeric(unlist(strsplit(gridcuts$x,",",extended=TRUE)),2,grid.res),2,grid.res))
-gridcuts$y<-t(matrix(as.numeric(unlist(strsplit(gridcuts$y,",",extended=TRUE)),2,grid.res),2,grid.res))
-
-x.start<-gridcuts$x[,1]
-x.stop <-gridcuts$x[,2]
-y.start<-gridcuts$y[,1]
-y.stop <-gridcuts$y[,2]
-
-xm<-(x.start+x.stop)/2
-yn<-(y.start+y.stop)/2
-xx <- rep(xm,grid.res)
-yy<-rep(yn,rep(grid.res,grid.res))
-
-pred.grid<-list(x=xx,y=yy,year=rep(2003,length(xx)))
-
-im.mat<-matrix(NA,grid.res,grid.res)
-
-par(mfrow=c(2,3),mar=c(4.5,4.5,2,2))
-
-for (year in years){
-
-   pred.grid<-list(x=xx,y=yy,year=rep(year,length(xx)))
-
-   im.it<-im.mat
-
-   # sardinia
-   z<-predict(sa.soap,pred.grid,type="response")
-   im.it[inSide(sa,xx,yy)]<-z[!is.na(z)]
-
-   # sicily
-   z<-predict(sc.soap,pred.grid,type="response")
-   im.it[inSide(sc,xx,yy)]<-z[!is.na(z)]
-
-   # italy
-   z<-predict(it.soap,pred.grid,type="response")
-   im.it[inSide(it,xx,yy)]<-z[!is.na(z)]
+cat("Italy BIC=",AIC(it.ad),"\n")
+cat("Sardinia BIC=",AIC(sa.ad),"\n")
+cat("Sicily BIC=",AIC(sc.ad),"\n")
 
 
-   im.it<-im.it[1:(grid.res-sum(x.start>620)),]
-   xs<-xm[1:(grid.res-sum(x.start>620))]
-   ys<-yn
-   
-   xlim<-c(xs[1]-25,xs[length(xs)])
-   ylim<-c(ys[1]-25,ys[length(ys)]+25)
-   zlim<-c(0,12)
 
-   image(z=im.it,x=xs,y=ys,
-         col=heat.colors(100),xlab="km (e)",ylab="km (n)",
-         main=year,asp=1,cex.main=1.4,
-         cex.lab=1.4,cex.axis=1.3,xlim=xlim,ylim=ylim,zlim=zlim)
 
-   contour(xs,ys,im.it,levels=seq(zlim[1],zlim[2],by=1),col="blue",add=TRUE)
 
-   lines(it,lwd=2)
-   lines(sa,lwd=2)
-   lines(sc,lwd=2)
 
-}
+
