@@ -1,0 +1,20 @@
+results from running the additive and interaction models in 
+terms of AIC/BIC...
+
+
+########### soap ##############
+Italy AIC= 37096.81 
+Sardinia AIC= -2184.612 
+Sicily AIC= -999.458 
+Italy BIC= 38144.14 
+Sardinia BIC= -2096.097 
+Sicily BIC= -806.4174 
+########### additive ##############
+Italy AIC= 36942.16 
+Sardinia AIC= -2370.593 
+Sicily AIC= -1055.32 
+Italy BIC= 37679.37 
+Sardinia BIC= -1849.858 
+Sicily BIC= -794.1708 
+
+

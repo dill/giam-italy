@@ -33,9 +33,9 @@ cat("Sardinia AIC=",AIC(sa.soap),"\n")
 cat("Sicily AIC=",AIC(sc.soap),"\n")
 
 
-cat("Italy BIC=",AIC(it.soap),"\n")
-cat("Sardinia BIC=",AIC(sa.soap),"\n")
-cat("Sicily BIC=",AIC(sc.soap),"\n")
+cat("Italy BIC=",AIC(it.soap,k=log(length(av.dat$year))),"\n")
+cat("Sardinia BIC=",AIC(sa.soap,k=log(length(av.dat$year))),"\n")
+cat("Sicily BIC=",AIC(sc.soap,k=log(length(av.dat$year))),"\n")
 
 
 
@@ -80,7 +80,7 @@ onoff<-inSide(sa,av.dat$x,av.dat$y)
 
 av.dat.sa<-pe(av.dat,onoff)
 
-sa.soap<- gam(share_100~
+sa.ad<- gam(share_100~
    s(x,y,bs="so",k=20,xt=list(bnd=list(sa)))+
    s(year,bs="cr",k=4,xt=list(bnd=list(sa)))
             ,knots=soap.knots,data=av.dat.sa,family=Gamma(link="log"),method="REML")
@@ -103,7 +103,7 @@ onoff<-inSide(sc,av.dat$x,av.dat$y)
 
 av.dat.sc<-pe(av.dat,onoff)
 
-sc.soap<- gam(share_100~
+sc.ad<- gam(share_100~
    s(x,y,bs="so",k=20,xt=list(bnd=list(sc)))+
    s(year,bs="cr",k=4,xt=list(bnd=list(sc)))
             ,knots=soap.knots,data=av.dat.sc,family=Gamma(link="log"),method="REML")
@@ -117,9 +117,9 @@ cat("Sardinia AIC=",AIC(sa.ad),"\n")
 cat("Sicily AIC=",AIC(sc.ad),"\n")
 
 
-cat("Italy BIC=",AIC(it.ad),"\n")
-cat("Sardinia BIC=",AIC(sa.ad),"\n")
-cat("Sicily BIC=",AIC(sc.ad),"\n")
+cat("Italy BIC=",AIC(it.ad,k=log(length(av.dat$year))),"\n")
+cat("Sardinia BIC=",AIC(sa.ad,k=log(length(av.dat$year))),"\n")
+cat("Sicily BIC=",AIC(sc.ad,k=log(length(av.dat$year))),"\n")
 
 
 
