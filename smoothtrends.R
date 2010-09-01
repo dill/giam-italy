@@ -1,105 +1,110 @@
 # do the temporal trends plot...
-
 # but this time make it smooth...
 
-
-set.seed(1)
 
 library(mgcv)
 library(soap)
 library(mvtnorm)
+require(splines)
 
 # model stuff first...
 load("REMLfull.RData")
 
-######################################
+# load the trend data...
+load("trend.RData")
 
-# trends stuff from here down...
 
-# options for mvnorm
-sig.lev <- 0.05
-n.rep   <- 1000
-s.meth  <- "svd"
+######### put the Sardinia and Sicily stuff in
 
-b<-it.soap
-# Nb - number of times we generate
-Nb<-1
+# Sardinia
+set.seed(1)
 
-# temporal resolution
-n.years<-10
-years<-seq(2003,2008,len=n.years)
+year[[1]]<-av.dat.sa$year==2003
+year[[2]]<-av.dat.sa$year==2004
+year[[3]]<-av.dat.sa$year==2005
+year[[4]]<-av.dat.sa$year==2006
+year[[5]]<-av.dat.sa$year==2007
+year[[6]]<-av.dat.sa$year==2008
 
-onoff<-inSide(it,pred.grid$x,pred.grid$y)
-
-# prediction grid
-pred.grid<-data.frame(x=rep(pred.grid$x[onoff],n.years),
-                      y=rep(pred.grid$y[onoff],n.years),
-                      year=years[rep(1:n.years,length(pred.grid$y[onoff]))]
-                     )
-
-# create the indicators
-north <-(pred.grid$y > -20)
-centre<-(pred.grid$y < -20 & pred.grid$y > -300)
-south <-(pred.grid$y < -300)
-
-# results matrix
-RES<-list(all=matrix(NA,n.years,Nb),
-          north=matrix(NA,n.years,Nb),
-          centre=matrix(NA,n.years,Nb),
-          south=matrix(NA,n.years,Nb))
-
+b<-sa.soap
+# extract the model matrix
+Xb<-model.matrix(b)
 
 for( i in 1:Nb){
    # simulate \theta_b
    bs  <- rmvnorm(1, mean = b$coeff, sigma=b$Vp, method=s.meth)
-   
-   # insert the coefficicents into the object
-   b$coefficients<-as.vector(bs)
-   # do the prediction
-   pred<-predict(b,pred.grid,type="response")
-   #ex<-matrix(pred,n.years,length(pred.grid$year)/n.years)
-   #ex<-matrix(pred,length(pred.grid$year)/n.years,n.years)
+   # calculate the expected value
+   ex<-exp(Xb%*%t(bs))
 
+   for(j in 1:6){
+      # full
+      RES[j,i]<-mean(c(RES[j,i],ex[year[[j]],]))
+      # south
+      RES[j+18,i]<-mean(c(RES[j+18,i],ex[year[[j]],]))
+   }
+}
 
-   # do something smarter here, no matrix?
+# Sicily
+set.seed(1)
 
-   #RES$all[,i]<-colMeans(ex)
-   #RES$north[,i]<-colMeans(ex[north,])
-   #RES$centre[,i]<-colMeans(ex[centre,])
-   #RES$south[,i]<-colMeans(ex[south,])
-   RES$all[,i]<-pred
-   RES$north[,i]<-pred[north]
-   RES$centre[,i]<-pred[centre]
-   RES$south[,i]<-pred[south]
+year[[1]]<-av.dat.sc$year==2003
+year[[2]]<-av.dat.sc$year==2004
+year[[3]]<-av.dat.sc$year==2005
+year[[4]]<-av.dat.sc$year==2006
+year[[5]]<-av.dat.sc$year==2007
+year[[6]]<-av.dat.sc$year==2008
+
+b<-sc.soap
+# extract the model matrix
+Xb<-model.matrix(b)
+
+for( i in 1:Nb){
+   # simulate \theta_b
+   bs  <- rmvnorm(1, mean = b$coeff, sigma=b$Vp, method=s.meth)
+   # calculate the expected value
+   ex<-exp(Xb%*%t(bs))
+
+   for(j in 1:6){
+      # full
+      RES[j,i]<-mean(c(RES[j,i],ex[year[[j]],]))
+      # south
+      RES[j+18,i]<-mean(c(RES[j+18,i],ex[year[[j]],]))
+   }
 }
 
 
-pdf(file="trends.pdf",width=4,height=4)
-par(mfrow=c(2,2))
 
 
-# all
-plot(apply(RES$all,1,median),type="l",x=years,
-     ylab="Incidence",xlab="Year",main="Mainland Italy",ylim=c(0,7))
-lines(apply(RES$all,1,quantile,sig.lev/2),lty=2,x=years)
-lines(apply(RES$all,1,quantile,1-sig.lev/2),lty=3,x=years)
+##############################################
 
-# north
-plot(apply(RES$north,1,median),type="l",x=years,
-     ylab="Incidence",xlab="Year",main="North",ylim=c(0,7))
-lines(apply(RES$north,1,quantile,sig.lev/2),lty=2,x=years)
-lines(apply(RES$north,1,quantile,1-sig.lev/2),lty=3,x=years)
+# plot stuff
+par(mfrow=c(2,2),las=1,mar=c(3.5,3,2,0.75),mgp=c(2,0.65,0))
 
-# centre
-plot(apply(RES$centre,1,median),type="l",x=years,
-     ylab="Incidence",xlab="Year",main="Centre",ylim=c(0,7))
-lines(apply(RES$centre,1,quantile,sig.lev/2),lty=2,x=years)
-lines(apply(RES$centre,1,quantile,1-sig.lev/2),lty=3,x=years)
+titles<-c("Mainland Italy","North","Centre","South")
 
-# south
-plot(apply(RES$south,1,median),type="l",x=years,
-     ylab="Incidence",xlab="Year",main="South",ylim=c(0,7))
-lines(apply(RES$south,1,quantile,sig.lev/2),lty=2,x=years)
-lines(apply(RES$south,1,quantile,1-sig.lev/2),lty=3,x=years)
+j<-1
 
-dev.off()
+for(i in c(0,6,12,18)){
+
+   # years
+   yy<-seq(2003,2008,1)
+
+   # smooth for median
+   med.line<-predict(interpSpline(yy,apply(RES[(1+i):(6+i),],1,median)))
+
+   # upper CI
+   u.line<-predict(interpSpline(yy,apply(RES[(1+i):(6+i),],1,quantile,sig.lev/2)))
+
+   # lower CI
+   l.line<-predict(interpSpline(yy,apply(RES[(1+i):(6+i),],1,quantile,1-sig.lev/2)))
+
+   plot(med.line$y,type="l",x=med.line$x,
+        ylab="Incidence",xlab="Year",main=titles[j],ylim=c(0,7))
+   lines(u.line$y,lty=2,x=u.line$x)
+   lines(l.line$y,lty=3,x=l.line$x)
+   j<-j+1
+}
+
+
+
+
