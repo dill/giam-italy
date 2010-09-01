@@ -35,7 +35,7 @@ b.sa<-sa.soap
 Xb.sa<-model.matrix(b.sa)
 
 # Nb - number of times we generate
-Nb<-1
+Nb<-200
 
 # create the indicators
 north <-(av.dat.it$y > -20)
@@ -69,9 +69,6 @@ sc.year[[3]]<-av.dat.sc$year==2005
 sc.year[[4]]<-av.dat.sc$year==2006
 sc.year[[5]]<-av.dat.sc$year==2007
 sc.year[[6]]<-av.dat.sc$year==2008
-
-
-
 
 # results matrix
 #RES<-matrix(NA,dim(Xb)[1],Nb)
@@ -110,18 +107,18 @@ for( i in 1:Nb){
 
 save.image(file="fulltrend.RData")
 
-par(mfrow=c(2,2),las=1,mar=c(3.5,3,2,0.75),mgp=c(2,0.65,0))
-
-titles<-c("Italy","North","Centre","South")
-
-j<-1
-
-for(i in c(0,6,12,18)){
-   plot(apply(RES[(1+i):(6+i),],1,median),type="l",x=seq(2003,2008,1),
-        ylab="Incidence",xlab="Year",main=titles[j],ylim=c(0,7))
-   lines(apply(RES[(1+i):(6+i),],1,quantile,sig.lev/2),lty=2,x=seq(2003,2008,1))
-   lines(apply(RES[(1+i):(6+i),],1,quantile,1-sig.lev/2),lty=3,x=seq(2003,2008,1))
-   j<-j+1
-}
+#par(mfrow=c(2,2),las=1,mar=c(3.5,3,2,0.75),mgp=c(2,0.65,0))
+#
+#titles<-c("Italy","North","Centre","South")
+#
+#j<-1
+#
+#for(i in c(0,6,12,18)){
+#   plot(apply(RES[(1+i):(6+i),],1,median),type="l",x=seq(2003,2008,1),
+#        ylab="Incidence",xlab="Year",main=titles[j],ylim=c(0,7))
+#   lines(apply(RES[(1+i):(6+i),],1,quantile,sig.lev/2),lty=2,x=seq(2003,2008,1))
+#   lines(apply(RES[(1+i):(6+i),],1,quantile,1-sig.lev/2),lty=3,x=seq(2003,2008,1))
+#   j<-j+1
+#}
 
 
