@@ -19,8 +19,8 @@ load("fulltrend.RData")
 
 # plot stuff
 
-postscript(file="trends.ps",height=4,width=6)
-par(mfrow=c(2,2),las=1,mar=c(3.5,3,2,0.75),mgp=c(2,0.65,0))
+postscript(file="trends.ps",height=5,width=7)
+par(mfrow=c(2,2),las=1,mar=c(3.5,3,2,0.75),mgp=c(2,0.65,0),cex=0.75,cex.lab=0.95)
 
 titles<-c("Italy","North","Centre","South")
 
