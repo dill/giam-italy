@@ -1,4 +1,4 @@
-\documentclass[10pt] {article}
+\documentclass[10pt]{article}
 %\documentclass[referee]{biom} 
 %\usepackage{epsf}
 %\usepackage{graphics}
@@ -26,7 +26,7 @@
 \usepackage{amsthm}
 \usepackage{amssymb}
 \usepackage{setspace}
-\usepackage{rotating}
+%\usepackage{rotating}
 %\usepackage{tabularx}
 %\usepackage{booktabs}
 
@@ -127,97 +127,61 @@
 
 \section{Introduction \label{IN}}
 
-Increased political interest ({\bf source?}), as well as academic interest has lead to a large amount of research into international migration, both theoretical and empirical, exploring its causes and consequences. Here our emphasis is to provide a tool for practitioners to provide spatial information for policy formulation. We first provide a review of previous work on the topic, before moving into the details of our proposal.
+Increased political interest as well as academic interest has lead to a large amount of research into international migration, both theoretical and empirical, exploring its causes and consequences (e.g., Drinkwater, Eade and Garapich 2009; Martin and Abimourched 2009; Rosenow 2009). Here, we first mention some previous studies, before motivating our work.
 
-Several theories of migration have been proposed, from both a macro- and microeconomic point of view, based on different schools of thought. Examples {\bf of migration theories} include the neoclassical economic theory (Borjas 1989; Massey et al. 1993), the assumptions regarding the new economics of migration (Stark and Bloom 1985; Massey et al. 1993), dual labor markets (Piore 1979; Massey et al. 1993) and world systems theory (Wallerstein 1974; Portes and Walton 1981; Morawska 1990; Hooghe et al. 2008). 
- %this sentence is generally awkward. When you say "examples include", "examples" could point to either "different schools of thought" or "migration theories". 
-
-In addition to theoretical work, many empirical studies have taken place. Examples include studies investigating: the impact of foreigners on the labour market of the host country (e.g., Borjas 1994, 2003, 2005; Borjas, Freeman and Katz 1996; Card 2005; Fullin and Reyneri 2010), underemployment (Slack and Jensen 2007), possible connections between immigration and nations' poverty rates (Raphael and Smolensky 2009), transfer of identity from the first to second generation immigrants (Casey and Dustmann 2010), difference in education, earnings and employment between first and second generation immigrants (Algan et al. 2010), problems relating to the integration of different cultures and languages (e.g., Lazer 1999; Contucci and Ghirlanda 2007), and the tendency for immigrants to live in ethnic ``enclaves'' (Edin, Fredriksson and Aslund 2003). 
+Several theories of migration have been proposed, from both a macro- and microeconomic point of view, based on different schools of thought. Among these are the neoclassical economic theory (Borjas 1989; Massey et al. 1993), the assumptions regarding the new economics of migration (Stark and Bloom 1985; Massey et al. 1993), dual labor markets (Piore 1979; Massey et al. 1993) and world systems theory (Wallerstein 1974; Portes and Walton 1981; Morawska 1990; Hooghe et al. 2008). In addition to theoretical work, many empirical studies have taken place. Examples include studies investigating: the impact of foreigners on the labour market of the host country (e.g., Borjas 1994, 2003, 2005; Borjas, Freeman and Katz 1996; Card 2005; Fullin and Reyneri 2010), underemployment (Slack and Jensen 2007), possible connections between immigration and nations' poverty rates (Raphael and Smolensky 2009), transfer of identity from the first to second generation immigrants (Casey and Dustmann 2010), difference in education, earnings and employment between first and second generation immigrants (Algan et al. 2010), problems relating to the integration of different cultures and languages (e.g., Lazer 1999; Contucci and Ghirlanda 2007), and the tendency for immigrants to live in ethnic ``enclaves'' (Edin, Fredriksson and Aslund 2003). 
   
-To the best of our knowledge no studies have attempted to model the spatiotemporal distribution of the incidence of resident foreigners in a country. The results of such an investigation complement previous findings, and should help to guide governmental policy. 
+To the best of our knowledge, no studies have attempted to model the spatiotemporal distribution of the incidence of resident foreign population in a country. The results of such an investigation complement previous findings, and should help to guide governmental policy. 
 
-In the special issue of \textit{The Economic Journal} dedicated to ``the integration of immigrants and its consequences'', Manning (2010) observes that many European countries are currently experiencing a significant ({\bf cite!})
- %would be best to provide a figure -- how are you defining "significant"? -- substantial?
- increase in immigrants in their populations. Here we consider the Italian case.
+In the special issue of \textit{The Economic Journal} dedicated to ``the integration of immigrants and its consequences'', Manning (2010) has pointed that, over recent years, many European countries have experienced an increase in the fraction of immigrants in the population. Here we consider the Italian case. According to the Italian National Statistical Office (ISTAT), between the 1991 and 2001 censuses, the incidence of resident foreigners in the total population increased from 0.6\% to 2.3\%. Over the period 2002--2008, the incidence increased from 2.7\% to 6.5\%. In particular, between 2002 and 2004 the increase was partly driven by new legislation (law no. 189/2002) dictating the regularisation process of previously illegal immigrants (Zincone 2002). However, even taking this policy change into account, these data are indicative of a substantial increase in the presence of resident foreigners which needs to be monitored. 
 
-Between the 1991 and 2001 censuses, the incidence of resident foreigners in the total population increased from 0.6\% to 2.3\%. According to the Italian National Statistical Office (ISTAT), over the period 2002\nobreakdash--2008, the incidence increased from 2.7\% to 6.5\%. In particular, between 2002 and 2004 the increase was partly driven by new legislation (law no. 189/2002) dictating the regularisation process of previously illegal immigrants (see Zincone (2002) for further details). However, even taking this policy change into account, these data are indicative of a recent increase in the presence of foreigners in Italy.
+This phenomenon has contributed to some socio-demographic changes. For instance, recent official statistics have highlighted a growing number of marriages between Italians and foreigners, from 10.5\% to 15.0\% between 2003 and 2008. Looking at the projections up to 2050 produced by ISTAT, the scenario shows a continuing increase in the number of resident foreigners (about 17\% of the total population by 2050), as is the case in many European countries (e.g., Alders, Keilman and Cruijsen 2007). At social level, it is of paramount importance to formulate adequate policies supporting the process of integration of resident foreigners in a host country. Immigrants' rights and integration policies are typically regulated by specific laws or rules. Such policies relate to a number of aspects including the access of resident foreigners to the public health service, admission to education, professional training, and organization of services addressing labor demand and supply issues (e.g., Zincone 2006). In the allocation of economic resources useful to support these policies at local level, policy-makers might be interested to know the spatial distribution of the resident foreigners in the country, for example, in terms of density respects to the total population, and the relative evolution over time. Here, our emphasis is to suggest a tool for practitioners to provide a spatiotemporal information in this regard. This because an area with a high density of resident foreigners is expected requires more resources than a low density area.
 
-This increase has lead to both socio-demographic and economic changes in Italy. For example, recent official statistics have highlighted an increase in marriage between Italians and foreigners; the number of entrepreneurs ({\bf source?}) with foreign citizenship has also increased ({\bf source?}). The projections up to 2050 produced by ISTAT suggest a continuing, substantial increase in numbers of resident foreigners (about 17\% of the total population by 2050), as is the case in many European countries (e.g., Alders, Keilman and Cruijsen 2007). 
-
-Given the increasing number of resident foreigners, it is of paramount importance to formulate adequate social policies which can support the process of integrating immigrants into their host country by, for example, promoting recognition and respect for different cultural identities. This contributes to ensuring community cohesion between foreign and native people, and thus avoids social unrest (e.g., Cheong et al. 2007; Van Der Veer 2003). ({\bf can't use a review that gives both sides to say that only one of those things will happen!})
-%this isn't a valid use of the references. you can't cite review articles about all of migration and say "oh god maybe something bad will happen" 
-Policy and law are typically key drivers in providing this. Immigrants' rights and integration policies typically relate to specific laws regarding public health and education (e.g., Zincone 2006). Taking a wider view, though, policies may also relate to professional training and the right to housing, as well as guidance and counselling on legal issues and administrative procedures. ({\bf source?})({\bf source?})({\bf source?}) When forming policy, knowledge of where experience should be drawn from, where pilot schemes should be run and where funding should be allocated is vital({\bf source?})({\bf source?}). The spatiotemporal maps produced using the proposed approach provide important insights  for practitioners.
-({\bf see comments below})
-%this paragraph is problematic for a couple of reasons. your argument seems to be "when you have more foreigners, making sure you have provision for foreigners becomes increasingly important, because people are racist and governments have to stop them from being racists." i mean, this is fine, but in this case it's basically just speculation based on the articles you cite. on top of this, there's compelling evidence that the key determinant of whether or not people are racists is the interaction they've had with minorities: if people know members of minorities (browns, gays, whatever) they're much less likely to hold negative opinions of their minority group as a whole -- this is really relevant in the case of migration, as when you have more minorities in a society people are more likely to interact with them, and so minimize social unrest: for an example, look at how the language around eastern european immigrants here moved from "oh god they're lazy and will take all our benefits" to "oh they're very good at plumbing"
-%so you should probably think about your theoretical argument here. the maths side of it is fine, but as an introduction to migration studies it's a bit flimsy.
-
-%\begin{figure}[htbp]
-%	\centering
-%		\includegraphics[width=0.41\textwidth, angle=270]{Figure1.eps}
-%	\caption{The graphs show the trend of resident foreigners in Italy during $2003-2008$ and in forecast for the period $2009-2050$, based on the official statistics and projections of ISTAT. The information is reported in terms of number (divided by 1000) and incidence of resident foreigners. Both variables are calculated at the end of December of each year, except for 2001 which is obtained from the population census (October $21^{th}$). The average, low and high scenarios are by the solid and dotted lines, respectively.}
-%	\label{fig1}
-%\end{figure}
-
-As a measure of density of the foreign population, we use the incidence of resident foreigners calculated as
+As a measure of density of the foreign population, we use
 \beq
-\% \ incidence \ of \ resident \ foreigners_j  = \frac{number \ of \ resident \ foreigners_j}{total \ resident \ population_j} \times 100
+\% \ incidence \ of \ resident \ foreigners_j  = \frac{number \ of \ resident \ foreigners_j}{total \ resident \ population_j} \times 100,
 \label{first.d1}
 \eeq
-where $j$ denotes a specific area such municipality, province, or region (e.g., De Bartolo 2007; Lowell 2007; Coleman 2008; Miguet 2008). This gives a simple, well-known, demographic indicator for comparing different regions of a country in terms of number of foreigners per 100 resident inhabitants. It can be thought of as indicative of the spatial distribution of foreigners and thus identify areas of the country with a greater or lesser presences of resident foreigners in the populations (e.g., OECD 2004). Spatiotemporal heterogeneity in the incidence may indicate that foreigners find particular areas more attractive at certain times.
+where $j$ denotes a specific area such municipality, province, or region (e.g., De Bartolo 2007; Lowell 2007; Coleman 2008; Miguet 2008). This gives a simple, well-known, demographic indicator for comparing different regions of a country in terms of number of foreigners per 100 resident inhabitants. It can be thought of as indicative of the spatial distribution of foreigners and thus identify areas of the country with a greater or lesser presences of resident foreigners in the populations (e.g., OECD 2004). In this regard, the tool suggested in this article has the aim to produce spatiotemporal maps to capture, in the space, the distribution of incidence of resident foreigners in the territory, and over time, changes of spatial trends. Spatial heterogeneity in the incidence suggests that foreigners find particular areas more attractive at certain times. The reasons may be connected to the economic features of the territory (e.g., in terms of employment, income, etc.), differences in housing prices or rents, for example, between a big city and a small town, to the morphology of the territory, etc. Massey et al. (1993) claim also that migration perpetuates migration via migrant networks which connect migrants and non-migrants in both origin and destination regions through interpersonal ties such as friendship, shared community origin or employment. To assess what draws foreigners to one particular area over another, it is useful to have some quantitative measure of the ``attractiveness'' of each area to foreigners. Here, we focus on economic and labour market factors, construct a composite indicator that we have named `Indicator of Spatial Economic Attractiveness (ISEA)' and produce spatiotemporal maps of the index. Three important variables constitute the composite indicator: (i) added value per capita at constante price (base year 2000), (ii) unemployment rate and (iii) employment rate. Since these are typically readily available, this composite indicator can be easily constructed for many countries. The results can be analyzed in the light of the spatiotemporal maps of the incidence of resident foreigners.
 
-Inhomogeneous spatial incidence may be explained by the economic prosperity of the area (in terms of employment or income) and abundance of affordable housing. Massey et al. (1993) claim that migration perpetuates migration via migrant networks which connect migrants and non-migrants in both origin and destination regions through interpersonal ties such as friendship, shared community origin or employment.
+The novel empirical analysis proposed in this article addresses those points discussed above. Our study uses  ISTAT data for Italy over the period 2003--2008. Since 2003, ISTAT has provided a public database with annual frequency of the number of resident foreigners at a municipal level. This new data represents the current maximum spatial and temporal detail available. Spatiotemporal modelling can be achieved via the use of splines which can perform smoothing over some bounded domain $\Omega\subseteq\mathbb{R}^2$, over time (e.g., Hastie and Tibshirani 1990; Ruppert, Wand, and Carroll 2003; Wood 2006). Here, the response (incidence of resident foreigners) is modelled as a smooth function of time and spatial coordinates. The model can then be used to create smooth maps of the geographical area of interest over time. Two points are noteworthy here. 
 
-To assess what draws foreigners to one particular area over another, it is useful to have some quantitative measure of the ``attractiveness'' of each area to foreigners. We focus on economic and labour market factors, construct a composite indicator that we have named Index of Spatial Economic Attractiveness (ISEA) and produce spatiotemporal maps of the index. Three important variables constitute the index: (i) added value per capita ({\bf source? how is it calculated? citation for calculate}), (ii) unemployment rate and (iii) employment rate. Since these are typically readily available, this composite indicator can be easily constructed for many countries. The results can be analyzed in the light of the spatiotemporal maps of the incidence of resident foreigners.
-
-The novel empirical analysis proposed in this article addresses those points discussed above. Our study uses  ISTAT data for Italy over the period 2003-2008. Since 2003, ISTAT has provided a public database with annual frequency of the number of resident foreigners at a municipal level. This new data represents the current maximum spatial and temporal detail available. Spatiotemporal modelling can be achieved via the use of splines which can perform smoothing over some bounded domain $\Omega\subseteq\mathbb{R}^2$, over time (e.g., Hastie and Tibshirani 1990; Ruppert, Wand, and Carroll 2003; Wood 2006). Here, the response (incidence of resident foreigners) is modelled as a smooth function of time and spatial coordinates. The model can then be used to create smooth maps of the geographical area of interest over time. Two points are noteworthy here. 
-
-First, when a geographical region has complex boundaries, as in many applied contexts, features from one part of the domain can unduly influence other parts giving rise to a phenomenon known as \textit{leakage} (e.g., Ramsay 2002). Leakage typically occurs when a smoother inappropriately links two parts of a domain causing the fitted surface to be mis-estimated, leading to incorrect inference (e.g., biased incidence estimates), which is clearly not desirable. This issue can be overcome if the smoother used can account for the structure of the domain that is under investigation; several solutions have been proposed (Ramsay 2002; Wood, Bravington and Hedley 2008). 
-
-Second, given that it is unlikely that the spatial trend of incidence of resident foreigners is additive in time,
-%why not?
-% as we shall see below
-% do soap+time fit, calculate AIC and BIC.
- the employed approach should account for a space-time interaction. These two goals can be jointly achieved by using a scale-invariant three-dimensional tensor product smoother combining a cubic regression spline basis function for time trend and a soap film spline basis for the spatial dimensions (Wood 2006; Wood, Bravington and Hedley 2008).
+First, when a geographical region has complex boundaries, as in many applied contexts, features from one part of the domain can unduly influence other parts giving rise to a phenomenon known as \textit{leakage} (e.g., Ramsay 2002). Leakage typically occurs when a smoother inappropriately links two parts of a domain causing the fitted surface to be mis-estimated, leading to incorrect inference (e.g., biased incidence estimates), which is clearly not desirable. This issue can be overcome if the smoother used can account for the structure of the domain that is under investigation; several solutions have been proposed (Ramsay 2002; Wood, Bravington and Hedley 2008). Second, given that it is unlikely that the spatial trend of incidence of resident foreigners is additive in time, the employed approach should account for a space-time interaction. These two goals can be jointly achieved by using a scale-invariant three-dimensional tensor product smoother combining a cubic regression spline basis function for time trend and a soap film spline basis for the spatial dimensions (Wood 2006; Wood, Bravington and Hedley 2008).
 
 The remainder of the article is organised as follows... [FILL IN]
 
 
 \section{Data \label{DAT}}
 
-\subsection{Overview \label{SDC}}
+\subsection{The structure and nature of the data on resident foreign population \label{SDC}}
 
-The entry of foreigners from some countries of the European Union (EU) into Italy is regulated by the Schengen agreements. These allow for the elimination of border controls, hence creating a common area of free movement among the state members (Broeders 2007).
- Foreigners from a non-EU country must possess a visa or the necessary documents (for further details see the official website of the Ministry of the Interior http://www.interno.it). 
+The entry of foreigners from some countries of the European Union (EU) into Italy is regulated by the Schengen agreements. These allow for the elimination of border controls, hence creating a common area of free movement among the state members (Broeders 2007). Foreigners from a non-EU country must possess a visa or the necessary documents (for further details see the official website of the Ministry of the Interior http://www.interno.it). 
  
-At this point, we must distinguish between those individuals considered to be the resident foreign population and those considered to be immigrants. The foreign population includes all people (born in Italy or abroad) who declare their citizenship to not be Italian. The immigrant population consists of all those born abroad who have declared to be foreigners or Italian by naturalisation (ie those who declare themselves to be a nationality other than Italian on the census). The foreigners born in Italy such as children born from foreign parents are excluded from immigrant population. The population census of 2001 showed that foreigners and immigrants constitute roughly the same group: about $81\%$ of immigrants have been identified by foreign citizenship, and $88\%$ of foreigners are immigrants (since they were born abroad).
+In studing a phenomenon linked to the international migration, it is need to distinguish between those individuals considered to be the resident foreign and those considered to be immigrants. The foreign population includes all people (born in Italy or abroad) who declare their citizenship to not be Italian. The immigrant population consists of all those born abroad who have declared to be foreigners or Italian by naturalisation (the later case refers to the acquisition of Italian citizenship). The foreigners born in Italy such as children born from foreign parents are excluded from immigrant population. The population census of 2001 showed that foreigners and immigrants constitute roughly the same group: about $81\%$ of immigrants have been identified by foreign citizenship, and $88\%$ of foreigners are immigrants (since they were born abroad).
 
 In many countries, official statistics report the number of resident foreigners, but not the number of immigrants (Coleman 2008). Currently, the dynamics of immigration to Italy still allow the acceptance of a definition which does not distinguish between these two groups. This simplification is reasonable during the first phase of the immigration process in a country, and when the majority of immigrants keep their own citizenship for a long period. Indeed, this is the case in Italy. The population census gives the best distinction between immigrants and foreigners. In this case the data can be analysed by birthplace, citizenship at birth, and citizenship at the census time. 
  
-Italian official statistics on the resident foreign population are mainly based on administrative sources linked to specific laws. Recently ISTAT has integrated the official statistics with a new public database (http://demo.istat.it). The database gives the number of resident foreigners calculated at the end of December each year in each municipality (of which there are around 8100). For each municipality measure (\ref{first.d1}) was calculated for each year in the period 2003\nobreakdash--2008. Compared to provincial or regional data, municipal-level data offers far more detail on the spatial distribution of the foreigners in the total population.
+Italian official statistics on the resident foreign population are mainly based on administrative sources linked to specific laws. Recently ISTAT has integrated the official statistics with a new public database (http://demo.istat.it). The database gives the number of resident foreigners calculated at the end of December each year in each municipality (of which there are around 8100). For each municipality measure (\ref{first.d1}) was calculated for each year in the period 2003--2008. Compared to provincial or regional data, municipal-level data offers far more detail on the spatial distribution of the foreigners in the total population.
  
-Populations are dynamic over time as well as space. To account for this we also include temporal information in our model. The change in number of foreign people, at the end of a year, is determined by
+Populations are dynamic over time as well as space. In this regard, the change in number of foreign people at municipal level, at the end of a year, is determined by
 $$
 \text{RFP}^{31^\text{th}}_{jy} = \text{RFP}^{1^\text{st}}_{jy} + (I_1 + I_2 + I_3+ I_4) - (D_1 + D_2 + D_3 + D_4 + AC).
 $$ 
 $\text{RFP}^{31^\text{th}}_{jy}$ indicates the total number of resident foreigners at the end of December in the $j^\text{th}$ Italian municipality for the $y^\text{th}$ year, and $\text{RFP}^{1^\text{st}}_{jy}$ the number of resident foreigners (in the same municipality, $j$ and year, $y$) on the $1^\text{st}$ of January. $I_{1}$ denotes the number of people whose parents are foreigners (at least one of them being resident in the municipality), $I_{2}$ the number of foreign citizens who asked to transfer their residence from another Italian municipality to the current one, $I_{3}$ those who asked to transfer their residence from abroad, and $I_{4}$ refers to recording operations due to other reasons (e.g. foreigners mistakenly deleted from the registry of the municipality, because they were temporarily missing). $D_{1}$ represents the number of resident foreigners who died during the year, $D_{2}$ those who moved to a different municipality, $D_{3}$ those who moved abroad, $D_{4}$ refers to cancellations for other reasons (e.g., foreigners deleted from the registry of the municipality, because they were not present), and \textit{AC} denotes those resident foreigners who obtained Italian citizenship during the year. 
 
-Acquisition of Italian citizenship by foreigners is regulated by law 91 of the $5^\text{th}$ of February 1992 and its subsequent amendments and additions. Foreigners can acquire the Italian citizenship by marriage to an Italian or by `naturalisation'. The latter case refers to the situation in which the foreigner has lived in the country from a certain period of time. Such a period varies dependent on the status of the person in question. For example the period is at least 10 years for non-EU citizens, at least 4 years for EU citizens and at least 5 years for political refugees or stateless persons and adult individuals who been adopted by Italian citizens. An exhaustive list of ways to obtain Italian citizenship is available on the Ministry of the Interior's website.
+Acquisition of Italian citizenship by foreigners is regulated by law 91 of the $5^\text{th}$ of February 1992 and its subsequent amendments and additions. Foreigners can acquire the Italian citizenship by marriage to an Italian or by `naturalisation'. The latter case refers to the situation in which the foreigner has lived in the country from a certain period of time. Such a period varies dependent on the status of the person in question and the specific laws of each country. For example, in Italy, the period is at least 10 years for non-EU citizens, at least 4 years for EU citizens and at least 5 years for political refugees or stateless persons and adult individuals who been adopted by Italian citizens. An exhaustive list of ways to obtain Italian citizenship is available on the Ministry of the Interior's website. Once foreigners have acquired Italian citizenship, they are included in the Italian population's statistics. Hence, these individuals will come out from the numerator of measure (\ref{first.d1}). However, our aim is to investigate and measure the incidence on the population of  residents who have not the Italian citizenship.
 
-Once foreigners have acquired Italian citizenship, they are included in the Italian population's statistics. Currently, no information is available on the number of resident Italian citizens separated by origin. In the opinion of the authors, were this information available a very interesting study could be conducted. For instance, this information could be useful for monitoring the ethnic and cultural diversity in the population. However, the multi-ethnic or multi-cultural aspect is not addressed here.
-
-The phenomenon of illegal immigration (e.g., Carter 1999; Hillman and Weiss 1999; De Bartolo 2007; Bchir 2008; Cangiano 2008) and its respective quantification (e.g., Strozza 2004) is also a very important issue. In this case, those entering the country are not in possession of a visa, the necessary documents or a valid permission to be in that country. Several approaches have been proposed to quantify this phenomenon, but all are subject to criticism (especially with regard to the magnitude of errors in the estimates). For this reason, we only make use of the official data on the resident foreign population, hence avoiding the possible introduction of factors which are not directly controllable and quantifiable which could bias our results. ({\bf Need to do something here. Can't explain illegal migration in 100 words. Maybe best just to merge this and the above paragraph and say what we're not doing?}) 
+In calculating the measure (\ref{first.d1}), we do not consider the number of illegal foreigners presents in the country. The phenomenon of illegal immigration (e.g., Carter 1999; Hillman and Weiss 1999; De Bartolo 2007; Bchir 2008; Cangiano 2008) and its respective quantification (e.g., Strozza 2004) represents a relevant topic of discussion in the studies of international migrations. Several approaches have been proposed in literature to quantify this phenomenon, but all are subject to criticism (especially with regard to the magnitude of errors in the estimates). For this reason, we only make use of the official data on the resident foreign population, hence avoiding the possible introduction of factors which are not directly controllable and quantifiable which could bias our results. 
 
 \subsection{The foreign population's contribution to Italy's demography \label{DEM}}
 
 Bijak et al. (2007) shows that in the absence of migration, many of the 27 European Union countries could see a decline in their non-immigrant populations up to 2052. In particular, with no migration they estimate that the population of Italy could decrease from 57 million in 2002 to about 43 million in 2052. The main causes of population decline in Italy may be linked to a low fertility rate and hence an ageing population. 
 
-Looking at population structure first, the ratio of old (over 64) to young (up to 14) in the total population was 143.4 ({\bf 1.434?}) at the end of 2008 (156.2 if we only consider individuals with Italian citizenship). The elderly population is about $43\%$ larger than the young population. Considering only resident foreign population the ratio is 11.2({\bf check this too!}).  From this we conclude that there is a substantial difference in the age structures of population present in Italy, if we stratify by citizenship.
+Looking at a traditional indicator that describes the weight of the elderly population, the ratio of old (over 64) to young (up to 14) in the total population was 143.4\% at the end of 2008 (156.2\% if we only consider individuals with Italian citizenship). The elderly population is about $43\%$ larger than the young population. Considering only resident foreign population the ratio is 11.2\%. In the same year, the average age of foreigners resident in Italy was equal to 31, while that of Italian citizens was equal to 43. From these informations we evidence that there is a substantial difference in the age structures of population present in Italy, if we stratify by citizenship.
 
 As for the low fertility rate, the latest data from ISTAT puts the average number of children per Italian women of childbearing age (from 15 to 49 years) at 1.33, lower than the average of 2.05 children for foreign women living in Italy. Combining the fertility rate for both Italian and foreign women, we obtain an average of 1.41. Coleman (2008) states that ``typically, in low-mortality populations a total fertility of about 2.04 is regarded as the `replacement level', that is, a level sufficient to replace the population in the long-run, ignoring migration''. Given the impact of foreigners on the population structure, the measure of total fertility (and hence the level of replacement) must take into account the contribution of immigrants (Coleman 2008). The increasing presence of foreigners in Italy over recent years has contributed not only to population growth, but also to a reduction in average age and an increase in the total fertility rate.
 
-The profile of the nationalities of resident foreigners in Italy is changing. In 2003, the top three countries of origin were Albania (13.6\%), Morocco (12.7\%) and Romania (8.9\%). In 2008, Romania was top (20.5\%), followed by Albania (11.3\%) and Morocco (10.4\%). ({\bf percentages of WHOLE pop'n or immigrant pop'n})The significant increase of the Romanian population in Italy coincides with the country's entry to the European Union ($1^\text{st}$ January 2007).
-
-Currently, Romanian is the most abundant foreign nationality in 14 of the 20 Italian regions. Italy hosts the largest Romanian community outside Romania and almost half of the entire Romanian migrant stock (Ban 2009). The choice of Italy as primary destination for Romanians can be explained by many factors including the presence of small Italian companies, the economic links with in Romania, and the accessibility of the Italian language for Romanians. ({\bf CITE THIS})
+The profile of the nationalities of resident foreigners in Italy is changing. Made 100 resident foreigners, in 2003, the top three countries represented were Albania (13.6\%), Morocco (12.7\%) and Romania (8.9\%). In 2008, Romania was top (20.5\%), followed by Albania (11.3\%) and Morocco (10.4\%). The significant increase of the Romanian population in Italy coincides with the country's entry to the European Union ($1^\text{st}$ January 2007). Currently, Romanian is the most abundant foreign nationality in 14 of the 20 Italian regions. Italy hosts the largest Romanian community outside Romania and almost half of the entire Romanian migrant stock. The choice of Italy as primary destination for Romanians can be explained by many factors including the presence of small Italian companies, the economic links with in Romania, and the accessibility of the Italian language for Romanians (Ban 2009). 
 
 According to a descriptive analysis of data from ISTAT, in 2008 the resident foreign population in Italy was made up of 53.6\% individuals from Europe, 22.4\% from Africa, 15.8\% from Asia, 8.1\% from America, and 0.1\% from Oceania.
 
@@ -258,7 +222,7 @@ In the GAM context, it is necessary to quantify the roughness of the smooth func
 $$
 J_\text{year}(f_\text{year})=\bm\xi\ts\textbf{S}_\text{year}\bm\xi \ \ \text{and} \ \ J_\text{space}(f_\text{space})=\bm\varphi\ts\textbf{S}_\text{space}\bm\varphi,
 $$
-where the $\textbf{S}$ matrices contain known coefficients whose values depend on the chosen bases for time and space. For instance, the second-order cubic spline penalty for $f_\text{year}(\texttt{year})$ evaluates $J_\text{year}(f_\text{year})=\int\left( \partial^2 f_\text{year}/\partial \texttt{year}^2 \right)^2 d\texttt{year}$, but it may be more complex (Wood 2006, 2008). Following, e.g., Zanin and Marra (2010), an overall penalty for the tensor product smooth can be obtained by applying the penalties of $f_\text{space}(\texttt{n},\texttt{e})$ to the varying coefficients of the marginal smooth $f_\text{year}(\texttt{year})$, $\xi_l(\texttt{n},\texttt{e})$,
+where the $\textbf{S}$ matrices contain known coefficients whose values depend on the chosen bases for time and space. For instance, the second-order cubic spline penalty for $f_\text{year}(\texttt{year})$ evaluates $J_\text{year}(f_\text{year})=\int\left( \partial^2 f_\text{year}/\partial \texttt{year}^2 \right)^2 d\texttt{year}$, but it may be more complex (Wood 2006, 2008). Following, e.g., Augustin (2009), an overall penalty for the tensor product smooth can be obtained by applying the penalties of $f_\text{space}(\texttt{n},\texttt{e})$ to the varying coefficients of the marginal smooth $f_\text{year}(\texttt{year})$, $\xi_l(\texttt{n},\texttt{e})$,
 $$
 \sum_{l=1}^L J_\text{space}\left\{  \xi_l(\texttt{n},\texttt{e}) \right\},
 $$ 
@@ -308,7 +272,7 @@ except at one of the knots ($\texttt{n}^*_k,\texttt{e}^*_k$). Then, we solve Poi
 \eeq
 for $k$ indexing the $K$ knots. When the boundary condition $\rho_k(\texttt{n},\texttt{e})=0$ is applied, the set of basis functions for the soap film smoother, $g_k(\texttt{n},\texttt{e})$ is found.  The PDEs are solved numerically using successive overrelaxation (see the appendix of Wood, Bravington and Hedley 2008 for further details).
 
-To find the boundary basis we first take a a `boundary function', $f_\text{bnd}(r)$, using cyclic splines. The function evaluates the height of the function at each point around the boundary. $f_\text{bnd}(r)$ will have the expansion
+To find the boundary basis we first take a `boundary function', $f_\text{bnd}(r)$, using cyclic splines. The function evaluates the height of the function at each point around the boundary. $f_\text{bnd}(r)$ will have the expansion
 \beq
 f_\text{bnd}(r)=\sum_{j=1}^J \alpha_j \delta_j(r),
 \label{soap-cyclic}
@@ -344,7 +308,7 @@ The solution of the PDEs above, yielding the basis and penalty, is the most comp
 
 \subsection{Parameter estimation \label{PE}}
 
-In model (\ref{PropM}), replacing $f$ with its tensor product expression yields a generalized linear model (McCullagh and Nelder, 1989) whose design matrix contains the spline bases representing the smooth component in the model. In principle such a model can simply be estimated by maximum likelihood (ML). However, in a smoothing spline context, unpenalized parameter estimation is likely to result in smooth component estimates that are too `wiggly', hence undermining the utility of such a model. This can be overcome by penalized ML, where the use of penalties allows for the suppression of that part of smooth term complexity which has no support from the data (e.g., Marra and Radice 2010). Specifically, the model can be fitted by minimization of
+In model (\ref{PropM}), replacing $f$ with its tensor product expression yields a generalized linear model (McCullagh and Nelder 1989) whose design matrix contains the spline bases representing the smooth component in the model. In principle such a model can simply be estimated by maximum likelihood (ML). However, in a smoothing spline context, unpenalized parameter estimation is likely to result in smooth component estimates that are too `wiggly', hence undermining the utility of such a model. This can be overcome by penalized ML, where the use of penalties allows for the suppression of that part of smooth term complexity which has no support from the data (e.g., Marra and Radice 2010). Specifically, the model can be fitted by minimization of
 \beq
 D(\bm\theta) + \bm\theta\ts\textbf{S}^*\bm\theta \ \  \text{w.r.t.} \ \  \bm\theta,
 \label{Dev}
@@ -377,11 +341,11 @@ Sicily & 40 (10x10) & 20 & 4\\
 \label{soap-basis-table}
 \end{table}
 
-The spatiotemporal structure of model (\ref{PropM}) and the lack of availability of economic variables at municipal level would suggest to fit the model by also taking into account the possible presence of some unexplained spatial and autocorrelation structure in the data. In a smoothing spline context, this can be consistently achieved by using a mixed modelling approach (Breslow and Clayton 1993). This possibility was explored by using the \texttt{gamm()} function of the \texttt{mgcv} package, which iteratively calls the \texttt{lme()} function of the \texttt{nlme} package (Pinheiro et al. 2009) for maximization; no models could be fitted due to convergence failures (see, e.g., Ruppert, Wand, and Carroll (2003) and Wood (2006) for problems and limitations with this approach). To explore the sensitivity of our estimates, we tried a fixed effect approach (Wooldridge 2002) but there was no significant change in results.
+The spatiotemporal structure of model (\ref{PropM}) and the lack of availability of economic variables at municipal level would suggest to fit the model by also taking into account the possible presence of some unexplained spatial and autocorrelation structure in the data. In a smoothing spline context, this can be consistently achieved by using a mixed modelling approach (Breslow and Clayton 1993). This possibility was explored by using the \texttt{gamm()} function of the \texttt{mgcv} package, which iteratively calls the \texttt{lme()} function of the \texttt{nlme} package (Pinheiro et al. 2009) for maximization; no models could be fitted due to convergence failures (see, e.g., Ruppert, Wand, and Carroll (2003) and Wood (2006) for problems and limitations with this approach). As an alternative, in order to explore the sensitivity of our estimates, we tried a fixed effect approach (e.g., Wooldridge 2002) but there was no significant change in results. Finally, using the classic Schwarz's Bayesian criterion (SBC), we compared model (\ref{PropM}) with one in which the spatial effect was assumed to be additive in time; the latter yielded an increased SBC.     
 
 \subsection{Variance estimation \label{VE}}
 
-Taking a Bayesian view we can construct intervals using the posterior distribution of the model parameters. This approach was originally proposed by Wahba (1983) or Silverman (1985) in the univariate spline model context, and then generalized to the component-wise case when dealing with Gaussian and non-Gaussian data (e.g., Gu 2002; Gu and Wahba 1993; Ruppert, Wand, and Carroll 2003). The features of these intervals which are interesting here are that they include both a bias and a variance component (Nychka 1988), they have good observed \textit{frequentist} coverage probabilities across the function as shown, for example, in the simulation experiments of Wang and Wahba (1995). The posterior distribution is given as
+Taking a Bayesian view we can construct intervals using the posterior distribution of the model parameters. This approach was originally proposed by Wahba (1983) or Silverman (1985) in the univariate spline model context, and then generalized to the component-wise case when dealing with Gaussian and non-Gaussian data (e.g., Gu 2002; Gu and Wahba 1993; Ruppert, Wand, and Carroll 2003). The interesting feature of these intervals is that since they include both a bias and a variance component (Nychka 1988), they have good observed \textit{frequentist} coverage probabilities across the function as shown, for example, in the simulation experiments of Wang and Wahba (1995). The posterior distribution is given as
 \beq
 \bm\theta|{\bf y} \dot{\backsim} N( \hat{\bm\theta}, {\bf V}_{\bm\theta} ),
 \label{Poster}
@@ -407,11 +371,13 @@ Small values for $N_b$ are typically tolerable. In practice, $N_b$ can be set to
  
 
 \section{Empirical results \label{ER}}
-XX
+In this section, we discuss the main results of our analysis. For analyzing a spatiotemporal phenomena of qualitative or quantitative type, thematic geographical or topographical maps are typically used to highlight, e.g., distributions, correlations and differentiations in the territory. However, not only the resulting maps are affected by choices such as the interval definition of the indicator or measure (e.g., quartiles, percentiles or customized) and color associated with each interval, a traditional approach does not take into account any spatial or temporal structure present in the data. This is why a new modeling approach such as the one employed here is required in order to provide maps characterizing reliably spatiotemporal patterns.
+
 
 \subsection{Spatiotemporal trends \label{STT}}
-XX
 
+
+Figure \ref{fig2} shows spatiotemporal trend maps of the incidence of resident foreign population in Italy for the period 2003--2008. Two main findings emerge from the graphical analysis: 1) the incidence of foreigners shows heterogeneous spatiotemporal trends with more attractive areas as opposed to others, and 2) the dichotomous difference between the north and south of Italy.  
 
 \begin{figure}[htbp]
 	\centering
@@ -420,29 +386,112 @@ XX
 	\label{fig2}
 \end{figure}
 
-\begin{figure}[htbp]
-	\centering
-		\includegraphics[width=0.66\textwidth, angle=270]{index.eps}
-	\caption{Spatial distribution of index of spatial attractiveness over Italy for the years 2003-2008. Predictions were made over those points lying inside the study region from a 100 by 100 grid.}
-	\label{fig3}
-\end{figure}
 
 \begin{figure}[htbp]
 	\centering
-		\includegraphics[width=0.66\textwidth]{trend.ps}
+		\includegraphics[width=0.35\textwidth]{mapIT.eps}
+	\caption{Geographical map of Italy and borders with foreign countries. Source: Google Earth.}
+	\label{fig1}
+\end{figure}
+
+For all the period of observation, Po Valley (see Figure \ref{fig1}) appears to be the most attractive zone of the country for foreign population. In 2008 this zone registered peaks of incidence higher than 10\%, compared with an average national incidence of 6.5\%. Spatial trends show the progressive formation of four gravitational poles: the first and most important in terms of magnitude of incidence (\ref{first.d1}), in the central area of the Po Valley, the second in central Italy, and the remaining two at the extremes in the northeast and northwest of the country, respectively. Foreigners have instead showed a lower attraction for the regions and islands of southern Italy during all the investigated period. This picture emphasizes the dichotomy between the areas of the north and those of the south of the country. Some possible explanations in this regard will be discussed in the next section.
+Another interesting finding is the progressive growth of incidence of foreigners at the borders with Switzerland and Austria (from about 1\% in 2003 to about 3--4\% in 2008). Recall that these zones are characterized by mountains, well known as the Alps, where, due to medium-high altitude, opportunities for people (for example, in terms of lifestyle, job, transportation, etc.) can be different with respect to plain and hill areas. In this context, for instance, we can refer to the lack of exploitation of economies of density (e.g., for public transportation, distribution of water, electricity, gas, etc.), shortage of lands for residential use, higher costs of production and transportation of locally produced goods, and so on. However, in order to better explain the reasons for the appeal by foreigners for these territories, further studies are needed.
+
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=0.55\textwidth, angle=270]{trends.ps}
 	\caption{Temporal trend...}
 	\label{trends}
 \end{figure}
 
+Looking at the estimated temporal trends by macroarea in Figure \ref{trends}, we observe that there are synchronized patterns for northern and central Italy, but not for southern Italy and the islands. For instance, in the period 2003--2005, northern and central Italy showed a fast incidence growth of foreigners. On the contrary, this phenomenon cannot be observed in the rest of the Italian territory where instead the incidence of foreigners showed a slower growth. 
+
+Traditionally, measure (\ref{first.d1}) is computed at a national, regional or provincial level. However, these geographical dimension are quite rough and can mask much of the heterogeneity of the phenomenon that could be instead observed to a smaller spatial detail such as the municipality dimension. As described so far this article aims precisely at capturing the spatial heterogeneity of the phenomenon under investigation. Results at municipal level should be useful for several scholars, such as demographers, sociologists, economists or politicians, for instance, to define spatial policies or to analyse the structure and evolution of the population in the territory. The incidence of foreigners in 2008 at national level is equal to 6.5\%. This piece of information does not tell us anything specific on the observed difference between northern and southern country, or on the presence of gravitational poles of foreigners. Briefly, the new official datasets made available from ISTAT on the number of foreigners present at municipal level has allowed to bridge some informative gaps with respect to the past, such as: (1) the possibility of measuring the incidence of foreigners on total population with a more spatial detail, and (2) the improvement of studies on the presence of foreign citizens in the country and the opportunity to analyse with a greater detail the spatiotemporal dynamic of the phenomenon under investigation.
+
+Figures \ref{fig2} and \ref{trends}, hence, highlight that important demographic changes are ongoing in the country. In particular, the rapid growth of incidence of resident foreigners in the total population registered during the last years can be viewed as a novelty in the panorama of long-run of the demographic history of Italy. Spatiotemporal maps, in this sense, represent a valid tool for monitoring the evolution of the early stages of foreign presence in a country, as well as, in the case of nations having a long history as destinations for immigrants.
 
 
-\subsection{Foreigner presence and spatial attractiveness: is there a nexus? \label{NEX}}
-XX
+\subsection{Incidence of resident foreigners and spatial economic attractiveness: is there a nexus? \label{NEX}}
 
-\subsection{Policy-maker's corner: a point of discussion \label{PM}}
-XX
+In this section, we propose to investigate the reasons of the polarization of foreigners in some areas of the country, as shown in Figure \ref{fig2}, on the basis of some spatial economic features. In doing so, two main points will be addressed: (a) the construction of a composite indicator of spatial economic attractiveness, and (b) a discussion on the nexus between polarization of the incidence of foreigners and spatial economic features.
 
-\section{Conclusions \label{CONC}}
+
+\subsubsection{The composite indicator of spatial economic attractiveness (ISEA) \label{ISEA}}
+
+We construct a simple composite indicator using three economic variables chosen considering their relevance, accuracy of measures, timeliness of update and accessibility of data, as well as good degree of coherence with our overall purpose. In particular, we have chosen a general measure of the economy (expressed in terms of gross domestic product (GDP)) and some relevant labor  market indicators (employment and unemployment rates). The indicators are calculated as follows:
+
+\begin{itemize}
+
+\item \textbf{Added value per capita at constant prices (base year 2000):} this measure has been computed as ratio between the added value at constant prices and number of inhabitants. The aim is to capture the spatial economic wealth produced in an area as opposed to another one.
+
+\item \textbf{Unemployment rate:} this is one of the major economic conjunctural indicators. The primary aim is to measure a tension in the labor market due to an excess of labor supply (by workers) with respect to labor demand (by companies).
+
+\item \textbf{Employment rate:} this indicator quantifies the incidence of the employed population in the total population. In our case, we have computed the specific rate of employment as ratio between the employed (15--64 years) and total population (15--64 years). 
+	
+\end{itemize}
+
+The maximum spatial detail of these indicators is the province. Currently, ISTAT does not publish any information in this regard at a municipal level. For scholars interested in spatial analysis, the absence of economic information at micro level can appear as an important constraint. National Statistical Institutes should improve the database of basic statistics, although we are aware of constraints of financial nature which do not allow institutes to record data at a municipal level.
+
+According to a general rule in constructing composite indicators (e.g., OECD 2008), we have chosen the principal component analysis (PCA) approach to define weights of aggregation of indicators (e.g., Hair et al. 2006). The choice of this technique has been supported by high correlation of economic variables of interest. Before performing PCA, we have checked the absence of outliers in the data for ensuring a quality of results.
+
+The PCA have been performed for each year in the period 2003--2008 using the \texttt{princomp()} function in \texttt{R}. Coherently with expectation and economic theory, the coefficients of equation of the first principal component have shown positive signs for the added value per capita and employment rate, while a negative sign for unemployment rate. Signs and magnitude of coefficients have shown a stability for the investigated years. Main results have also evidenced that the eigenvalue of first principal component is higher than unity and explains more than 90\% of variance. Based on these elements, we have felt that estimated standardized scores of the first principal component adequately represent the composite indicator of interest. Further details on the results of principal component analysis are available upon request. The standardized scores have been normalized using a `min-max' procedure (p. 85, OECD 2008) for ranking scores in a range scale from 0 to 100. This method could be used due to the absence of outliers in standardized scores.
+ 
+\begin{figure}[htbp]
+\centering
+	\includegraphics[width=0.66\textwidth, angle=270]{sensitivity.eps}
+\caption{Scatter plots analysis with the ISEA on the Y-axis and each input source on the X-axis.}
+	\label{fig4}
+\end{figure}
+
+The quality of the proposed composite indicator has been performed producing scatter plots analysis (see Figure \ref{fig4}). For each investigated year, we have plotted the value of the ISEA on the Y-axis, and each input source on the X-axis. This analysis has helped to reveal patterns in the input-output relation (p. 35, OECD 2008). Figure 4 shows, for instance, that a value of composite indicator close to 100, corresponds to the highest levels of added value per capita and employment rate, and to the lowest levels of unemployment rate. For low values of the composite indicator, we have observed an opposite view. The proposed composite indicator is able to capture in relative terms, for each investigated year, the rank of Italian provinces from the most to the least attractive ones from an economic point of view and of labor market in the whole. Under the name `indicator of economic attractiveness' it will be considered, hence, both aspects that refer to the GDP per capita and labor market.
+
+
+\subsubsection{...is there a nexus? \label{nexus}}
+
+Figure \ref{fig5} shows spatiotemporal maps of the ISEA, obtained using the methodology illustrated in Section \ref{METH} for data at province level. We can see that there are not spatial patterns of the composite indicator for the island of Sardinia. This is due to the small number of observations available. In any case, levels of ISEA during the period 2003--2008 ranged from a minimum of 20 to a maximum of 43.
+
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=0.66\textwidth, angle=270]{index.eps}
+	\caption{Spatial distribution of index of spatial attractiveness over Italy for the years 2003-2008. Predictions were made over those points lying inside the study region from a 100 by 100 grid.}
+	\label{fig5}
+\end{figure}
+
+
+Spatiotemporal maps of ISEA show differences in economic attractiveness between areas of northern and southern country. Specifically, in the north of the country the highest values of composite indicator were concentrated, while in southern Italy and islands the lowest levels were observed. Scatter plots of Figure \ref{fig4} help to better highlight the magnitude of these differences. We can note, for instance, that between a level of composite indicator above 80 and below 30, there was a significant gap in terms of added value per capita: a value around 20-30000 euros in the first case, while around 10-15000 euros in the second case. As evidence in others empirical studies, this gap between the two macroareas of the country (the north and the south) has a structural nature (e.g., Luciano 2004; Petacchini 2008; Daniele 2009). Similar considerations can be formulated for employment (e.g., Guisan and Aguayo 2002) and unemployment rates (e.g., Brunello, Lupi and Ordine, 2001; Cracolici, Cuffaro and Nijkamp 2007, 2009). The employment rates of Italian southern provinces have registered levels below 50\%. These appear quite far from targets of 70\% by 2010 as specified by the Lisbon Strategy in March 2000. At the same time, despite a greater labor market flexibility with respect to the past has contributed to reduce over time unemployment rate in the country (e.g., Zanin and Marra 2010), the highest and persistent levels of unemployment registered in many southern provinces (more than 10\%) in comparison to those of northern Italy (around or below of 5\%) remain quite worrying. The situation becomes more and more critical considering that during a negative economic cycle, unemployment tends to increase (e.g., Zanin and Marra 2010).
+
+The reasons for more favorable economic indicators in the north than in the south of the country can be attributed to several factors. For instance, the territorial morphology, the features and location of the productive structures, the presence of important infrastructures such as motorway, railway, and so on. Looking at the industrial polarization and the company dimensions, ISTAT has measured that in the north there are more than 70 companies of industrial and business services sectors each thousand inhabitants, while in southern Italy about 50 companies each thousand inhabitants. Despite this difference between the north and the south of the country, both levels are among the highest than the average EU-27 countries (about 40 companies of industrial and business services sectors each thousand inhabitants). These data support the evidence of a fragmented productivity, mainly composed by small or medium-sized companies. In this context, we must also remember that Italian productive structure is characterized by industrial districts. The industrial district is an agglomeration of firms, generally of small-medium size, located in a limited geographical area and historically determined, specializing in one or more stages of a production process and integrated through a complex network of interrelations of economic and social nature (e.g., Beccatini 1991; Bellandi 2002). According to Becchetti, Oropallo and Panizza (2007), industrial districts have an important role in contributing to the performance of export and added value of the territory, and also in supporting employment. At the last general census of industry and population of 2001 Istat determined the existence of 156 industry districts, 81 of which located in the north, 49 in central Italy and only 26 in the south. The number of employed workers per industrial district was equal to about 45000, 20000 and 11000 units, respectively.  
+
+Some studies available in literature seem also to evidence a nexus between industrial location and public infrastructure (e.g., Martin and Rogers 1995), and the economic benefit of transport infrastructure investments (e.g., Chandra and Thompson 2000; Bronzini and Piselli 2009; Miller, Hoel and Ellington 2009; Lakshmanan 2010) such as highway, railway and so on. In this regard, recent data by Istat have shown, for instance, that the Italian highway has been developed for about 22 km each thousand square kilometers of land area, and that northern and southern areas are above and below the national average, respectively. The minor extension of the motorway network in the south than in the north of country, can be viewed as a penalizing factor, expecially for some firms that need to transport goods produced in regions that are distant from the production site. This gap could be a possible reason of the lower industrial development of southern with respect to that of northern Italy. However, further investigations are needed in this regard. 
+
+From spatiotemporal analysis of ISEA (Figure \ref{fig5}) and of the incidence of foreigners (Figure \ref{fig2}), we expect to find that areas with a medium-high level of composite indicator show a higher incidence of foreigners. This hypotesis is also supported by additional elements, such as the young age of foreigners (see Section \ref{DEM}) and their mainly presence in Italy for working reasons (Fullin and Reyneri 2010). 
+
+At this point, it is necessary to answer the question: is there a nexus between the polarization of the incidence of resident foreigners in the total population and the degree of spatial economic attractiveness? The answer is `\textsl{yes}'. If we overlap maps of Figure \ref{fig2} with those of Figure \ref{fig5}, we can see the strong nexus between the magnitude of incidence of foreigners and the features of the economy and labour market in the territory. Areas with a higher level of composite indicator have showed the highest incidence of foreigners, and vice versa.
+
+As a possible extension to a qualitative analysis, this relationship could be also tested econometrically using model \ref{PropM} and adding the composite indicator as an exogenous variable. However, as discussed in Section \ref{ISEA}, given the constraint on spatial dimension of indicators useful to construct the proposed composite indicator (the incidence of foreigners is computed at a municipality level, while the composite indicator at a provincial level), we have considered the two analyses separately. We must remember that the main aim of this study is to model the spatiotemporal polarization of resident foreign population, and the proposed composite indicator, should contribute to explain some of the reasons of spatial heterogeneity of the phenomenon under investigation.
+
+
+
+\subsection{Policy-maker's corner: some cues to reflect on  \label{PM}}
+
+Morton (2010) has raised an interesting view on the `called to action' topic, encouraging statisticians not only in the role of gathering, analysing, interpreting and communicating evidence, but also in suggesting policies. The results of our analysis have shown interesting demographic behavioral patterns on the spatiotemporal polarization of foreigners in the country. In this regard we want to raise some cues to reflect on, for instance, on the possible consequences of a growing polarization of foreigners only in some areas of the country rather than in other ones. Here, we will try to discuss briefly on this issue with a particular attention to some aspects linked to labour market.
+
+As a preamble, in analyzing the flows of international migrations in Italy, Murat and Paba (2003) found that over the years a large share of foreigners were directed in the sectors of \textsl{Made in Italy} and in industrial districts mainly located in central-northern Italy. This is in agreement with the evidence of Section \ref{nexus}. Men are usually employed in manufacturing, construction and agricoltural sectors, while women in family services and services in general (Venturini and Villoso, 2008). Foreign workers are usually employed in low-skilled jobs that Italian younger generations no longer want to consider. This has contributed to meet, for instance, the demand of manpower in manufacturing, where there is a relevant mismatch between labour market demand and native labour supply (e.g., Fullin and Reyneri 2010). Foreigners from non-EU countries arriving in Italy have to find a job within 6 months from their arrival, otherwise, they will be forced to switch back to an illegal resident status, or to leave the country (e.g., Fullin and Reyneri 2010). This may be a reason forcing many foreigners to accept unskilled jobs.
+
+Observing Figure \ref{fig2} a question may raise naturally: what effects can we expect from a growing polarization of the foreigners only in some areas of the country? Here, we do not propose a conclusive and exaustive empirical answer to this question, as it is beyond the aim of our study but we want to answer anyway based on what we expect. Regarding to the labor market, for instance, an excess of labor supply for some types of job positions may occur (see also Nannestad (2007) for an illustration of the `immigration surplus'). Even if foreign workers are more mobile than native workers (Venturini and Villoso 2008), in this context, foreigners who are looking for a job could spend time before finding it. This is not a favorable situation, especially for foreigners from non-EU countries for which to have a job, as discussed above, is a mandatory requirement for residing in the country (e.g., Fullin and Reyneri 2010). As a consequence, we could observe some tensions in the labor market. These aspects touch some relevant remarkable points for policy-makers and suggest, at the same time, possible future  extensions of this article. For instance, in proposing spatiotemporal forecasts and simulations of the incidence of foreigners, the investigation of effects on the labor market and on local welfare system due to an increase of incidence of foreigners, and so on.
+
+
+To the above discussion, we can link also a remark on the correlation between business cycle and the level of welfare dependency. For example, during an economic recession many individuals, expecially with temporary contracts, will experience higher welfare dependency as unemployment increase (Blume and Verner 2007). This is due to a job destruction as a consequence of a lower level of company production (e.g., Zanin and Marra 2010). In particular, Rosholm et al. (2004) found that immigrants, expecially those coming from under developed countries, have a weaker labour-market attachment than natives. In this regard, Barth, Bratsberg and Raaum (2004) showed that welfare dependency is more sensitive to economic cycle among immigrants than among natives. Given the spatiotemporal dynamics of incidence of foreigners in Italy (Figure \ref{fig2}), these additional evidence can not be neglected in defining appropriate local welfare state policies.
+
+Given the nexus between polarization of resident foreigners and the economic attractiveness, it is clear that the gap between the north and the south of the country (Figure \ref{fig5}) does not favour an homogeneous distribution of the incidence of foreigners inside of the country. In this regard some policies can be suggested. For instance, encouraging in currently less economically attractive areas the settlement of new industrial poles, planning investments for improving public infrastructure expecially in a context related to transport, and so on. In other words, replicate in the southern regions, good policies and investments that fostered the development, for instance, of the northern country.
+
+In this context, maps of Figure \ref{fig2} should represent a valid tool for monitoring spatiotemporal trends of measure (\ref{first.d1}) and the effects in the relation to the change of the spatial economic attractiveness. This section is not exaustive and conclusive of the above mentioned topics, but it should represent a base to reflect on to stimulate scholars towards some relevant topics on the international migration.
+
+
+
+\section{Concluding remarks \label{CONC}}
 XX
 
 
@@ -458,11 +507,19 @@ XX
 
 \bibitem{} Ban, C. (2009), ``Economic transnationalism and its ambiguities: the case of Romanian Migration to Italy,'' \textit{International Migration}, DOI: 10.1111/j.1468-2435.2009.00556.x.
 
+\bibitem{} Barth, E., Bratsberg, B., Raaum, O. (2004), ``Identify earning assimilation of immigrants under changing macroeconomic conditions,'' \textit{Scandinavian Journal of Economics}, 106, 1--22.
+
 %\bibitem{} Bauer, T., and Zimmermann, K. F. (1999), ``Assessment of possible migration pressure and its labour market impact following EU enlargement to central and eastern europe,'' IZA Research Report Series 3, Bonn.
 
-\bibitem{} Bchir, H. M. (2008), ``The effect of mode 4 liberalization on illegal immigration,'' \textit{Economic modelling}, 25, 1051--1063.
+\bibitem{} Bchir, H. M. (2008), ``The effect of mode 4 liberalization on illegal immigration,'' \textit{Economic Modelling}, 25, 1051--1063.
+
+\bibitem{} Beccatini, G. (1991), ``Italian industrial districts: problems and perspectives,'' \textit{International Studies of Management $\&$ Organization}, 21, 83--90.
+
+\bibitem{} Bellandi, M. (2002), ``Italian industrial districts: an industrial economics interpretation,'' \textit{European Planning Studies}, 10, 425--437.
 
 \bibitem{} Bijak, J., Kupiszewska, D., Kupiszewski, M., Saczuk, K., and Kicinger, A. (2007), ``Population and labour force projections for 27 European countries, 2002--2052: impact of international migration on population ageing,'' \textit{European Journal of Population}, 23, 1--31.
+
+\bibitem{} Blume, K. and Verner, M. (2007), ``Welfare dependency among Danish immigrants,'' \textit{European Journal of Political Economy}, 23, 453--471.
 
 \bibitem{} Borjas, J. G. (1989), ``Economic theory and international migration,'' \textit{International Migration Review}, 23, 457--85.
 
@@ -478,6 +535,10 @@ XX
 
 \bibitem{} Broeders, D. (2007), ``The new digital borders of Europe: EU database and the surveillance of irregular migrants,'' \textit{International Sociology}, 22, 71--92.
 
+\bibitem{} Bronzini, R. and Piselli, P. (2009), ``Determinants of lung-run regional productivity with geographical spillovers: the role of R$\&$D, human capital and public infrastructure,'' \textit{Regional Science and Urban Economics}, 39, 187--199.
+
+\bibitem{} Brunello, G., Lupi, C. and Ordine, P. (2001), ``Widening differences in Italian regional unemployment,'' \textit{Labour Economics}, 8, 103--129.
+
 \bibitem{} Cangiano, A. (2008), ``Foreign migrants in Southern European countries: evaluation of recent data,'' in \textit{International Migration in Europe. Data, Models, and Estimates}, Editors: Raymer, J. and Willekens, F., 89--112, Wiley.
 
 \bibitem{} Casey, T., and Dustmann, C. (2010), ``Immigrants' identity, economic outcomes and the trasmission of identity across generations,'' \textit{The Economic Journal}, 120, F31--F51.
@@ -486,15 +547,25 @@ XX
 
 \bibitem{} Carter, T. J. (1999), ``Illegal immigration in a efficiency wage model,'' \textit{Journal of International Economics}, 49, 385--401.
 
-\bibitem{} Cheong, P. H., Edwards, R., Goulbourne, H., and Solomos, J. (2007), ``Immigration, social cohesion and social capital: A critical review,'' \textit{Critical Social Policy}, 27, 24--49.
+\bibitem{} Chandra, A. and Thompson, E. (2000), ``Does public infrastructure affect economic activity? Evidence from the rural interstate highway system,'' \textit{Regional Science $\&$ Urban Economics}, 30, 457--490.
+
+%\bibitem{} Cheong, P. H., Edwards, R., Goulbourne, H., and Solomos, J. (2007), ``Immigration, social cohesion and social capital: A critical review,'' \textit{Critical Social Policy}, 27, 24--49.
 
 \bibitem{} Coleman, D. (2008), ``The demographic effects of international migration Europe,'' \textit{Oxford Review of Economic Policy}, 24, 452--76.
 
 \bibitem{} Contucci, P., and Ghirlanda, S. (2007), ``Modelling society with statistical mechanics: an application to cultural contact and immigration,'' \textit{Quality and Quantity}, 41, 569--78.
 
+\bibitem{} Cracolici M.F., Cuffaro M. and Nijkamp, P. (2007), ``Geographical distribution of unemployment: an analysis of provincial differences in Italy,'' \textit{Growth and Changes}, 38, 649--670.
+
+\bibitem{} Cracolici M.F., Cuffaro M. and Nijkamp, P. (2009), ``A spatial analysis on Italian unemployment differences,'' \textit{Statistical Methods $\&$ Applications}, 18, 275--291.
+
 \bibitem{} Craven, P., and Wahba, G. (1979), ``Smoothing noisy data with spline functions,'' \textit{Numerische Mathematik}, 31, 377--403.
 
+\bibitem{} Daniele, V. (2009), ``Development policy, public spending and regional convergence in Italy (1996-2007),'' \textit{Regional and Sectoral Economic Studies}, 9, 17--34.
+
 \bibitem{} De Bartolo, G. (2007), ``Immigration in Italy: the great emergency,'' Population Association of America - Annual Meeting, March 29-31, New York, Office of Population Research, Princeton University.
+
+\bibitem{} Drinkwater, S., Eade, J. and Garapich, M. (2009), ``Poles apart? EU enlargement and the labour market outcomes of immigrants in the United Kingdom,'' \textit{International Migration}, 47, 161--190.
 
 \bibitem{} Edin, Per-A., Fredriksson, P., and Aslund, O. (2003), ``Ethnic enclaves and the economic success of immigrants - evidence from a natural experiment,'' \textit{The Quarterly Journal of Economics}, 118, 329--57.
 
@@ -504,19 +575,31 @@ XX
 
 \bibitem{} Gu, C., and Wahba, G. (1993), ``Smoothing Spline ANOVA with Component-Wise Bayesian Confidence Intervals,'' \textit{Journal of Computational and Graphical Statistics}, 2, 97--117.
 
+\bibitem{} Guisan, M.C. and Aguayo, E. (2002), ``Employment and regional development in Italy,'' \textit{Applied Econometric and International Development}, 2, 41--72.
+
+\bibitem{} Hair, J.F., Black, W.C., Babin, B.J., Anderson, R.E. and Tatham, R.L. (2006), Multivariate data analysis, six edition, Pearson Prentice Hall, Upper Saddle River, New York
+
 \bibitem{} Hastie, T., and Tibshirani, R. (1990), \textit{Generalized Additive Models}, London: Chapman $\&$ Hall.
 
 \bibitem{} Hillman, A. L., and Weiss, A. (1999), ``A theory of permissible illegal immigration,'' \textit{European Journal of Political Economy}, 15, 585--604.
 
 \bibitem{} Hooghe, M., Trappers, A., Meuleman, B., and Reeskens, T. (2008), ``Migration to European countries: a structural explanation of patterns 1980-2004,'' \textit{International Migration Review}, 42, 476--504.
 
+\bibitem{} Lakshmanan, T.R. (2010), ``The broader economic consequences of transport infrastructure investments,'' \textit{Journal of Transport Geography}, in press.
+
 \bibitem{} Lazear, E. P. (1999), ``Culture and language,'' \textit{Journal of Political Economy}, 107, S95--S126.
 
 \bibitem{} Lowell, L. B. (2007), ``Trends in international migration flows and stocks, 1975-2005,'' OECD Social, Employment and Migration Working Paper 58, OECD, Paris.
 
+\bibitem{} Luciano, M. (2004), ``The macroeconomics of Italy: a regional perspective,'' \textit{Journal of Policy Modeling}, 26, 927--944.
+
 \bibitem{} Manning, A. (2010), ``Feature: the integration of immigrants and their children in Europe: introduction,'' \textit{The Economic Journal}, 120, F1--F3. 
 
 \bibitem{} Marra, G, and Radice, R. (2010), ``Penalised regression splines: theory and application to medical research,'' \textit{Statistical Methods in Medical Research}, 19, 107--125.
+
+\bibitem{} Martin, P. and Rogers, C.A. (1995), ``Industrial location and public infrastructure,'' \textit{Journal of International Economics}, 39, 335--351.
+
+\bibitem{} Martin, S. and Abimourched, R. (2009), ``Migrants rights: international law and national action,'' \textit{International Migration}, 47, 115--138.
 
 \bibitem{} Massey, D. S., Arago, J., Hugo, G., Kouaouci, A., Pellegrino, A., and Taylor, J. E. (1993), ``Theory of international migration: a review and appraisal,'' \textit{Population and Development Review}, 19, 431--66.
 
@@ -524,11 +607,23 @@ XX
 
 \bibitem{} Miguet, F. (2008), ``Voting about immigration policy: What does the Swiss experience tell us?,'' \textit{European Journal of Political Economy}, 24, 628--41.
 
+\bibitem{} Miller, J.S., Hoel, L.A., and Ellington, D.B. (2009), ``Can highway investment policies influence regional growth?,'' \textit{Socio-Economic Planning Sciences}, 43, 165--176.
+
 \bibitem{} Morawska, E. (1990), ``The Sociology and historiography of Immigration,'' in \textit{Immigration Reconsidered: History, Sociology, and Politics}, ed. Virginia Y. McLaughlin, New York: Oxford University Press, 187--240.
+
+\bibitem{} Morton, S.C. (2010), ``Statistics: from evidence to policy,'' \textit{Journal of the American Statistical Association}, 105, 1--5.
+
+\bibitem{} Murat, M. and Paba, S. (2003), ``International migration, outsourcing and Italian industrial district,'' \textit{Proceedings of the Conference: Clusters, Industrial Districts and Firms: the Challenge of Globalization. Conference in Honour of Professor Sebastiano Brusco}, Modena, Italy, September 12--13.
+
+\bibitem{} Nannestad P. (2007), ``Immigration and welfare states: a survey of 15 years of research,'' \textit{European Journal of Political Economy}, 23, 512--532.
 
 \bibitem{} Nychka, D. (1988), ``Bayesian Confidence Intervals for Smoothing Splines,'' \textit{Journal of the American Statistical Association}, 83, 1134--1143.
 
 \bibitem{} OECD (2004), ``Trends in International Migration 2003,'' \textit{OECD Pubblishing}, Paris.
+
+\bibitem{} OECD (2008), Handbook on constructing composite indicators: methodology and user guide, OECD, Paris.
+
+\bibitem{} Petacchini, E. (2008), ``Local analysis of economic disparities in Italy: a spatial statistics approach,'' \textit{Statistical Methods $\&$ Applications}, 17, 85--112.
 
 \bibitem{} Pinheiro, J., Bates, D., DebRoy, S., Sarkar, D., and the R Core Team (2009), \textit{nlme: Linear and Nonlinear Mixed Effects Models}, R package version 3.1- 96.
 
@@ -542,6 +637,10 @@ XX
 
 \bibitem{} Reiss, P. T., and Ogden, R. T. (2009), ``Smoothing parameter selection for a class of semiparametric linear models,'' \textit{Journal of the Royal Statistical Society Series B}, 71, 505--524.
 
+\bibitem{} Rosenow, K. (2009), ``The europeanisation of integration policies,'' \textit{International Migration}, 47, 133--159.
+
+\bibitem{} Rosholm, M., Nielsen, H.S., Smith, N., Husted, L. (2004), ``Qualifications, discrimination or assimilation? An entended framework for analyzing immigrant wage gaps,'' \textit{Empirical Economics}, 29, 855--883.
+
 \bibitem{} Ruppert, D., Wand, M. P., and Carroll, R. J. (2003), \textit{Semiparametric Regression}, London: Cambridge University Press.
 
 \bibitem{} Silverman, B. W. (1985), ``Some Aspects of the Spline Smoothing Approach to Non-Parametric Regression Curve Fitting,'' \textit{Journal of the Royal Statistical Society Series B}, 47, 1--52.
@@ -552,7 +651,9 @@ XX
 
 \bibitem{} Strozza, S. (2004), ``Estimates of the illegal foreigners in Italy: a review of the literature,'' \textit{International Migration Review}, 38, 309--331.
 
-\bibitem{} Van Der Veer, K. (2003), ``The future of western societies: multicultural identity or extreme nationalism?,'' \textit{Futures}, 35, 169--187.
+%\bibitem{} Van Der Veer, K. (2003), ``The future of western societies: multicultural identity or extreme nationalism?,'' \textit{Futures}, 35, 169--187.
+
+\bibitem{} Venturini, A. and Villoso, C. (2008), ``Labour-market assimilation of foreign workers in Italy,'' \textit{Oxford Review of Economic Policy}, 24, 517--541.
 
 \bibitem{} Wahba, G. (1983), ``Bayesian `Confidence Intervals' for the Cross-Validated Smoothing Spline,'' \textit{Journal of the Royal Statistical Society Series B}, 45, 133--150.
 
@@ -572,7 +673,9 @@ XX
 
 \bibitem{} Wooldridge, J. M. (2002), \textit{Econometric Analysis of Cross Section and Panel Data}, Cambridge: MIT Press.
 
-\bibitem{} Zanin, L., and Marra, G. (2010), ``Modelling the probability that a household participates in tourism: the Italian case,'' \textit{Physica A: Statistical Mechanics and its Applications}, ?.
+\bibitem{} Zanin, L. and Marra, G. (2010) , ``Rolling regression versus time-varying coefficient modelling: an empirical investigation of the Okun's law in some Euro area countries,'' \textit{Bulletin of Economic Research}, in press
+
+%\bibitem{} Zanin, L., and Marra, G. (2010), ``Modelling the probability that a household participates in tourism: the Italian case,'' \textit{Physica A: Statistical Mechanics and its Applications}, ?.
 
 \bibitem{} Zincone, G. (2006), ``The making of policies: immigration and immigrants in Italy,'' \textit{Journal of Ethnic and Migration Studies}, 32, 347--75.
 
