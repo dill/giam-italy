@@ -4,8 +4,6 @@
 library(maps)
 library(mapdata)
 library(soap)
-library(maps)
-library(adehabitat)
 
 # function to do the formatting to the data
 fix_it_data<-function(data){
