@@ -7,7 +7,7 @@ library(soap)
 library(dillhandy)
 
 # extra scripts
-source("models.R")
+source("fixit.R")
 
 # run fixdata anyway to get the boundaries
 full<-read.csv(file="database_complete.csv")
@@ -36,14 +36,17 @@ soap.knots<-make_soap_grid(it,c(20,25))
 soap.knots<-pe(soap.knots,-c(4,5,11,35,61,68,108))
 
 # basis size
-it.bsize<-c(50,6)
+it.bsize<-c(30,6)
 
+#it.soap<- gam(share_100~
+#   te(x,y,year,bs=c("sf","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=list(it)),NULL))+
+#   te(x,y,year,bs=c("sw","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=list(it)),NULL))
+#            ,knots=soap.knots,data=it.dat,family=Gamma(link="log"),method="REML")
 it.soap<- gam(share_100~
    te(x,y,year,bs=c("sf","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=list(it)),NULL))+
    te(x,y,year,bs=c("sw","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=list(it)),NULL))
-            ,knots=soap.knots,data=it.dat,family=Gamma(link="log"),method="REML")
+            ,knots=soap.knots,data=it.dat,family=Tweedie(link=power(0),p=1.5),method="REML")
 ##########################
-
 
 
 ########################
@@ -51,20 +54,27 @@ it.soap<- gam(share_100~
 
 # Sardinia boundary
 sa<-list(x=fixdat$sardinia$map$km.e,y=fixdat$sardinia$map$km.n)
+# data
+sa.dat<-list(x=fixdat$sardinia$dat$km.e,
+             y=fixdat$sardinia$dat$km.n,
+             year=fixdat$sardinia$dat$year,
+             share_100=fixdat$sardinia$dat$share_100)
 
 # setup the soap knots
 #20x25
 soap.knots<-make_soap_grid(sa,c(10,10))
 soap.knots<-pe(soap.knots,-c(47))
 
-onoff<-inSide(sa,av.dat$x,av.dat$y)
+sc.ksize<-c(20,4)
 
-av.dat.sa<-pe(av.dat,onoff)
-
+#sa.soap<- gam(share_100~
+#   te(x,y,year,bs=c("sf","cr"),k=sc.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))+
+#   te(x,y,year,bs=c("sw","cr"),k=sc.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))
+#            ,knots=soap.knots,data=av.dat.sa,family=Gamma(link="log"),method="REML")
 sa.soap<- gam(share_100~
-   te(x,y,year,bs=c("sf","cr"),k=c(20,4),d=c(2,1),xt=list(list(bnd=list(sa)),NULL))+
-   te(x,y,year,bs=c("sw","cr"),k=c(20,4),d=c(2,1),xt=list(list(bnd=list(sa)),NULL))
-            ,knots=soap.knots,data=av.dat.sa,family=Gamma(link="log"),method="REML")
+   te(x,y,year,bs=c("sf","cr"),k=sc.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))+
+   te(x,y,year,bs=c("sw","cr"),k=sc.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))
+            ,knots=soap.knots,data=av.dat.sa,family=Tweedie(link=power(0),p=1.5),method="REML")
 ##########################
 
 
