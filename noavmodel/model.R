@@ -47,7 +47,7 @@ it.soap<- gam(share_100~
    te(x,y,year,bs=c("sw","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=list(it)),NULL))
             ,knots=soap.knots,data=it.dat,family=Tweedie(link=power(0),p=1.5),method="REML")
 ##########################
-
+gc()
 
 ########################
 # Sardinia 
@@ -65,17 +65,18 @@ sa.dat<-list(x=fixdat$sardinia$dat$km.e,
 soap.knots<-make_soap_grid(sa,c(10,10))
 soap.knots<-pe(soap.knots,-c(47))
 
-sc.ksize<-c(20,4)
+sa.ksize<-c(20,4)
 
 #sa.soap<- gam(share_100~
 #   te(x,y,year,bs=c("sf","cr"),k=sc.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))+
 #   te(x,y,year,bs=c("sw","cr"),k=sc.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))
 #            ,knots=soap.knots,data=av.dat.sa,family=Gamma(link="log"),method="REML")
 sa.soap<- gam(share_100~
-   te(x,y,year,bs=c("sf","cr"),k=sc.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))+
-   te(x,y,year,bs=c("sw","cr"),k=sc.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))
+   te(x,y,year,bs=c("sf","cr"),k=sa.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))+
+   te(x,y,year,bs=c("sw","cr"),k=sa.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))
             ,knots=soap.knots,data=av.dat.sa,family=Tweedie(link=power(0),p=1.5),method="REML")
 ##########################
+gc()
 
 
 
@@ -84,21 +85,27 @@ sa.soap<- gam(share_100~
 
 # Sicily boundary
 sc<-list(x=fixdat$sicily$map$km.e,y=fixdat$sicily$map$km.n)
+# data
+sc.dat<-list(x=fixdat$sicily$dat$km.e,
+             y=fixdat$sicily$dat$km.n,
+             year=fixdat$sicily$dat$year,
+             share_100=fixdat$sicily$dat$share_100)
 
 # setup the soap knots
-#20x25
 soap.knots<-make_soap_grid(sc,c(10,10))
 #soap.knots<-pe(soap.knots,-c(4,5,11,35,61,68,108))
 
-onoff<-inSide(sc,av.dat$x,av.dat$y)
-
-av.dat.sc<-pe(av.dat,onoff)
-
+sc.bsize<-c(20,4)
+#sc.soap<- gam(share_100~
+#   te(x,y,year,bs=c("sf","cr"),k=c(20,4),d=c(2,1),xt=list(list(bnd=list(sc)),NULL))+
+#   te(x,y,year,bs=c("sw","cr"),k=c(20,4),d=c(2,1),xt=list(list(bnd=list(sc)),NULL))
+#            ,knots=soap.knots,data=av.dat.sc,family=Gamma(link="log"),method="REML")
 sc.soap<- gam(share_100~
-   te(x,y,year,bs=c("sf","cr"),k=c(20,4),d=c(2,1),xt=list(list(bnd=list(sc)),NULL))+
-   te(x,y,year,bs=c("sw","cr"),k=c(20,4),d=c(2,1),xt=list(list(bnd=list(sc)),NULL))
-            ,knots=soap.knots,data=av.dat.sc,family=Gamma(link="log"),method="REML")
+   te(x,y,year,bs=c("sf","cr"),k=sc.bsize,d=c(2,1),xt=list(list(bnd=list(sc)),NULL))+
+   te(x,y,year,bs=c("sw","cr"),k=sc.bsize,d=c(2,1),xt=list(list(bnd=list(sc)),NULL))
+            ,knots=soap.knots,data=av.dat.sc,family=Tweedie(link=power(0),p=1.5),method="REML")
 ##########################
+gc()
 
 
 
