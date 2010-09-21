@@ -36,16 +36,16 @@ soap.knots<-make_soap_grid(it,c(20,25))
 soap.knots<-pe(soap.knots,-c(4,5,11,35,61,68,108))
 
 # basis size
-it.bsize<-c(30,6)
+it.bsize<-c(20,6)
 
-#it.soap<- gam(share_100~
-#   te(x,y,year,bs=c("sf","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=list(it)),NULL))+
-#   te(x,y,year,bs=c("sw","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=list(it)),NULL))
-#            ,knots=soap.knots,data=it.dat,family=Gamma(link="log"),method="REML")
 it.soap<- gam(share_100~
    te(x,y,year,bs=c("sf","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=list(it)),NULL))+
    te(x,y,year,bs=c("sw","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=list(it)),NULL))
-            ,knots=soap.knots,data=it.dat,family=Tweedie(link=power(0),p=1.5),method="REML")
+            ,knots=soap.knots,data=it.dat,family=Gamma(link="log"),method="REML")
+#it.soap<- gam(share_100~
+#   te(x,y,year,bs=c("sf","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=list(it)),NULL))+
+#   te(x,y,year,bs=c("sw","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=list(it)),NULL))
+#            ,knots=soap.knots,data=it.dat,family=Tweedie(link=power(0),p=1.5),method="REML")
 ##########################
 gc()
 
