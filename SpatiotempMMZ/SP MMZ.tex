@@ -372,20 +372,13 @@ Small values for $N_b$ are typically tolerable. In practice, $N_b$ can be set to
 
 \section{Empirical results \label{ER}}
 
-In this section we illustrate and draw inference from the models described above. The maps resulting from these models give new insights into the distribution of resident foreign population through both space and time. (\textbf{this is shit but something like this would be fine})
-
-
-(\textbf{this goes here or at the end I think...})These new datasets from ISTAT on the number of foreigners present at municipal level along with our modelling approach have allowed us to fill gaps in our knowledge about the resident foreign population. They allow for the possibility of measuring the incidence of foreigners in the total population with greater spatial and temporal detail as well as allowing us to explore the spatiotemporal interaction in the data.
-
-
-
-%For analyzing a spatiotemporal phenomena of qualitative or quantitative type, thematic geographical or topographical maps are typically used to highlight, e.g., distributions, correlations and differentiations in the territory. However, not only the resulting maps are affected by choices such as the interval definition of the indicator or measure (e.g., quartiles, percentiles or customized) and color associated with each interval, a traditional approach does not take into account any spatial or temporal structure present in the data. This is why a new modeling approach such as the one employed here is required in order to provide maps characterizing reliably spatiotemporal patterns.
-
+We now present the results of running the models detailed above. We first look at the results of the model for incidence of resident foreigners, then the model for the constructed index. Finally, we show that there is a correlation between these two sets of maps and explore the possible explanations for and consequences of this.
 
 \subsection{Spatiotemporal trends \label{STT}}
 
+Measure (\ref{first.d1}) is usually computed at a national, regional or provincial level(\textbf{CITE!}). The incidence of foreigners on a national level in Italy was 6.5\% in 2008. This piece of information does not tell us anything specific on the observed difference between northern and southern country, or on the presence of areas with particularly high levels of foreigners. This kind of  low resolution statistic can mask smaller-scale heterogeneity in the population. Our aim here is to capture exactly this spatial heterogeneity.
 
-Figure \ref{fig2} shows the spatiotemporal trend of the incidence of resident foreign population in Italy for the period 2003--2008. Two obvious features stand out: 1) the distribution of foreigners is not homogeneous in space or time, and 2) the striking difference in incidence between north and south Italy.  
+Figure \ref{fig2} shows the spatiotemporal trend of the incidence of resident foreign population in Italy for the period 2003--2008. Two features stand out: 1) the distribution of foreigners is not homogeneous in space or time, and 2) the striking difference in incidence between north and south. Clearly this inhomogeneous distribution is not captured in the above, national, statistic for incidence.
 
 \begin{figure}[tbp]
 	\centering
@@ -402,9 +395,7 @@ Figure \ref{fig2} shows the spatiotemporal trend of the incidence of resident fo
 	\label{fig1}
 \end{figure}
 
-Over 2003--2008, the Po Valley (see Figure \ref{fig1}) appears to be the most attractive part of the country for foreign population. In 2008, the area's incidence was 10\% higher than the national average of 6.5\%(\textbf{CHECK: is this what you mean?}). Looking at Figure \ref{fig2}, we can see the progressive formation of four foci: the centre of the Po Valley, central Italy(\textbf{near...}), and at the extremes in the northeast and northwest of the country. Foreigners seem less attracted to the regions and islands of southern Italy during the investigated period, emphasising the dichotomy between the north and south
-
-We also see a progressive growth of incidence of foreigners at the borders with Switzerland and Austria (from about 1\% in 2003 to about 3--4\% in 2008). We  would expect lifestyle, job, transportation in these, mountainous, areas to be different from those lower altitudes. In order to understand the appeal of these areas to foreigners further studies are needed. (\textbf{do we want to ref or say we checked this?})
+From Figure \ref{fig2} we can see that from the Po Valley (see Figure \ref{fig1}) the incidence spreads out to form four distinct foci over the course of the observed period. Foreigners are particularly attracted to the centre of the Po Valley, central Italy(\textbf{near... Rome, Pisa and Florence?}), and in the extreme northeast and northwest of the country (\textbf{do any of these encompass Milan?}). The Po Valley appears to be the most attractive part of the country for foreigners. In 2008, the area's incidence was 10\% higher than the national average of 6.5\%(\textbf{CHECK: is this what you mean?}). We also see growth in incidence at the borders with Switzerland and Austria (from about 1\% in 2003 to about 3--4\% in 2008). In order to understand the appeal of these areas to foreigners further studies are needed. Foreigners seem less attracted to the regions and islands of southern Italy during the investigated period.
 
 \begin{figure}[tbp]
 	\centering
@@ -413,64 +404,55 @@ We also see a progressive growth of incidence of foreigners at the borders with 
 	\label{trends}
 \end{figure}
 
-Figure \ref{trends}, shows the estimated temporal trends for both the full Italian territory, and broken down by area (\textbf{Need to say what the cut points were, maybe in the caption?}). The trends for northern and central Italy are similar. However, those for southern Italy and the islands are much flatter. Over the period 2003--2005, northern and central Italy show a faster growth in incidence. This phenomenon does not appear in the rest of the country. (\textsf{MORE here})
-
-Measure (\ref{first.d1}) is usually computed at a national, regional or provincial level(\textbf{CITE!}). The incidence of foreigners, nationally, was 6.5\% in 2008. This piece of information does not tell us anything specific on the observed difference between northern and southern country, or on the presence of areas with particularly high levels of foreigners. Producing such maps at a low resolution can mask small-scale heterogeneity in the population. Here, we aim to capture exactly this spatial heterogeneity.
+Figure \ref{trends}, shows the estimated temporal trends for both the full Italian territory, and broken down by area (\textbf{Need to say what the cut points were, maybe in the caption?}). The trends for northern and central Italy are similar. However, those for southern Italy and the islands are much flatter. Northern and central Italy show a faster growth in incidence . These trends reflect what we see in the maps in Figure \ref{fig2}, that there is something different about the south of the country and its islands.
 
 \subsection{Incidence of resident foreigners and spatial economic attractiveness: is there a connection? \label{NEX}}
 
-Here we investigate a possible explanation for the heterogeneous distribution of foreigners using some economic features. We first describe the construction of a composite indicator of spatial economic attractiveness (ISEA), before moving onto a discussion of whether there is a connection in the distribution of the incidence of foreigners and spatial economic features.(\textbf{reword})
+Given this difference between north and south, we now investigate a possible explanation using some economic variables. We first describe the construction of a composite indicator of spatial economic attractiveness (ISEA), before moving onto a discussion of whether there is a connection in the spatiotemporal distribution of the incidence of foreigners and ISEA.
 
-\subsubsection{The composite indicator of spatial economic attractiveness (ISEA) \label{ISEA}}
+\subsubsection{Construction of the indicator of spatial economic attractiveness (ISEA) \label{ISEA}}
 
-We construct a simple composite indicator using three economic variables chosen for their relevance, accuracy, frequency of update and accessibility, as well as coherence with our overall purpose. In particular, the following indicators were chosen:
+We construct a simple composite indicator using three economic variables chosen for their relevance, accuracy, frequency of update and accessibility, as well as coherence with our overall purpose. These variables are:
 
 \begin{itemize}
-\item \textbf{Added value per capita at constant prices (base year 2000):} this measure has been computed as ratio between the added value at constant prices and number of inhabitants. This measure should capture the spatial economic wealth produced in a particular area. (\textbf{CITE!})
-\item \textbf{Unemployment rate:} to measure the tension in the labor market due to an excess of labor supply (by workers) with respect to labor demand (by companies). (\textbf{this doesn't say how it's measured})
-\item \textbf{Employment rate:} this indicator quantifies the incidence of the employed population in the total population. In our case, we have computed the specific rate of employment as ratio between the employed (15--64 years) and total labour force. (15--64 years). 
+\item \textbf{Added value per capita at constant prices (base year 2000):} computed as the ratio of added value at constant prices and number of inhabitants. This measure should capture the wealth produced in a particular area. (\textbf{CITE! Where else is this used/defined?})
+\item \textbf{Unemployment rate:} calculated as the percentage of the labour force (15--64 year olds) not in work. This measures the tension in the labour market due to an excess of labour supply (by workers) with respect to labor demand (by companies).
+\item \textbf{Employment rate:} computed as the percentage of the total labour force (15--64 year olds) in work. (\textbf{maybe say something more here})
 \end{itemize}
 
-The maximum spatial detail of these indicators is at province level and were provided by ISTAT.
+Data were provided by ISTAT, at province level (the highest resolution available).
 
-Following the methods of OECD (2008) in constructing composite indicators, we have chosen to use principal component analysis (PCA) to define weights for the aggregation of indicators (Hair et al. 2006). This choice is supported by the high correlation between the economic variables listed above. Before performing PCA, outlier presence was checked.
+As in OECD (2008), the composite indicator was constructed using principal component analysis (PCA) to define weights for the aggregation of indicators (Hair et al. 2006). The high correlation between the economic variables listed above, further emphasises the need for such an approach. Before performing PCA, outlier presence was checked.
 
-The PCA was performed for each year in the period 2003--2008 using the \texttt{princomp()} function in \texttt{R}. In accordance with both our expectations and the economic theory, coefficients in the first principal component for the added value per capita and employment rate were positive, and negative for unemployment rate. Sign and magnitude of the coefficients were stable for those years investigated. The eigenvalue of first principal component was greater than unity and explains more than 90\% of the variance. We believe that the first component accurately represents the composite indicator of interest (\textbf{fix}). The standardised scores were normalised using a `min-max' procedure (p. 85, OECD 2008) for ranking scores in a range scale from 0 to 100. This method was viable due to the absence of outliers in the standardised scores. Further details on the results of principal component analysis are available upon request.
+PCA was performed for each year in the period 2003--2008 using the \texttt{princomp()} function in \texttt{R}. In accordance with both our expectations and the economic theory, coefficients in the first principal component for the added value per capita and employment rate were positive, and negative for unemployment rate. Sign and magnitude of the coefficients were stable for those years investigated. The eigenvalue of first principal component was greater than unity and explains more than 90\% of the variance. For this reason, we believe that the first component accurately represents the composite indicator. Since there were no outliers in the standardised scores, they were normalised using a `min-max' procedure (p. 85, OECD 2008), ranking them between 0 to 100. Further details on the results of principal component analysis are available upon request.
  
 \begin{figure}[tbp]
 \centering
 	\includegraphics[width=0.66\textwidth, angle=270]{sensitivity.eps}
-\caption{Scatter plots analysis with the ISEA on the Y-axis and each input source on the X-axis. (\textbf{what happened to the other years, need to say that these are representative samples!})(\textbf{Put the axis labels and titles on all the plots})}
+\caption{Scatter plots of ISEA against each of the economic variables. (\textbf{what happened to the other years, need to say that these are representative samples!})(\textbf{Put the axis labels and titles on all the plots})}
 	\label{fig4}
 \end{figure}
 
-For each investigated year, the ISEA was plotted against each of the economic indicators  (see Figure \ref{fig4}). These scatterplots can reveal relationships between the individual indicators and the composite index (p. 35, OECD 2008). A value of composite indicator close to 100 corresponds to the highest levels of added value per capita and employment rate and to the lowest levels of unemployment rate. For low values of the composite indicator we have observed the opposite effect. The proposed composite indicator ranks the Italian provinces, on a yearly basis, from the most to the least attractive from both an economic and labor market standpoint.
+Scatterplots of the composite indicator against its components (Figure \ref{fig4}) can reveal relationships between the individual indicators and the composite index (p. 35, OECD 2008). A value of composite indicator close to 100 corresponds to the highest levels of added value per capita and employment rate and to the lowest levels of unemployment rate. For low values of the composite indicator we observe the opposite effect. The proposed composite indicator ranks the Italian provinces, on a yearly basis, from the most to the least attractive from both an economic and labour market standpoint.
 
-\subsubsection{...is there a connection? \label{nexus}}
+\subsubsection{Is there a connection between ISEA and incidence? \label{nexus}}
 
-Figure \ref{fig5} shows spatiotemporal maps of the ISEA, obtained using the same methodology as in Section \ref{METH}. Due to the small number of observations available, there Sardinia is omitted from these plots. The maps show a clear gradient running from the highest levels in the north to the lowest in the  south. Scatter plots of Figure \ref{fig4} help to better highlight the magnitude of these differences.
+Figure \ref{fig5} shows spatiotemporal maps of the ISEA, obtained using the same methodology as in Section \ref{METH}. Due to the small number of observations available, there Sardinia is omitted from these plots. The maps show a clear gradient running from the highest levels in the north to the lowest in the south. The difference between the north and south of the country can be explained by factors such as the lack of infrastructure in the south; the economic benefits of which have been demonstrated (Chandra and Thompson 2000; Bronzini and Piselli 2009; Miller, Hoel and Ellington 2009; Lakshmanan 2010). Despite increasing labour market flexibility, which contributed to a reduction in unemployment (Zanin and Marra 2010), the highest and most persistent levels of unemployment are reported in southern provinces ($>$10\%, compared to $\leq$ 5\% in the north).(\textbf{are there papers on there being a more structural element to unemployment in south as compared to north?})
 
-\begin{figure}[htbp]
+\begin{figure}[tbp]
 	\centering
 		\includegraphics[width=0.66\textwidth, angle=270]{index.eps}
 	\caption{Spatial distribution of index of spatial attractiveness over Italy for the years 2003-2008. Predictions were made over those points lying inside the study region from a 100 by 100 grid.}
 	\label{fig5}
 \end{figure}
 
-Between an ISEA value of above 80 and below 30, there was a significant gap in terms of added value per capita: a value around 20-30000 euros in the first case, while around 10-15000 euros in the second case. (\textbf{don't understand what you mean here}) 
+Figure \ref{fig4}'s scatterplots highlight the magnitude of these differences. Between an ISEA value of above 80 and below 30, there was a significant gap in terms of added value per capita: a value around 20-30000 euros in the first case, while around 10-15000 euros in the second case. (\textbf{don't understand what you mean here, can you elaborate?}) 
 
-(\textbf{SQUASH})
-As evidenced in other empirical studies, this gap between the two macroareas of the country (the north and the south) has a structural nature (Luciano 2004; Petacchini 2008; Daniele 2009). 
-(\textbf{can't really make this assertion, yes, we know that the low values are in southern regions and high in northern but we can't transfer that into our scatterplots --- there could be a mix})
+One would expect that there would be a higher incidence of resident foreigners in areas with high ISEA values and vice versa. This is supported by the primary reason for the resident foreigner's presence in Italy: employment (Fullin and Reyneri 2010). By this reasoning, foreigners should take up residence in places where there are jobs available to them. If we overlay Figure \ref{fig2} onto Figure \ref{fig5}, we can see that there is a clear correlation between incidence of resident foreigners and the ISEA. Areas with a higher level of composite indicator have the highest incidence of foreigners, and vice versa.
 
-We would expect that there would be a higher incidence of resident foreigners in areas with high ISEA values and vice versa. This hypotesis is also supported by additional elements, such as the young age of foreigners (see Section \ref{DEM}) and their mainly presence in Italy for working reasons (Fullin and Reyneri 2010). (\textbf{don't think that the first part of this follows})
-(\textbf{SQUASH})
+Other empirical studies (Luciano 2004; Petacchini 2008; Daniele 2009) assert that this gap between north and south Italy has a structural nature. The maps in Figure \ref{fig2} support this to some degree, as we see that there is a spatial trend in incidence, however the mechanisms behind this are still unclear. The association between the incidence and the ISEA gives one plausible explanation: that foreigners inhabit  economically prosperous areas where they can find employment.
 
-At this point, it is necessary to answer the question: is there a nexus between incidence of resident foreigners and spatial economic attractiveness? The answer is `\textsl{yes}' (\textbf{MAYBE!}). If we overlay Figure \ref{fig2} onto Figure \ref{fig5}, we can see a clear correlation in magnitude of incidence of foreigners and the ISEA. Areas with a higher level of composite indicator have showed the highest incidence of foreigners, and vice versa.
-
-As a possible extension to a qualitative analysis, this relationship could be tested econometrically using model \ref{PropM} and adding the composite indicator as an exogenous variable. However, as discussed in Section \ref{ISEA}, given the constraint on spatial dimension of indicators useful to construct the proposed composite indicator (the incidence of foreigners is computed at a municipality level, while the composite indicator at a provincial level), we have considered the two analyses separately. The main aim of this study is to model the spatiotemporal distribution of resident foreign population, and the proposed composite indicator, could contribute towards explaining some of the reasons for the spatial heterogeneity observed in the maps in Figure \ref{fig2}.
-
-
+As a possible extension to a qualitative analysis, this relationship could be tested econometrically using model \ref{PropM} and adding the composite indicator as an exogenous variable. However, as discussed in Section \ref{ISEA}, given the computational constraints and the differing spatial dimension of the quantities being modelled (the incidence of foreigners is computed at a municipality level, while the composite indicator at a provincial level), we have considered the two analyses separately. The main aim of this study is to model the spatiotemporal distribution of resident foreign population. The proposed composite indicator could contribute towards explaining some of the observed spatial heterogeneity, but it represents only one of many possible avenues to explore.
 
 \section{Concluding remarks \label{CONC}}
 XX
