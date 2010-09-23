@@ -49,6 +49,8 @@ it.soap<- gam(share_100~
 ##########################
 gc()
 
+save.image("it.RData")
+
 ########################
 # Sardinia 
 
@@ -65,19 +67,20 @@ sa.dat<-list(x=fixdat$sardinia$dat$km.e,
 soap.knots<-make_soap_grid(sa,c(10,10))
 soap.knots<-pe(soap.knots,-c(47))
 
-sa.ksize<-c(20,4)
+sa.ksize<-c(10,4)
 
-#sa.soap<- gam(share_100~
-#   te(x,y,year,bs=c("sf","cr"),k=sc.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))+
-#   te(x,y,year,bs=c("sw","cr"),k=sc.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))
-#            ,knots=soap.knots,data=av.dat.sa,family=Gamma(link="log"),method="REML")
 sa.soap<- gam(share_100~
-   te(x,y,year,bs=c("sf","cr"),k=sa.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))+
-   te(x,y,year,bs=c("sw","cr"),k=sa.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))
-            ,knots=soap.knots,data=av.dat.sa,family=Tweedie(link=power(0),p=1.5),method="REML")
+   te(x,y,year,bs=c("sf","cr"),k=sc.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))+
+   te(x,y,year,bs=c("sw","cr"),k=sc.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))
+            ,knots=soap.knots,data=av.dat.sa,family=Gamma(link="log"),method="REML")
+#sa.soap<- gam(share_100~
+#   te(x,y,year,bs=c("sf","cr"),k=sa.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))+
+#   te(x,y,year,bs=c("sw","cr"),k=sa.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))
+#            ,knots=soap.knots,data=av.dat.sa,family=Tweedie(link=power(0),p=1.5),method="REML")
 ##########################
 gc()
 
+save.image("sa.RData")
 
 
 ########################
@@ -95,20 +98,22 @@ sc.dat<-list(x=fixdat$sicily$dat$km.e,
 soap.knots<-make_soap_grid(sc,c(10,10))
 #soap.knots<-pe(soap.knots,-c(4,5,11,35,61,68,108))
 
-sc.bsize<-c(20,4)
-#sc.soap<- gam(share_100~
-#   te(x,y,year,bs=c("sf","cr"),k=c(20,4),d=c(2,1),xt=list(list(bnd=list(sc)),NULL))+
-#   te(x,y,year,bs=c("sw","cr"),k=c(20,4),d=c(2,1),xt=list(list(bnd=list(sc)),NULL))
-#            ,knots=soap.knots,data=av.dat.sc,family=Gamma(link="log"),method="REML")
+sc.bsize<-c(10,4)
 sc.soap<- gam(share_100~
-   te(x,y,year,bs=c("sf","cr"),k=sc.bsize,d=c(2,1),xt=list(list(bnd=list(sc)),NULL))+
-   te(x,y,year,bs=c("sw","cr"),k=sc.bsize,d=c(2,1),xt=list(list(bnd=list(sc)),NULL))
-            ,knots=soap.knots,data=av.dat.sc,family=Tweedie(link=power(0),p=1.5),method="REML")
+   te(x,y,year,bs=c("sf","cr"),k=c(20,4),d=c(2,1),xt=list(list(bnd=list(sc)),NULL))+
+   te(x,y,year,bs=c("sw","cr"),k=c(20,4),d=c(2,1),xt=list(list(bnd=list(sc)),NULL))
+            ,knots=soap.knots,data=av.dat.sc,family=Gamma(link="log"),method="REML")
+#sc.soap<- gam(share_100~
+#   te(x,y,year,bs=c("sf","cr"),k=sc.bsize,d=c(2,1),xt=list(list(bnd=list(sc)),NULL))+
+#   te(x,y,year,bs=c("sw","cr"),k=sc.bsize,d=c(2,1),xt=list(list(bnd=list(sc)),NULL))
+#            ,knots=soap.knots,data=av.dat.sc,family=Tweedie(link=power(0),p=1.5),method="REML")
 ##########################
 gc()
 
+save.image("sc.RData")
 
 
+pdf(file="maps.pdf",width=9)
 ########################
 # now make the image plot
 
@@ -185,3 +190,6 @@ for (year in years){
    lines(sc,lwd=2)
 
 }
+
+
+dev.off()
