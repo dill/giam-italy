@@ -1,7 +1,7 @@
 # index model
 # index constructed by Luca
 
-source("models.R")
+source("fixit.R")
 
 # run fixdat
 inddat<-read.csv(file="database/database_index.csv")

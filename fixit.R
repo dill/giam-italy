@@ -1,6 +1,4 @@
-# using the new database now...
-
-# packages
+# function to do the formatting to the data
 library(maps)
 library(mapdata)
 library(soap)
@@ -13,7 +11,7 @@ source("latlong2km.R")
 source("makesoapgrid.R")
 source("eda.R")
 
-# function to do the formatting to the data
+
 fix_it_data<-function(data){
 
    ##### Mainland
@@ -55,10 +53,10 @@ fix_it_data<-function(data){
    it.dat$km.e<-ne.km$km.e
    it.dat$km.n<-ne.km$km.n
 
-#   if(!is.null(inddat$share_100)){
-#      # make share_100 work with the log link
+   if(!is.null(inddat$share_100)){
+      # make share_100 work with the log link
       it.dat$share_100<-it.dat$share_100+1e-6
-#   }
+   }
 
    # also return the boundary in km
    it.map<-latlong2km(it.map$x,it.map$y,11.5,44)
@@ -78,10 +76,10 @@ fix_it_data<-function(data){
    sc.dat$km.e<-ne.km$km.e
    sc.dat$km.n<-ne.km$km.n
 
- #  if(!is.null(inddat$share_100)){
- #     # make share_100 work with the log link
+   if(!is.null(inddat$share_100)){
+      # make share_100 work with the log link
       sc.dat$share_100<-sc.dat$share_100+1e-6
- #  }
+   }
 
    # also return the boundary in km
    sc.map<-latlong2km(sc.map$x,sc.map$y,11.5,44)
@@ -100,10 +98,10 @@ fix_it_data<-function(data){
    sa.dat$km.e<-ne.km$km.e
    sa.dat$km.n<-ne.km$km.n
 
- #  if(!is.null(inddat$share_100)){
- #     # make share_100 work with the log link
+   if(!is.null(inddat$share_100)){
+      # make share_100 work with the log link
       sa.dat$share_100<-sa.dat$share_100+1e-6
- #  }
+   }
 
    # also return the boundary in km
    sa.map<-latlong2km(sa.map$x,sa.map$y,11.5,44)

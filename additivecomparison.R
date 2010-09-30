@@ -12,7 +12,7 @@ source("pe.R")
 source("latlong2km.R")
 source("makesoapgrid.R")
 source("eda.R")
-source("models.R")
+source("fixit.R")
 
 # run fixdata anyway to get the boundaries
 full<-read.csv(file="database/database_complete.csv")

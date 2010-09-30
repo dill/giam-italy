@@ -1,4 +1,15 @@
 # EDA for the Italian data
+library(maps)
+library(mapdata)
+library(soap)
+library(maps)
+library(adehabitat)
+
+# extra scripts
+source("pe.R")
+source("latlong2km.R")
+source("makesoapgrid.R")
+source("eda.R")
 
 do_eda<-function(fullll,plot.it=FALSE,zlim,year,dat.ret=FALSE){
    # want to create a matrix to use with image
@@ -34,12 +45,6 @@ do_eda<-function(fullll,plot.it=FALSE,zlim,year,dat.ret=FALSE){
    
    # image matrix
    im.mat<-matrix(NA,grid.res,grid.res)
-   
-   #i+.mat<-matrix(NA,grid.res,grid.res)
-   
-
-
-#   for(this.year in 
 
    # put the observations into the grid
    for(i in 1:length(x.start)){
@@ -58,26 +63,6 @@ do_eda<-function(fullll,plot.it=FALSE,zlim,year,dat.ret=FALSE){
       }
    }
 
-   # need to speed this up...
-   #y.ind<-floor((ne.km$y-y.start[1])/diff(y.start)[1])
-   #x.ind<-floor((ne.km$x-x.start[1])/diff(x.start)[1])
-
-   #for(i in 1:length(x.start)){
-   #   for(j in 1:length(y.start)){
-   #
-   #      ind<-y.ind[j]+grid.res*x.ind[i]
-   #      
-   #      # take the mean of the standardised proportion of foreign
-   #      # population, ignoring NAs
-   #      sq<-mean(fullll$share_100[ind],na.rm=T)
-   #      yr<-mean(fullll$year[ind],na.rm=T)
-   #
-   #      im.mat[i,j]<-sq
-   #
-   #   }
-   #}
-
-   
    im.copy<-im.mat
    im.copy[is.nan(im.copy)]<-0
    seqlen<-sum(rowSums(im.copy)>=0)
@@ -88,11 +73,6 @@ do_eda<-function(fullll,plot.it=FALSE,zlim,year,dat.ret=FALSE){
    #y.stop<-y.stop[rowSums(im.copy)>0]
    im.copy<-im.copy[rowSums(im.copy)>=0,]
 
-   
-   #im.copy[im.copy==0]<-NA
-
-
-   
    # create the grid sequences
    xs<-seq(x.start[1],x.stop[length(x.stop)],len=seqlen)
    ys<-seq(y.start[1],y.stop[length(y.stop)],len=grid.res)
@@ -127,12 +107,9 @@ do_eda<-function(fullll,plot.it=FALSE,zlim,year,dat.ret=FALSE){
 
       dat<-pe(dat,ins)
 
-
    }else{
       dat<-NULL
    }
 
-
    return(list(xlim=xlim,ylim=ylim,dat=dat))
-   
 } 

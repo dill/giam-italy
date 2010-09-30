@@ -11,7 +11,7 @@ source("pe.R")
 source("latlong2km.R")
 source("makesoapgrid.R")
 source("eda.R")
-source("models.R")
+source("fixit.R")
 
 # load full data
 full<-read.csv(file="database/database_complete.csv")
