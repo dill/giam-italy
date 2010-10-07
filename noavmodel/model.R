@@ -104,7 +104,6 @@ save.image("it.RData")
 #save.image("sc.RData")
 #
 #
-#pdf(file="maps.pdf",width=9)
 ########################
 # now make the image plot
 
@@ -136,6 +135,7 @@ for (i in 1:length(years)){
    zlim<-c(0,12)
 
 
+pdf(file="maps.pdf",width=9)
 par(mfrow=c(2,3),mar=c(4.5,4.5,2,2))
 
 
@@ -150,8 +150,9 @@ for (i in 1:length(years)){
    lines(it,lwd=2)
 
 }
+dev.off()
 
-x11()
+pdf(file="gamcheck.pdf",width=9)
 gam.check(it.soap)
 
-#dev.off()
+dev.off()
