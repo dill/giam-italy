@@ -91,7 +91,7 @@ gc()
 ######################
 # SAVE
 ######################
-save.image("fullmod.RData")
+save.image(paste("fullmod-",it.soap$family[[1]],".RData",sep=""))
 
 ########################
 # now make the image plot
@@ -131,7 +131,7 @@ xlim<-c(xm[1]-25,xm[length(xm)])
 ylim<-c(yn[1]-25,yn[length(yn)]+25)
 zlim<-c(0,12)
 
-pdf(file="maps.pdf",width=9)
+pdf(paste("maps-",it.soap$family[[1]],".pdf",sep=""),width=9)
 par(mfrow=c(2,3),mar=c(4.5,4.5,2,2))
 
 for (i in 1:length(years)){
@@ -153,12 +153,12 @@ for (i in 1:length(years)){
 }
 dev.off()
 
-pdf(file="gamcheck-it.pdf",width=9)
+pdf(paste("gamcheck-it-",it.soap$family[[1]],".pdf",sep=""),width=5)
 gam.check(it.soap)
 dev.off()
-pdf(file="gamcheck-sa.pdf",width=9)
+pdf(paste("gamcheck-sa-",it.soap$family[[1]],".pdf",sep=""),width=5)
 gam.check(sa.soap)
 dev.off()
-pdf(file="gamcheck-sc.pdf",width=9)
+pdf(paste("gamcheck-sc-",it.soap$family[[1]],".pdf",sep=""),width=5)
 gam.check(sc.soap)
 dev.off()
