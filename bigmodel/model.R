@@ -1,4 +1,4 @@
-# read in av data and run the model
+# huge model
 # this is the big fat version that does Italy, Sardinia and Sicily...
 
 library(maps)
@@ -17,16 +17,48 @@ fixdat<-fix_it_data(full)
 # Italy
 # Italy boundary
 it<-list(x=fixdat$italy$map$km.e,y=fixdat$italy$map$km.n)
-# data
-it.dat<-list(x=fixdat$italy$dat$km.e,
-             y=fixdat$italy$dat$km.n,
-             year=fixdat$italy$dat$year,
-             share_100=fixdat$italy$dat$share_100)#+1e-15)
+# Sardinia boundary
+sa<-list(x=fixdat$sardinia$map$km.e,y=fixdat$sardinia$map$km.n)
+# Sicily boundary
+sc<-list(x=fixdat$sicily$map$km.e,y=fixdat$sicily$map$km.n)
+# a big boundary
+bigbnd<-list(it,sa,sc)
+
+# Data
+dat<-list(x=c(fixdat$italy$dat$km.e,
+              fixdat$sicily$dat$km.e,
+              fixdat$sardinia$dat$km.e),
+          y=c(fixdat$italy$dat$km.n,
+              fixdat$sicily$dat$km.n,
+              fixdat$sardinia$dat$km.n),
+          year=c(fixdat$italy$dat$year,
+                 fixdat$sicily$dat$year,
+                 fixdat$sardinia$dat$year),
+          share_100=c(fixdat$italy$dat$share_100,
+                      fixdat$sicily$dat$share_100,
+                      fixdat$sardinia$dat$share_100))
 
 # setup the soap knots
-soap.knots<-make_soap_grid(it,c(15,15))
-#soap.knots<-pe(soap.knots,-c(4,5,11,35,61,68,108)) #20 x 25
-soap.knots<-pe(soap.knots,-c(1,46)) #15 x15
+soap.knots.it<-make_soap_grid(it,c(15,15))
+soap.knots.it<-pe(soap.knots.it,-c(1,46)) #15 x15
+soap.knots.sa<-make_soap_grid(sa,c(6,7))
+soap.knots.sc<-make_soap_grid(sc,c(6,6))
+soap.knots<-list(x=c(soap.knots.it$x,soap.knots.sa$x,soap.knots.sc$x),
+                 y=c(soap.knots.it$y,soap.knots.sa$y,soap.knots.sc$y))
+
+# basis size
+it.bsize<-c(20,6)
+
+# a very big model...
+big.soap<- gam(share_100~
+   te(x,y,year,bs=c("sf","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=bigbnd),NULL))+
+   te(x,y,year,bs=c("sw","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=bigbnd),NULL))
+            ,knots=soap.knots,data=dat)
+#            ,knots=soap.knots,data=it.dat,family=Tweedie(link=power(0),p=1.6),method="REML")
+
+
+
+
 
 # basis size
 it.bsize<-c(20,6)
@@ -44,16 +76,7 @@ gc()
 ########################
 # Sardinia 
 
-# Sardinia boundary
-sa<-list(x=fixdat$sardinia$map$km.e,y=fixdat$sardinia$map$km.n)
-# data
-sa.dat<-list(x=fixdat$sardinia$dat$km.e,
-             y=fixdat$sardinia$dat$km.n,
-             year=fixdat$sardinia$dat$year,
-             share_100=fixdat$sardinia$dat$share_100)
 
-# setup the soap knots
-soap.knots<-make_soap_grid(sa,c(6,8))
 
 sa.ksize<-c(8,6)
 
@@ -68,16 +91,8 @@ gc()
 ########################
 # Sicily 
 
-# Sicily boundary
-sc<-list(x=fixdat$sicily$map$km.e,y=fixdat$sicily$map$km.n)
-# data
-sc.dat<-list(x=fixdat$sicily$dat$km.e,
-             y=fixdat$sicily$dat$km.n,
-             year=fixdat$sicily$dat$year,
-             share_100=fixdat$sicily$dat$share_100)
 
 # setup the soap knots
-soap.knots<-make_soap_grid(sc,c(10,10))
 
 sc.bsize<-c(10,6)
 sc.soap<- gam(share_100~

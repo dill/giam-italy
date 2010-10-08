@@ -13,6 +13,9 @@ source("fixit.R")
 full<-read.csv(file="database_complete.csv")
 fixdat<-fix_it_data(full)
 
+eps<-1e-10
+
+
 ########################
 # Italy
 # Italy boundary
@@ -21,7 +24,7 @@ it<-list(x=fixdat$italy$map$km.e,y=fixdat$italy$map$km.n)
 it.dat<-list(x=fixdat$italy$dat$km.e,
              y=fixdat$italy$dat$km.n,
              year=fixdat$italy$dat$year,
-             share_100=fixdat$italy$dat$share_100)#+1e-15)
+             share_100=fixdat$italy$dat$share_100+eps)
 
 # setup the soap knots
 soap.knots<-make_soap_grid(it,c(15,15))
@@ -34,8 +37,8 @@ it.bsize<-c(20,6)
 it.soap<- gam(share_100~
    te(x,y,year,bs=c("sf","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=list(it)),NULL))+
    te(x,y,year,bs=c("sw","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=list(it)),NULL))
-            ,knots=soap.knots,data=it.dat,family=Tweedie(link=power(0),p=1.6),method="REML")
-#            ,knots=soap.knots,data=it.dat,family=Gamma(link="log"),method="REML")
+#            ,knots=soap.knots,data=it.dat,family=Tweedie(link=power(0),p=1.6),method="REML")
+            ,knots=soap.knots,data=it.dat,family=Gamma(link="log"),method="REML")
 ##########################
 gc()
 
@@ -50,7 +53,7 @@ sa<-list(x=fixdat$sardinia$map$km.e,y=fixdat$sardinia$map$km.n)
 sa.dat<-list(x=fixdat$sardinia$dat$km.e,
              y=fixdat$sardinia$dat$km.n,
              year=fixdat$sardinia$dat$year,
-             share_100=fixdat$sardinia$dat$share_100)
+             share_100=fixdat$sardinia$dat$share_100+eps)
 
 # setup the soap knots
 soap.knots<-make_soap_grid(sa,c(6,8))
@@ -60,8 +63,8 @@ sa.ksize<-c(8,6)
 sa.soap<- gam(share_100~
    te(x,y,year,bs=c("sf","cr"),k=sa.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))+
    te(x,y,year,bs=c("sw","cr"),k=sa.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))
-            ,knots=soap.knots,data=sa.dat,family=Tweedie(link=power(0),p=1.6),method="REML")
-#            ,knots=soap.knots,data=sa.dat,family=Gamma(link="log"),method="REML")
+#            ,knots=soap.knots,data=sa.dat,family=Tweedie(link=power(0),p=1.6),method="REML")
+            ,knots=soap.knots,data=sa.dat,family=Gamma(link="log"),method="REML")
 ##########################
 gc()
 
@@ -74,7 +77,7 @@ sc<-list(x=fixdat$sicily$map$km.e,y=fixdat$sicily$map$km.n)
 sc.dat<-list(x=fixdat$sicily$dat$km.e,
              y=fixdat$sicily$dat$km.n,
              year=fixdat$sicily$dat$year,
-             share_100=fixdat$sicily$dat$share_100)
+             share_100=fixdat$sicily$dat$share_100+eps)
 
 # setup the soap knots
 soap.knots<-make_soap_grid(sc,c(10,10))
@@ -83,8 +86,8 @@ sc.bsize<-c(10,6)
 sc.soap<- gam(share_100~
    te(x,y,year,bs=c("sf","cr"),k=sc.bsize,d=c(2,1),xt=list(list(bnd=list(sc)),NULL))+
    te(x,y,year,bs=c("sw","cr"),k=sc.bsize,d=c(2,1),xt=list(list(bnd=list(sc)),NULL))
-            ,knots=soap.knots,data=sc.dat,family=Tweedie(link=power(0),p=1.6),method="REML")
-#            ,knots=soap.knots,data=sc.dat,family=Gamma(link="log"),method="REML")
+#            ,knots=soap.knots,data=sc.dat,family=Tweedie(link=power(0),p=1.6),method="REML")
+            ,knots=soap.knots,data=sc.dat,family=Gamma(link="log"),method="REML")
 ##########################
 gc()
 
