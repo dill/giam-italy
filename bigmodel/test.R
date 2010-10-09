@@ -8,10 +8,12 @@ t <- runif(n)
 z <- fs.test(x,y,b=1)
 z <- z + 4.2
 z <- z^(.5+t)
-fsb<-fs.boundary()
+bnd<-fs.boundary()
 
 # make two horeshoes
-bnd<-list(list(x=bnd$x+1,y=bnd$y),list(x=-(bnd$x+1),y=-bnd$y))
+bnd<-list(list(x=bnd$x+1,y=bnd$y),
+          list(x=-(bnd$x+1),y=-bnd$y))#,
+#          list(x=c(-5,5,5,-5,-5),y=c(-1,-1,1,1,-1)))
 
 # find what's inside
 ind <- inSide(bnd,x=x,y=y) ## remove outsiders
