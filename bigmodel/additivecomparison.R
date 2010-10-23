@@ -10,7 +10,7 @@ library(dillhandy)
 source("fixit.R")
 
 eps<-0
-eps<-1e-8
+#eps<-1e-8
 
 # run fixdata anyway to get the boundaries
 full<-read.csv(file="database_complete.csv")
@@ -36,8 +36,9 @@ it.dat<-list(x=fixdat$italy$dat$km.e,
 it.bsize<-c(120,6)
 
 it.add<- gam(share_100~s(x,y,k=it.bsize[1])+s(year,bs="cr",k=it.bsize[2]),
-#              data=it.dat,family=Tweedie(link=power(0),p=1.6),method="REML")
-             data=it.dat,family=Gamma(link="log"),method="REML")
+              data=it.dat,family=Tweedie(link=power(0),p=1.7),method="REML")
+gam.check(it.add)
+#             data=it.dat,family=Gamma(link="log"),method="REML")
 ##########################
 gc()
 
