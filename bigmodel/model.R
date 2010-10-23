@@ -13,100 +13,81 @@ source("fixit.R")
 full<-read.csv(file="database_complete.csv")
 fixdat<-fix_it_data(full)
 
-########################
-# Italy
+
+eps<-0
+eps<-1e-8
+
 # Italy boundary
 it<-list(x=fixdat$italy$map$km.e,y=fixdat$italy$map$km.n)
 # Sardinia boundary
 sa<-list(x=fixdat$sardinia$map$km.e,y=fixdat$sardinia$map$km.n)
 # Sicily boundary
 sc<-list(x=fixdat$sicily$map$km.e,y=fixdat$sicily$map$km.n)
-# a big boundary
-bigbnd<-list(it,sa,sc)
 
-# Data
-dat<-list(x=c(fixdat$italy$dat$km.e,
-              fixdat$sicily$dat$km.e,
-              fixdat$sardinia$dat$km.e),
-          y=c(fixdat$italy$dat$km.n,
-              fixdat$sicily$dat$km.n,
-              fixdat$sardinia$dat$km.n),
-          year=c(fixdat$italy$dat$year,
-                 fixdat$sicily$dat$year,
-                 fixdat$sardinia$dat$year),
-          share_100=c(fixdat$italy$dat$share_100,
-                      fixdat$sicily$dat$share_100,
-                      fixdat$sardinia$dat$share_100))
 
+
+########################
+# Italy
+it.dat<-list(x=fixdat$italy$dat$km.e,
+          y=fixdat$italy$dat$km.n,
+          year=fixdat$italy$dat$year,
+          share_100=fixdat$italy$dat$share_100+eps)
+
+
+# basis size
+it.bsize<-c(20,6)
 # setup the soap knots
 soap.knots.it<-make_soap_grid(it,c(15,15))
 soap.knots.it<-pe(soap.knots.it,-c(1,46)) #15 x15
-soap.knots.sa<-make_soap_grid(sa,c(6,7))
-soap.knots.sc<-make_soap_grid(sc,c(6,6))
-soap.knots<-list(x=c(soap.knots.it$x,soap.knots.sa$x,soap.knots.sc$x),
-                 y=c(soap.knots.it$y,soap.knots.sa$y,soap.knots.sc$y))
-
-# basis size
-it.bsize<-c(20,6)
-
-# a very big model...
-big.soap<- gam(share_100~
-   te(x,y,year,bs=c("sf","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=bigbnd),NULL))+
-   te(x,y,year,bs=c("sw","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=bigbnd),NULL))
-            ,knots=soap.knots,data=dat)
-#            ,knots=soap.knots,data=it.dat,family=Tweedie(link=power(0),p=1.6),method="REML")
-
-
-
-
-
-# basis size
-it.bsize<-c(20,6)
 
 it.soap<- gam(share_100~
    te(x,y,year,bs=c("sf","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=list(it)),NULL))+
    te(x,y,year,bs=c("sw","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=list(it)),NULL))
-            ,knots=soap.knots,data=it.dat,family=Tweedie(link=power(0),p=1.6),method="REML")
-#            ,knots=soap.knots,data=it.dat,family=Gamma(link="log"),method="REML")
+#         ,knots=soap.knots.it,data=it.dat,family=Tweedie(link=power(0),p=1.6),method="REML")
+            ,knots=soap.knots.it,data=it.dat,family=Gamma(link="log"),method="REML")
 ##########################
 gc()
 
-#save.image("it.RData")
 
 ########################
 # Sardinia 
+sa.dat<-list(x=fixdat$sardinia$dat$km.e,
+          y=fixdat$sardinia$dat$km.n,
+          year=fixdat$sardinia$dat$year,
+          share_100=fixdat$sardinia$dat$share_100+eps)
 
 
+soap.knots.sa<-make_soap_grid(sa,c(6,7))
 
 sa.ksize<-c(8,6)
 
 sa.soap<- gam(share_100~
    te(x,y,year,bs=c("sf","cr"),k=sa.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))+
    te(x,y,year,bs=c("sw","cr"),k=sa.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))
-            ,knots=soap.knots,data=sa.dat,family=Tweedie(link=power(0),p=1.6),method="REML")
-#            ,knots=soap.knots,data=sa.dat,family=Gamma(link="log"),method="REML")
+#        ,knots=soap.knots.sa,data=sa.dat,family=Tweedie(link=power(0),p=1.6),method="REML")
+        ,knots=soap.knots.sa,data=sa.dat,family=Gamma(link="log"),method="REML")
 ##########################
 gc()
 
 ########################
 # Sicily 
-
+sc.dat<-list(x=fixdat$sicily$dat$km.e,
+          y=fixdat$sicily$dat$km.n,
+          year=fixdat$sicily$dat$year,
+          share_100=fixdat$sicily$dat$share_100+eps)
 
 # setup the soap knots
+soap.knots.sc<-make_soap_grid(sc,c(6,6))
 
 sc.bsize<-c(10,6)
 sc.soap<- gam(share_100~
    te(x,y,year,bs=c("sf","cr"),k=sc.bsize,d=c(2,1),xt=list(list(bnd=list(sc)),NULL))+
    te(x,y,year,bs=c("sw","cr"),k=sc.bsize,d=c(2,1),xt=list(list(bnd=list(sc)),NULL))
-            ,knots=soap.knots,data=sc.dat,family=Tweedie(link=power(0),p=1.6),method="REML")
-#            ,knots=soap.knots,data=sc.dat,family=Gamma(link="log"),method="REML")
+#         ,knots=soap.knots.sc,data=sc.dat,family=Tweedie(link=power(0),p=1.6),method="REML")
+          ,knots=soap.knots.sc,data=sc.dat,family=Gamma(link="log"),method="REML")
 ##########################
 gc()
 
-######################
-# SAVE
-######################
-save.image(paste("fullmod-",it.soap$family[[1]],".RData",sep=""))
 
 ########################
 # now make the image plot
@@ -145,6 +126,11 @@ for (i in 1:length(years)){
 xlim<-c(xm[1]-25,xm[length(xm)])
 ylim<-c(yn[1]-25,yn[length(yn)]+25)
 zlim<-c(0,12)
+
+######################
+# SAVE
+######################
+save.image(paste("fullmod-",it.soap$family[[1]],".RData",sep=""))
 
 pdf(paste("maps-",it.soap$family[[1]],".pdf",sep=""),width=9)
 par(mfrow=c(2,3),mar=c(4.5,4.5,2,2))
