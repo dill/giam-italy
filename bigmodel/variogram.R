@@ -17,7 +17,8 @@ make_variogram<-function(model,fitres=FALSE){
 
 
    gb<-list(data=residuals(model,type="d"),coords=coords)
-   vg<-variog(gb,max.dist=1200)
+#   vg<-variog(gb,max.dist=1200)
+   vg<-variog(gb,max.dist=100)
    vg.env<-variog.mc.env(gb, obj.var = vg,nsim=99)
 
    # plot the fitted vs residuals too?
