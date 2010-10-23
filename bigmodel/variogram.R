@@ -32,4 +32,10 @@ make_variogram<-function(model,fitres=FALSE){
 
 }
 
-make_variogram(soap.it,fitres=TRUE)
+pdf(file="variogram.pdf",width=8,height=4)
+make_variogram(it.soap,fitres=TRUE)
+dev.off()
+
+save.image("variogram.RData")
+
+
