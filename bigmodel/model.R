@@ -57,7 +57,7 @@ sa.dat<-list(x=fixdat$sardinia$dat$km.e,
           share_100=fixdat$sardinia$dat$share_100+eps)
 
 
-soap.knots.sa<-make_soap_grid(sa,c(6,7))
+soap.knots.sa<-make_soap_grid(sa,c(5,6))
 
 sa.ksize<-c(8,6)
 
