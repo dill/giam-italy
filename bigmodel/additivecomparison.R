@@ -10,7 +10,7 @@ library(dillhandy)
 source("fixit.R")
 
 eps<-0
-#eps<-1e-8
+eps<-1e-8
 
 # run fixdata anyway to get the boundaries
 full<-read.csv(file="database_complete.csv")
@@ -36,9 +36,8 @@ it.dat<-list(x=fixdat$italy$dat$km.e,
 it.bsize<-c(120,6)
 
 it.add<- gam(share_100~s(x,y,k=it.bsize[1])+s(year,bs="cr",k=it.bsize[2]),
-              data=it.dat,family=Tweedie(link=power(0),p=1.7),method="REML")
-gam.check(it.add)
-#             data=it.dat,family=Gamma(link="log"),method="REML")
+#              data=it.dat,family=Tweedie(link=power(0),p=1.7),method="REML")
+             data=it.dat,family=Gamma(link="log"),method="REML")
 ##########################
 gc()
 
@@ -118,6 +117,7 @@ zlim<-c(0,12)
 # SAVE
 ######################
 save.image(paste("add-mod-",it.add$family[[1]],".RData",sep=""))
+
 
 pdf(paste("add-maps-",it.add$family[[1]],".pdf",sep=""),width=9)
 par(mfrow=c(2,3),mar=c(4.5,4.5,2,2))
