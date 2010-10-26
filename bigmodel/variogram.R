@@ -17,7 +17,8 @@ make_variogram<-function(model,fitres=FALSE){
 
 
    gb<-list(data=residuals(model,type="d"),coords=coords)
-   vg<-variog(gb,max.dist=1200)
+#   vg<-variog(gb,max.dist=1200)
+   vg<-variog(gb,max.dist=100)
    vg.env<-variog.mc.env(gb, obj.var = vg,nsim=99)
 
    # plot the fitted vs residuals too?
@@ -32,4 +33,10 @@ make_variogram<-function(model,fitres=FALSE){
 
 }
 
-make_variogram(soap.it,fitres=TRUE)
+pdf(file="variogram.pdf",width=8,height=4)
+make_variogram(it.soap,fitres=TRUE)
+dev.off()
+
+save.image("variogram.RData")
+
+
