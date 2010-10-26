@@ -45,10 +45,19 @@ soap.knots.it<-pe(soap.knots.it,-c(1,46)) #15 x15
 it.soap<- gam(share_100~
    te(x,y,year,bs=c("sf","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=list(it)),NULL))+
    te(x,y,year,bs=c("sw","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=list(it)),NULL))
-#         ,knots=soap.knots.it,data=it.dat,family=Tweedie(link=power(0),p=1.6),method="REML")
-            ,knots=soap.knots.it,data=it.dat,family=Gamma(link="log"),method="REML")
+         ,knots=soap.knots.it,data=it.dat,family=Tweedie(link=power(0),p=1.6),method="REML")
+#            ,knots=soap.knots.it,data=it.dat,family=Gamma(link="log"),method="REML")
 ##########################
 gc()
+
+
+source("diagnostics.R")
+## run some checks
+pdf(file=paste("check-Tweedie-",tweediepar,".pdf",sep=""),4,4)
+diagnostic(it.soap)
+dev.off()
+
+
 
 
 ########################
