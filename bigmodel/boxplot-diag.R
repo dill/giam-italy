@@ -23,15 +23,15 @@ resids<-residuals(it.soap,type="deviance")
 #resids<-residuals(it.soap,type="pearson")
 
 # find the grid cells the residuals lie in...
-xi<-abs(floor((it.dat$x-xmin)/delx))+1
-yj<-abs(floor((it.dat$y-ymin)/dely))+1
+xi<-abs(floor((it.dat$x-xmin)/delx))#+1
+yj<-abs(floor((it.dat$y-ymin)/dely))#+1
 
 
 
 
 # plot them
 
-par(mfrow=c(1,3))
+par(mfrow=c(2,2))
 
 
 # x data
@@ -46,6 +46,9 @@ boxplot(resids~ind,data=ydata,main="y")
 yeardata<-data.frame(ind=it.dat$year,resids=resids)
 boxplot(resids~ind,data=yeardata,main="year")
 
+# box index...
+boxind<-data.frame(ind=yj*res+xi,resids=resids)
+boxplot(resids~ind,data=boxind,main="box index")
 
 
 
