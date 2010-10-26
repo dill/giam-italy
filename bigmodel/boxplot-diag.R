@@ -51,4 +51,16 @@ boxind<-data.frame(ind=yj*res+xi,resids=resids)
 boxplot(resids~ind,data=boxind,main="box index")
 
 
+#quartz()
+#
+#library(ggplot2)
+#
+#ggdat<-data.frame(resids=resids,boxind=boxind$ind,xind=xdata$ind,
+#                  yind=ydata$ind,yearind=it.dat$year)
+#
+#p<-ggplot(ggdat,aes(factor(boxind),resids))
+#p<-p+facet_grid(yearind~.)
+#p<-p+geom_boxplot(outlier.size=1)
+#print(p)
+
 
