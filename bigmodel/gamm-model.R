@@ -31,64 +31,68 @@ sc<-list(x=fixdat$sicily$map$km.e,y=fixdat$sicily$map$km.n)
 it.dat<-list(x=fixdat$italy$dat$km.e,
           y=fixdat$italy$dat$km.n,
           year=fixdat$italy$dat$year,
+          province=fixdat$italy$dat$code_province,
+          municipality=fixdat$italy$dat$code_municipality,
           share_100=fixdat$italy$dat$share_100+eps)
 
 
 # basis size
 it.bsize<-c(20,6)
 # setup the soap knots
-#soap.knots.it<-make_soap_grid(it,c(15,15))
-#soap.knots.it<-pe(soap.knots.it,-c(1,46)) #15 x15
-soap.knots.it<-make_soap_grid(it,c(15,20))
-soap.knots.it<-pe(soap.knots.it,-c(7,20,33,66,69)) #15 x15
+soap.knots.it<-make_soap_grid(it,c(15,15))
+soap.knots.it<-pe(soap.knots.it,-c(1,46)) #15 x15
+#soap.knots.it<-make_soap_grid(it,c(15,20))
+#soap.knots.it<-pe(soap.knots.it,-c(7,20,33,66,69)) #15 x15
 
-it.soap<- gam(share_100~
+
+it.soap<- gamm(share_100~
    te(x,y,year,bs=c("sf","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=list(it)),NULL))+
    te(x,y,year,bs=c("sw","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=list(it)),NULL))
 #         ,knots=soap.knots.it,data=it.dat,family=Tweedie(link=power(0),p=1.6),method="REML")
-            ,knots=soap.knots.it,data=it.dat,family=Gamma(link="log"),method="REML")
+            ,knots=soap.knots.it,data=it.dat,family=Gamma(link="log"),method="REML",
+         correlation=corAR1(form=~1|province))
 ##########################
 gc()
 
 
-########################
-# Sardinia 
-sa.dat<-list(x=fixdat$sardinia$dat$km.e,
-          y=fixdat$sardinia$dat$km.n,
-          year=fixdat$sardinia$dat$year,
-          share_100=fixdat$sardinia$dat$share_100+eps)
-
-
-soap.knots.sa<-make_soap_grid(sa,c(5,6))
-
-sa.ksize<-c(8,6)
-
-sa.soap<- gam(share_100~
-   te(x,y,year,bs=c("sf","cr"),k=sa.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))+
-   te(x,y,year,bs=c("sw","cr"),k=sa.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))
-#        ,knots=soap.knots.sa,data=sa.dat,family=Tweedie(link=power(0),p=1.6),method="REML")
-        ,knots=soap.knots.sa,data=sa.dat,family=Gamma(link="log"),method="REML")
-##########################
-gc()
-
-########################
-# Sicily 
-sc.dat<-list(x=fixdat$sicily$dat$km.e,
-          y=fixdat$sicily$dat$km.n,
-          year=fixdat$sicily$dat$year,
-          share_100=fixdat$sicily$dat$share_100+eps)
-
-# setup the soap knots
-soap.knots.sc<-make_soap_grid(sc,c(6,6))
-
-sc.bsize<-c(10,6)
-sc.soap<- gam(share_100~
-   te(x,y,year,bs=c("sf","cr"),k=sc.bsize,d=c(2,1),xt=list(list(bnd=list(sc)),NULL))+
-   te(x,y,year,bs=c("sw","cr"),k=sc.bsize,d=c(2,1),xt=list(list(bnd=list(sc)),NULL))
-#         ,knots=soap.knots.sc,data=sc.dat,family=Tweedie(link=power(0),p=1.6),method="REML")
-          ,knots=soap.knots.sc,data=sc.dat,family=Gamma(link="log"),method="REML")
-##########################
-gc()
+#########################
+## Sardinia 
+#sa.dat<-list(x=fixdat$sardinia$dat$km.e,
+#          y=fixdat$sardinia$dat$km.n,
+#          year=fixdat$sardinia$dat$year,
+#          share_100=fixdat$sardinia$dat$share_100+eps)
+#
+#
+#soap.knots.sa<-make_soap_grid(sa,c(5,6))
+#
+#sa.ksize<-c(8,6)
+#
+#sa.soap<- gam(share_100~
+#   te(x,y,year,bs=c("sf","cr"),k=sa.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))+
+#   te(x,y,year,bs=c("sw","cr"),k=sa.ksize,d=c(2,1),xt=list(list(bnd=list(sa)),NULL))
+##        ,knots=soap.knots.sa,data=sa.dat,family=Tweedie(link=power(0),p=1.6),method="REML")
+#        ,knots=soap.knots.sa,data=sa.dat,family=Gamma(link="log"),method="REML")
+###########################
+#gc()
+#
+#########################
+## Sicily 
+#sc.dat<-list(x=fixdat$sicily$dat$km.e,
+#          y=fixdat$sicily$dat$km.n,
+#          year=fixdat$sicily$dat$year,
+#          share_100=fixdat$sicily$dat$share_100+eps)
+#
+## setup the soap knots
+#soap.knots.sc<-make_soap_grid(sc,c(6,6))
+#
+#sc.bsize<-c(10,6)
+#sc.soap<- gam(share_100~
+#   te(x,y,year,bs=c("sf","cr"),k=sc.bsize,d=c(2,1),xt=list(list(bnd=list(sc)),NULL))+
+#   te(x,y,year,bs=c("sw","cr"),k=sc.bsize,d=c(2,1),xt=list(list(bnd=list(sc)),NULL))
+##         ,knots=soap.knots.sc,data=sc.dat,family=Tweedie(link=power(0),p=1.6),method="REML")
+#          ,knots=soap.knots.sc,data=sc.dat,family=Gamma(link="log"),method="REML")
+###########################
+#gc()
 
 
 ########################
@@ -118,10 +122,10 @@ for (i in 1:length(years)){
    pred.grid<-list(x=xx,y=yy,year=rep(years[i],length(xx)))
    # italy
    im.mat[i,it.onoff]<-predict(it.soap,pe(pred.grid,it.onoff),type="response")
-   # sardinia
-   im.mat[i,sa.onoff]<-predict(sa.soap,pe(pred.grid,sa.onoff),type="response")
-   # sicily
-   im.mat[i,sc.onoff]<-predict(sc.soap,pe(pred.grid,sc.onoff),type="response")
+#   # sardinia
+#   im.mat[i,sa.onoff]<-predict(sa.soap,pe(pred.grid,sa.onoff),type="response")
+#   # sicily
+#   im.mat[i,sc.onoff]<-predict(sc.soap,pe(pred.grid,sc.onoff),type="response")
 }
 
 # limits for the plot   
@@ -132,9 +136,9 @@ zlim<-c(0,12)
 ######################
 # SAVE
 ######################
-save.image(paste("fullmod-",it.soap$family[[1]],".RData",sep=""))
+save.image(paste("gamm-mod-",it.soap$family[[1]],".RData",sep=""))
 
-pdf(paste("maps-",it.soap$family[[1]],".pdf",sep=""),width=9)
+pdf(paste("gamm-maps-",it.soap$family[[1]],".pdf",sep=""),width=9)
 par(mfrow=c(2,3),mar=c(4.5,4.5,2,2))
 
 for (i in 1:length(years)){
@@ -156,12 +160,12 @@ for (i in 1:length(years)){
 }
 dev.off()
 
-pdf(paste("gamcheck-it-",it.soap$family[[1]],".pdf",sep=""),width=5)
-gam.check(it.soap)
-dev.off()
-pdf(paste("gamcheck-sa-",it.soap$family[[1]],".pdf",sep=""),width=5)
-gam.check(sa.soap)
-dev.off()
-pdf(paste("gamcheck-sc-",it.soap$family[[1]],".pdf",sep=""),width=5)
-gam.check(sc.soap)
-dev.off()
+#pdf(paste("gamcheck-it-",it.soap$family[[1]],".pdf",sep=""),width=5)
+#gam.check(it.soap)
+#dev.off()
+#pdf(paste("gamcheck-sa-",it.soap$family[[1]],".pdf",sep=""),width=5)
+#gam.check(sa.soap)
+#dev.off()
+#pdf(paste("gamcheck-sc-",it.soap$family[[1]],".pdf",sep=""),width=5)
+#gam.check(sc.soap)
+#dev.off()
