@@ -133,7 +133,7 @@ for (i in 1:length(years)){
 }
 
 # limits for the plot   
-xlim<-c(xm[1]-25,xm[length(xm)])
+xlim<-c(xm[1]-25,xm[length(xm)]+25)
 ylim<-c(yn[1]-25,yn[length(yn)]+25)
 zlim<-c(0,12)
 
@@ -142,7 +142,8 @@ zlim<-c(0,12)
 ######################
 save.image(paste("fullmod-",it.soap$family[[1]],".RData",sep=""))
 
-pdf(paste("maps-",it.soap$family[[1]],".pdf",sep=""),width=9)
+#pdf(paste("maps-",it.soap$family[[1]],".pdf",sep=""),width=9)
+postscript(paste("maps-",it.soap$family[[1]],".ps",sep=""),width=9)
 par(mfrow=c(2,3),mar=c(4.5,4.5,2,2))
 
 for (i in 1:length(years)){

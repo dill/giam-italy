@@ -7,7 +7,8 @@ library(soap)
 library(mvtnorm)
 
 # load the models 
-load("fullmod-Gamma.RData")# CHECK!
+#load("fullmod-Gamma.RData")# CHECK!
+load("fullmod-Tweedie(1.2).RData") # load the data
 
 ######################################
 
@@ -108,34 +109,34 @@ save.image(file="trends.RData")
 
 ### Do the plotting
 
-#postscript(file="trends.ps",height=5,width=7)
-#par(mfrow=c(2,2),las=1,mar=c(3.5,3,2,0.75),mgp=c(2,0.65,0),cex=0.75,cex.lab=0.95)
-#
-#titles<-c("Italy","North","Centre","South and Islands")
-#
-#j<-1
-#
-#for(i in c(0,6,12,18)){
-#
-#   # years
-#   yy<-seq(2003,2008,1)
-#
-#   # smooth for median
-#   med.line<-predict(interpSpline(yy,apply(RES[(1+i):(6+i),],1,median)))
-#
-#   # upper CI
-#   u.line<-predict(interpSpline(yy,apply(RES[(1+i):(6+i),],1,quantile,sig.lev/2)))
-#
-#   # lower CI
-#   l.line<-predict(interpSpline(yy,apply(RES[(1+i):(6+i),],1,quantile,1-sig.lev/2)))
-#
-#   plot(med.line$y,type="l",x=med.line$x,
-#        ylab="Incidence",xlab="",main=titles[j],ylim=c(0,7))
-#   lines(u.line$y,lty=2,x=u.line$x)
-#   lines(l.line$y,lty=3,x=l.line$x)
-#   j<-j+1
-#}
-#
-#dev.off()
+postscript(file="trends.ps",height=5,width=7)
+par(mfrow=c(2,2),las=1,mar=c(3.5,3,2,0.75),mgp=c(2,0.65,0),cex=0.75,cex.lab=0.95)
+
+titles<-c("Italy","North","Centre","South and Islands")
+
+j<-1
+
+for(i in c(0,6,12,18)){
+
+   # years
+   yy<-seq(2003,2008,1)
+
+   # smooth for median
+   med.line<-predict(interpSpline(yy,apply(RES[(1+i):(6+i),],1,median)))
+
+   # upper CI
+   u.line<-predict(interpSpline(yy,apply(RES[(1+i):(6+i),],1,quantile,sig.lev/2)))
+
+   # lower CI
+   l.line<-predict(interpSpline(yy,apply(RES[(1+i):(6+i),],1,quantile,1-sig.lev/2)))
+
+   plot(med.line$y,type="l",x=med.line$x,
+        ylab="Incidence",xlab="",main=titles[j],ylim=c(0,7))
+   lines(u.line$y,lty=2,x=u.line$x)
+   lines(l.line$y,lty=3,x=l.line$x)
+   j<-j+1
+}
+
+dev.off()
 
 
