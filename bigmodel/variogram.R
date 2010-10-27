@@ -5,8 +5,8 @@
 library(geoR)
 library(soap)
 
-load("fullmod-Gamma.RData")
-
+#load("fullmod-Gamma.RData")
+load("fullmod-Tweedie(1.2).RData") # load the data
 
 make_variogram<-function(model,fitres=FALSE){
 
@@ -33,7 +33,7 @@ make_variogram<-function(model,fitres=FALSE){
 
 }
 
-pdf(file="variogram.pdf",width=8,height=4)
+postscript(file="variogram.pdf",width=8,height=4)
 make_variogram(it.soap,fitres=TRUE)
 dev.off()
 
