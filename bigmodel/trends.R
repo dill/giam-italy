@@ -39,7 +39,7 @@ Nb<-200
 
 # create the indicators
 north <-(it.dat$y > -20)
-centre<-(it.dat$y < -20 & av.dat.it$y > -300)
+centre<-(it.dat$y < -20 & it.dat$y > -300)
 south <-(it.dat$y < -300)
 
 # Italy
