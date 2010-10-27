@@ -6,11 +6,12 @@ library(mapdata)
 library(soap)
 library(dillhandy)
 
-load("fullmod-Gamma.RData")
+#load("fullmod-Gamma.RData")
+load("fullmod-Tweedie(1.2).RData") # load the data
 
 
 eps<-0
-eps<-1e-8
+#eps<-1e-8
 
 # Italy boundary
 it<-list(x=fixdat$italy$map$km.e,y=fixdat$italy$map$km.n)
@@ -19,16 +20,12 @@ sa<-list(x=fixdat$sardinia$map$km.e,y=fixdat$sardinia$map$km.n)
 # Sicily boundary
 sc<-list(x=fixdat$sicily$map$km.e,y=fixdat$sicily$map$km.n)
 
-
-
-
 ########################
 # Italy
 it.dat<-list(x=fixdat$italy$dat$km.e,
           y=fixdat$italy$dat$km.n,
           year=fixdat$italy$dat$year,
           share_100=residuals(it.soap,type="deviance"))
-
 
 # basis size
 it.bsize<-c(20,6)
@@ -124,14 +121,15 @@ for (i in 1:length(years)){
 # limits for the plot   
 xlim<-c(xm[1]-25,xm[length(xm)])
 ylim<-c(yn[1]-25,yn[length(yn)]+25)
-zlim<-c(-3,0.6)
+zlim<-c(min(im.mat,na.rm=TRUE),max(im.mat,na.rm=TRUE))
 
 ######################
 # SAVE
 ######################
-#save.image(paste("fullmod-",it.soap$family[[1]],".RData",sep=""))
+save.image(paste("residmod-",it.soap$family[[1]],".RData",sep=""))
 
-pdf(paste("residmaps-",it.soap$family[[1]],".pdf",sep=""),width=9)
+#pdf(paste("residmaps-",it.soap$family[[1]],".pdf",sep=""),width=9)
+postscript(paste("residmaps-",it.soap$family[[1]],".ps",sep=""),width=9)
 par(mfrow=c(2,3),mar=c(4.5,4.5,2,2))
 
 for (i in 1:length(years)){
