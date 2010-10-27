@@ -5,6 +5,7 @@ set.seed(1)
 library(mgcv)
 library(soap)
 library(mvtnorm)
+library(splines)
 
 # load the models 
 #load("fullmod-Gamma.RData")# CHECK!
@@ -35,7 +36,7 @@ b.sa<-sa.soap
 Xb.sa<-model.matrix(b.sa)
 
 # Nb - number of times we generate
-Nb<-200
+Nb<-1000
 
 # create the indicators
 north <-(it.dat$y > -20)
