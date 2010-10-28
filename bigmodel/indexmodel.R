@@ -61,7 +61,7 @@ gc()
 #        ,knots=soap.knots.sa,data=sa.dat,family=Tweedie(link=power(0),p=tweediepar),method="REML")
 ###########################
 #gc()
-#
+
 #########################
 ## Sicily 
 #sc.dat<-list(x=fixdat$sicily$dat$km.e,
@@ -70,9 +70,9 @@ gc()
 #          index=fixdat$sicily$dat$index)
 #
 ## setup the soap knots
-#soap.knots.sc<-make_soap_grid(sc,c(4,4))
+#soap.knots.sc<-make_soap_grid(sc,c(3,3))
 #
-#sc.bsize<-c(5,6)
+#sc.bsize<-c(3,3)
 #sc.soap<- gam(index~
 #   te(x,y,year,bs=c("sf","cr"),k=sc.bsize,d=c(2,1),xt=list(list(bnd=list(sc)),NULL))+
 #   te(x,y,year,bs=c("sw","cr"),k=sc.bsize,d=c(2,1),xt=list(list(bnd=list(sc)),NULL))

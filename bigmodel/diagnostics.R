@@ -51,7 +51,7 @@ diagnostic<-function(model,res=20,resid.type="deviance"){
    plot(x=c(0.5,14),y=c(1.1,5),type="n",las=1,asp=1,
         main="Scale-location plot",
         ylab="Abs. value of residuals",
-        xlab="Fitted values",cex=0.3)
+        xlab="Predicted values",cex=0.3)
    points(sl.dat,cex=0.3)
 
    #loess fit..
