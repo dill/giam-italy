@@ -122,14 +122,21 @@ for(i in c(0,6,12,18)){
    # years
    yy<-seq(2003,2008,1)
 
+   ### smooths
    # smooth for median
    med.line<-predict(interpSpline(yy,apply(RES[(1+i):(6+i),],1,median)))
-
    # upper CI
    u.line<-predict(interpSpline(yy,apply(RES[(1+i):(6+i),],1,quantile,sig.lev/2)))
-
    # lower CI
    l.line<-predict(interpSpline(yy,apply(RES[(1+i):(6+i),],1,quantile,1-sig.lev/2)))
+
+#   ### lines
+#   #  median
+#   med.line<-list(x=yy,y=apply(RES[(1+i):(6+i),],1,median))
+#   # upper CI
+#   u.line<-list(x=yy,y=apply(RES[(1+i):(6+i),],1,quantile,sig.lev/2))
+#   # lower CI
+#   l.line<-list(x=yy,y=apply(RES[(1+i):(6+i),],1,quantile,1-sig.lev/2))
 
    plot(med.line$y,type="l",x=med.line$x,
         ylab="Incidence",xlab="",main=titles[j],ylim=c(0,7))

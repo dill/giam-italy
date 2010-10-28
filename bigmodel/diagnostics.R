@@ -9,7 +9,7 @@
 # resid.type residuals are used
 diagnostic<-function(model,res=20,resid.type="deviance"){
    # plot settings here
-   par(mfrow=c(2,2),pch=19,mar=c(4.5,4.5,2,2))
+   par(mfrow=c(2,2),pch=19,mar=c(3,3,2,1.5),cex.axis=0.7,mgp=c(1.75,1,0),cex.main=0.8)
 
    ### boxplots
    # first generate the grid...
@@ -30,21 +30,33 @@ diagnostic<-function(model,res=20,resid.type="deviance"){
    
    ### year data
    yeardata<-data.frame(ind=it.dat$year,resids=resids)
-   boxplot(resids~ind,data=yeardata,main="year",cex=0.3,las=2)
+   boxplot(resids~ind,data=yeardata,main="Annual distribution of residuals",
+            cex=0.3,las=1,xaxt="n",
+            xlab="year",ylab="Residuals")
+   axis(1,at=1:6,labels=c("03","04","05","06","07","08"))
    
    ### box index...
    boxind<-data.frame(ind=yj*res+xi,resids=resids)
-   boxplot(resids~ind,data=boxind,main="box index",cex=0.3,xaxt="n")
+   boxplot(resids~ind,data=boxind,main="Spatial distribution of residuals",
+            xlab="index",ylab="Residuals",
+            cex=0.3,xaxt="n",las=1)
    axis(1,at=1:length(unique(boxind$ind)))
 
-
    ### Normal qqplot
-   qqnorm(residuals(model,type=resid.type),cex=0.3,asp=1)
+   qqnorm(residuals(model,type=resid.type),cex=0.3,asp=1,las=1)
    abline(0,1)
 
    ### scale-location plot
-   plot(fitted(model),abs(residuals(model,type=resid.type)),
-        main="scale-location",
-        ylab=paste("Absolute value of ",resid.type," residuals",sep=""),
+   sl.dat<-list(x=fitted(model),y=abs(residuals(model,type=resid.type)))
+   plot(x=c(0.5,14),y=c(1.1,5),type="n",las=1,asp=1,
+        main="Scale-location plot",
+        ylab="Abs. value of residuals",
         xlab="Fitted values",cex=0.3)
+   points(sl.dat,cex=0.3)
+
+   #loess fit..
+   loe<-loess(y~x,data=sl.dat)
+   pred<-predict(loe,newdata=seq(0,14,by=0.01)) 
+   lines(seq(0,14,by=0.01),pred,col="grey")
+
 }
