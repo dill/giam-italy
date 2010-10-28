@@ -32,15 +32,22 @@ it.dat<-list(x=fixdat$italy$dat$km.e,
 # basis size
 it.bsize<-c(20,6)
 # setup the soap knots
-soap.knots.it<-make_soap_grid(it,c(14,14))
-soap.knots.it<-pe(soap.knots.it,-c(25)) #14 x14
+#soap.knots.it<-make_soap_grid(it,c(14,14))
+#soap.knots.it<-pe(soap.knots.it,-c(25)) #14 x14
+soap.knots.it<-make_soap_grid(it,c(16,16))
+soap.knots.it<-pe(soap.knots.it,-c(27)) 
 
 tweediepar<-1.2
 
 it.soap<- gam(index~
    te(x,y,year,bs=c("sf","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=list(it)),NULL))+
    te(x,y,year,bs=c("sw","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=list(it)),NULL))
+#         ,knots=soap.knots.it,data=it.dat,method="REML")
          ,knots=soap.knots.it,data=it.dat,family=Tweedie(link=power(0),p=tweediepar),method="REML")
+diagnostic(it.soap,res=5)
+dev.copy2pdf(file=paste("index-",it.soap$family[[1]],"-",tweediepar,".pdf"))
+
+#         ,knots=soap.knots.it,data=it.dat,family=Gamma(link=power(0)),method="REML")
 ##########################
 gc()
 

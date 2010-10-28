@@ -37,7 +37,7 @@ diagnostic<-function(model,res=20,resid.type="deviance"){
    
    ### box index...
    boxind<-data.frame(ind=yj*res+xi,resids=resids)
-   boxplot(resids~ind,data=boxind,main="Spatial distribution of residuals",
+   boxplot(resids~ind,data=boxind,main="Spatial aggregation index",
             xlab="index",ylab="Residuals",
             cex=0.3,xaxt="n",las=1)
    axis(1,at=1:length(unique(boxind$ind)))
@@ -48,15 +48,20 @@ diagnostic<-function(model,res=20,resid.type="deviance"){
 
    ### scale-location plot
    sl.dat<-list(x=fitted(model),y=abs(residuals(model,type=resid.type)))
-   plot(x=c(0.5,14),y=c(1.1,5),type="n",las=1,asp=1,
+#   plot(x=c(0.5,14),y=c(1.1,5),type="n",las=1,asp=1,
+#        main="Scale-location plot",
+#        ylab="Abs. value of residuals",
+#        xlab="Predicted values",cex=0.3)
+#   points(sl.dat,cex=0.3)
+   plot(sl.dat,las=1,
         main="Scale-location plot",
         ylab="Abs. value of residuals",
         xlab="Predicted values",cex=0.3)
-   points(sl.dat,cex=0.3)
 
    #loess fit..
    loe<-loess(y~x,data=sl.dat)
-   pred<-predict(loe,newdata=seq(0,14,by=0.01)) 
-   lines(seq(0,14,by=0.01),pred,col="grey")
+   nd<-seq(min(sl.dat$x,na.rm=T),max(sl.dat$x,na.rm=T))
+   pred<-predict(loe,newdata=nd,by=0.01) 
+   lines(nd,pred,col="grey")
 
 }
