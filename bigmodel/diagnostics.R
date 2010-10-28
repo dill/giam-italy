@@ -9,7 +9,7 @@
 # resid.type residuals are used
 diagnostic<-function(model,res=20,resid.type="deviance"){
    # plot settings here
-   par(mfrow=c(2,2),pch=19,mar=c(3,3,2,1.5),cex.axis=0.7,mgp=c(1.75,1,0),cex.main=0.9)
+   par(mfrow=c(2,2),pch=19,mar=c(3,3,2,1.5),cex.axis=0.7,mgp=c(1.75,1,0),cex.main=0.95)
 
    ### boxplots
    # first generate the grid...
