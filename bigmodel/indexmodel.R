@@ -44,8 +44,8 @@ it.soap<- gam(index~
    te(x,y,year,bs=c("sw","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=list(it)),NULL))
 #         ,knots=soap.knots.it,data=it.dat,method="REML")
          ,knots=soap.knots.it,data=it.dat,family=Tweedie(link=power(0),p=tweediepar),method="REML")
-diagnostic(it.soap,res=5)
-dev.copy2pdf(file=paste("index-",it.soap$family[[1]],"-",tweediepar,".pdf"))
+#diagnostic(it.soap,res=5)
+#dev.copy2pdf(file=paste("index-",it.soap$family[[1]],"-",tweediepar,".pdf"))
 
 #         ,knots=soap.knots.it,data=it.dat,family=Gamma(link=power(0)),method="REML")
 ##########################
@@ -128,10 +128,10 @@ zlim<-c(10,97)
 ######################
 # SAVE
 ######################
-save.image(paste("indexmod-",it.soap$family[[1]],".RData",sep=""))
+#save.image(paste("indexmod-",it.soap$family[[1]],".RData",sep=""))
 
-#pdf(paste("index-maps-",it.soap$family[[1]],".pdf",sep=""),width=9)
-postscript(paste("index-maps-",it.soap$family[[1]],".ps",sep=""),width=9)
+pdf(paste("index-maps-",it.soap$family[[1]],"-",tweediepar,".pdf",sep=""),width=9)
+#postscript(paste("index-maps-",it.soap$family[[1]],".ps",sep=""),width=9)
 par(mfrow=c(2,3),mar=c(4.5,4.5,2,2))
 
 for (i in 1:length(years)){
