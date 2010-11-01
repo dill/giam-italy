@@ -34,10 +34,10 @@ it.bsize<-c(20,6)
 # setup the soap knots
 #soap.knots.it<-make_soap_grid(it,c(14,14))
 #soap.knots.it<-pe(soap.knots.it,-c(25)) #14 x14
-soap.knots.it<-make_soap_grid(it,c(16,16))
-soap.knots.it<-pe(soap.knots.it,-c(27)) 
+soap.knots.it<-make_soap_grid(it,c(7,7))
+#soap.knots.it<-pe(soap.knots.it,-c(27)) 
 
-tweediepar<-1.2
+tweediepar<-1.7
 
 it.soap<- gam(index~
    te(x,y,year,bs=c("sf","cr"),k=it.bsize,d=c(2,1),xt=list(list(bnd=list(it)),NULL))+
@@ -123,15 +123,15 @@ for (i in 1:length(years)){
 # limits for the plot   
 xlim<-c(xm[1]-25,xm[length(xm)]+25)
 ylim<-c(yn[1]-25,yn[length(yn)]+25)
-zlim<-c(10,97)
+zlim<-c(9,93)
 
 ######################
 # SAVE
 ######################
-#save.image(paste("indexmod-",it.soap$family[[1]],".RData",sep=""))
+save.image(paste("indexmod-",it.soap$family[[1]],".RData",sep=""))
 
-pdf(paste("index-maps-",it.soap$family[[1]],"-",tweediepar,".pdf",sep=""),width=9)
-#postscript(paste("index-maps-",it.soap$family[[1]],".ps",sep=""),width=9)
+#pdf(paste("index-maps-",it.soap$family[[1]],"-",tweediepar,".pdf",sep=""),width=9)
+postscript(paste("index-maps-",it.soap$family[[1]],".ps",sep=""),width=9)
 par(mfrow=c(2,3),mar=c(4.5,4.5,2,2))
 
 for (i in 1:length(years)){
@@ -143,7 +143,7 @@ for (i in 1:length(years)){
 
    # then the contour ontop
    contour(xm,yn,matrix(im.mat[i,],grid.res.x,grid.res.y),
-            levels=seq(zlim[1],zlim[2],by=15),col="blue",add=TRUE)
+            levels=seq(zlim[1],zlim[2],by=10),col="blue",add=TRUE)
 
    # then the country borders
    lines(it,lwd=2)
