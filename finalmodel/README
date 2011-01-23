@@ -1,0 +1,26 @@
+This folder contains the code to reproduce the results in the analysis of
+Italian RFP data by Marra, Miller and Zannin.
+
+
+Files and their purposes are as follows:
+
+Scripts that may be run directly:
+model.R              - soap film smoother of RFP incidence
+additivecomparison.R - incidence model with additive temporal effect
+residmodel.R         - fit a GAM to the residuals (incidence), to check for structure
+trends.R             - create the temporal incidence trend plots
+indexmodel.R         - smoother for the ISEA data
+indexresids.R         - fit a GAM to the residuals (ISEA), to check for structure
+makediagplots.R      - create the 2x2 diagnostic plots for incidence data
+                        (requires that model.R is run first to create RData file)
+
+Utility scripts:
+diagnostics.R        - function to create the 2x2 diagnosic plots
+fixit.R              - take the raw data and put it into the correct format
+
+
+Data:
+database_complete.csv   - raw incidence data
+database_index.csv      - ISEA data
+
+
