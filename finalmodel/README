@@ -1,5 +1,10 @@
 This folder contains the code to reproduce the results in the analysis of
-Italian RFP data by Marra, Miller and Zannin.
+Italian RFP data by Marra, Miller and Zanin.
+
+Required R packages and where you can get them:
+mgcv           - http://people.bath.ac.uk/sw283/mgcv/
+soap           - http://www.maths.bath.ac.uk/~sw283/simon/software.html
+dillhandy      - https://github.com/dill/dillhandy
 
 
 Files and their purposes are as follows:
@@ -10,9 +15,9 @@ additivecomparison.R - incidence model with additive temporal effect
 residmodel.R         - fit a GAM to the residuals (incidence), to check for structure
 trends.R             - create the temporal incidence trend plots
 indexmodel.R         - smoother for the ISEA data
-indexresids.R         - fit a GAM to the residuals (ISEA), to check for structure
+indexresids.R        - fit a GAM to the residuals (ISEA), to check for structure
 makediagplots.R      - create the 2x2 diagnostic plots for incidence data
-                        (requires that model.R is run first to create RData file)
+                       (requires that model.R is run first to create RData file)
 
 Utility scripts:
 diagnostics.R        - function to create the 2x2 diagnosic plots
