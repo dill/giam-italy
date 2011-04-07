@@ -15,7 +15,7 @@ do_eda<-function(dat,zlim=c(0,12)){
    for(year in 2003:2008){
 
       # use adehabitat to make the grid for us...
-      grid.res<-c(100,60)
+      grid.res<-c(60,100)
 
       ne.km<-data.frame(x=c(dat$italy$dat$km.e[dat$italy$dat$year==year],
                             dat$sicily$dat$km.e[dat$sicily$dat$year==year],
@@ -28,8 +28,13 @@ do_eda<-function(dat,zlim=c(0,12)){
                    dat$sicily$dat$share_100[dat$sicily$dat$year==year],
                    dat$sardinia$dat$share_100[dat$sardinia$dat$year==year])
       
-      xgrid<-seq(min(ne.km$x),max(ne.km$x),len=grid.res[1])
-      ygrid<-seq(min(ne.km$y),max(ne.km$y),len=grid.res[2])
+
+      mapx<-c(fixdat$italy$map$km.e,fixdat$sicily$map$km.e,fixdat$sardinia$map$km.e)
+      mapy<-c(fixdat$italy$map$km.n,fixdat$sicily$map$km.n,fixdat$sardinia$map$km.n)
+
+      xgrid<-seq(min(mapx),max(mapx),len=grid.res[1])
+      ygrid<-seq(min(mapy),max(mapy),len=grid.res[2])
+
 
       x.start<-xgrid[1:(length(xgrid)-1)]
       x.stop <-xgrid[2:length(xgrid)]
