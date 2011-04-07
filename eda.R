@@ -10,6 +10,8 @@ do_eda<-function(dat,zlim){
 
    # bult the image plot of the raw data
 
+   par(mfrow=c(2,3))
+
    for(year in 2003:2008){
 
       # use adehabitat to make the grid for us...
