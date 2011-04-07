@@ -6,16 +6,17 @@
 #library(adehabitat)
 #
 
-do_eda<-function(dat,zlim){
+do_eda<-function(dat,zlim=c(0,12)){
 
    # bult the image plot of the raw data
-
-   par(mfrow=c(2,3))
+   postscript("rawplot.ps",width=9)
+   par(mfrow=c(2,3),mar=c(4.5,4.5,2,2))
 
    for(year in 2003:2008){
 
       # use adehabitat to make the grid for us...
-      grid.res<-150
+      grid.res<-c(100,60)
+
       ne.km<-data.frame(x=c(dat$italy$dat$km.e[dat$italy$dat$year==year],
                             dat$sicily$dat$km.e[dat$sicily$dat$year==year],
                             dat$sardinia$dat$km.e[dat$sardinia$dat$year==year]),
@@ -27,27 +28,16 @@ do_eda<-function(dat,zlim){
                    dat$sicily$dat$share_100[dat$sicily$dat$year==year],
                    dat$sardinia$dat$share_100[dat$sardinia$dat$year==year])
       
-      # make a matrix of the latitudes and longitudes
-      itmat<-matrix(c(ne.km$x,ne.km$y),length(ne.km$x),2)
-      it.asc<-ascgen(itmat,nrcol=grid.res)
-      
-      # now extract the grid
-      gridcuts<-attr(it.asc,"dimnames")
-      gridcuts$x<-gsub("\\(","",gridcuts$x)
-      gridcuts$x<-gsub("\\]","",gridcuts$x)
-      gridcuts$y<-gsub("\\(","",gridcuts$y)
-      gridcuts$y<-gsub("\\]","",gridcuts$y)
-      
-      gridcuts$x<-t(matrix(as.numeric(unlist(strsplit(gridcuts$x,",")),2,grid.res),2,grid.res))
-      gridcuts$y<-t(matrix(as.numeric(unlist(strsplit(gridcuts$y,",")),2,grid.res),2,grid.res))
-      
-      x.start<-gridcuts$x[,1]
-      x.stop <-gridcuts$x[,2]
-      y.start<-gridcuts$y[,1]
-      y.stop <-gridcuts$y[,2]
+      xgrid<-seq(min(ne.km$x),max(ne.km$x),len=grid.res[1])
+      ygrid<-seq(min(ne.km$y),max(ne.km$y),len=grid.res[2])
+
+      x.start<-xgrid[1:(length(xgrid)-1)]
+      x.stop <-xgrid[2:length(xgrid)]
+      y.start<-ygrid[1:(length(ygrid)-1)]
+      y.stop <-ygrid[2:length(ygrid)]
       
       # image matrix
-      im.mat<-matrix(NA,grid.res,grid.res)
+      im.mat<-matrix(NA,grid.res[1],grid.res[2])
 
 
       # put the observations into the grid
@@ -77,8 +67,8 @@ do_eda<-function(dat,zlim){
       im.copy<-im.copy[rowSums(im.copy)>=0,]
 
       # create the grid sequences
-      xs<-seq(x.start[1],x.stop[length(x.stop)],len=seqlen)
-      ys<-seq(y.start[1],y.stop[length(y.stop)],len=grid.res)
+      xs<-xgrid
+      ys<-ygrid
 
       # xlim and ylim   
       xlim=c(xs[1]-25,xs[length(xs)]+25)
@@ -86,12 +76,14 @@ do_eda<-function(dat,zlim){
       
       # plot with map overlay
       image(z=im.mat,x=xs,y=ys,
-            col=topo.colors(100),xlab="km (e)",ylab="km (n)",
-            main=paste("Raw data",year),asp=1,zlim=zlim,cex.main=1.4,
+            col=heat.colors(100),xlab="km (e)",ylab="km (n)",
+            main=paste(year),asp=1,zlim=zlim,cex.main=1.4,
             cex.lab=1.4,cex.axis=1.3,xlim=xlim,ylim=ylim)
-      lines(fixdat$italy$map$km.e,fixdat$italy$map$km.n)
-      lines(fixdat$sicily$map$km.e,fixdat$sicily$map$km.n)
-      lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n)
+      lines(fixdat$italy$map$km.e,fixdat$italy$map$km.n,lwd=2)
+      lines(fixdat$sicily$map$km.e,fixdat$sicily$map$km.n,lwd=2)
+      lines(fixdat$sardinia$map$km.e,fixdat$sardinia$map$km.n,lwd=2)
 
    }
+
+   dev.off()
 } 
