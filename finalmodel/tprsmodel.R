@@ -117,7 +117,7 @@ sc.onoff<-inSide(sc,xx,yy)
 for (i in 1:length(years)){
    pred.grid<-list(x=xx,y=yy,year=rep(years[i],length(xx)))
    # italy
-   im.mat[i,it.onoff]<-predict(it.soap,pe(pred.grid,it.onoff),type="response")
+   im.mat[i,it.onoff]<-predict(it.b,pe(pred.grid,it.onoff),type="response")
    # sardinia
    im.mat[i,sa.onoff]<-predict(sa.soap,pe(pred.grid,sa.onoff),type="response")
    # sicily
