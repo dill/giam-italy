@@ -36,7 +36,7 @@ it.dat<-list(x=fixdat$italy$dat$km.e,
           share_100=fixdat$italy$dat$share_100+eps)
 
 # basis size
-it.bsize<-c(200,6)
+it.bsize<-c(100,6)
 # set the Tweedie parameter
 tweediepar<-1.2
 
@@ -48,7 +48,6 @@ it.b<-gam(share_100~te(x,y,year,bs=c("tp","cr"),k=it.bsize,d=c(2,1)),
 ##########################
 
 gc() # take out the trash - save some memory
-save.image("it-1.RData")
 
 ########################
 # Sardinia 
@@ -59,7 +58,7 @@ sa.dat<-list(x=fixdat$sardinia$dat$km.e,
           year=fixdat$sardinia$dat$year,
           share_100=fixdat$sardinia$dat$share_100+eps)
 
-sa.bsize<-c(50,6)
+sa.bsize<-c(25,6)
 
 sa.soap<- gam(share_100~te(x,y,year,bs=c("tp","cr"),k=sa.bsize,d=c(2,1)),
        data=sa.dat,family=Tweedie(link=power(0),p=tweediepar),method="REML")
@@ -67,7 +66,6 @@ sa.soap<- gam(share_100~te(x,y,year,bs=c("tp","cr"),k=sa.bsize,d=c(2,1)),
 #        ,knots=soap.knots.sa,data=sa.dat,family=Gamma(link="log"),method="REML")
 ##########################
 gc()
-save.image("it-2.RData")
 
 ########################
 # Sicily 
@@ -81,14 +79,13 @@ sc.dat<-list(x=fixdat$sicily$dat$km.e,
 # setup the soap knots
 soap.knots.sc<-make_soap_grid(sc,c(6,6))
 
-sc.bsize<-c(40,6)
+sc.bsize<-c(30,6)
 sc.soap<- gam(share_100~te(x,y,year,bs=c("tp","cr"),k=sc.bsize,d=c(2,1)),
          data=sc.dat,family=Tweedie(link=power(0),p=tweediepar),method="REML")
 # comment the line above and uncomment the one below for Gamma errors
 #          ,knots=soap.knots.sc,data=sc.dat,family=Gamma(link="log"),method="REML")
 ##########################
 gc()
-save.image("it-3.RData")
 
 
 ########################
