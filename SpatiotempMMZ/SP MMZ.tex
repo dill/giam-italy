@@ -1,4 +1,4 @@
-\documentclass[11pt]{article}
+\documentclass[12pt]{article}
 \usepackage{graphicx}
 \usepackage{multirow}
 \usepackage{makeidx}
@@ -20,7 +20,14 @@
 \usepackage{amssymb}
 \usepackage{setspace}
 
- 
+\renewcommand{\rmdefault}{ptm}
+%\usepackage[scaled=0.92]{helvet}
+\usepackage{courier}
+\normalfont 
+\usepackage[T1]{fontenc}
+
+
+%\singlespacing 
 \onehalfspacing
 %\doublespacing
 \setlength{\textheight}{22.5cm}
@@ -42,6 +49,8 @@
   \fi
   \vskip\belowcaptionskip}
 \makeatother
+
+%\renewcommand{\rmdefault}{ptm}
 
 
 \newcommand {\hide}[1] {\typeout{ #1 }}
@@ -94,7 +103,7 @@
 \begin{document}
 
 
-\title{Modeling the Spatiotemporal Distribution of the Incidence of Resident Foreign Population Using a Soap Film Smoother}
+\title{Modelling the Spatiotemporal Distribution of the Incidence of Resident Foreign Population Using a Soap Film Smoother}
 
 \author{
 Giampiero Marra \\ \small Department of Statistical Science, University College London \\ \small Gower Street, London WC1E 6BT, U.K. 
@@ -111,26 +120,31 @@ Luca Zanin \\ \small Department of Analysis and Economic Research, Prometeia \\ 
 
 \begin{abstract}
 
-Recently, many European countries have experienced a substantial increase in the proportion of immigrants in their populations. The incidence of resident foreigners calculated at a national level does not provide information on the spatial and temporal distribution of the phenomenon, which may be crucial to demographers, economists, sociologists, and policy makers (to name just a few) to study and formulate adequate policies supporting, e.g., the process of integration of resident foreigners in a host country. In this paper we suggest a tool for practitioners to provide spatiotemporal maps representing, in space, the distribution of the incidence of resident foreigners in the territory, and over time, changes in spatial trends. In doing this, we use Italian data at municipal level, for the period 2003-2008. The temporal trend of the incidence occurs at different strengths and patterns depending on the spatial location hence it is necessary to allow for such interaction in the model. We propose using a generalized additive model incorporating a scale-invariant smoother of the time and space dimensions. Specifically, we set up a tensor product smooth combining a cubic regression spline basis for time and a soap film spline basis for space. In addition, we construct a composite indicator representing economic and labor market factors to explain some of the observed spatial heterogeneity. The employed approach provides a consistent framework to produce spatiotemporal maps which could be effectively used by policy makers to decide the allocation of economic resources at local level.
+Recently, many European countries have experienced a substantial increase in the proportion of immigrants in their populations. The incidence of resident foreigners calculated at a national level does not provide information on the spatial and temporal distribution of the phenomenon, which may be crucial to demographers, economists, sociologists, and policy makers to study and formulate adequate policies supporting, e.g., the process of integration of resident foreigners in a host country. In this paper we suggest a tool for practitioners to provide spatiotemporal maps representing, at a local level, the distribution of the incidence of resident foreigners in the territory, and changes in spatial trends over time. In doing this, we use Italian data at municipal level, for the period 2003-2008. The temporal trend of the incidence occurs at different strengths and patterns depending on the spatial location hence it is necessary to allow for such interaction in the model. We propose using a generalized additive model incorporating a scale-invariant smoother of the time and space dimensions. Specifically, we set up a tensor product smoother combining a cubic regression spline basis for time and a soap film spline basis for space. The employed approach provides a consistent framework to produce spatiotemporal maps which could be effectively used by policy makers to decide the allocation of economic resources at local level.
 
 \vspace{0.4cm}
-\noindent \textbf{Key Words:} Composite indicator; Generalized additive model; Incidence of resident foreigners; Policy-making; Soap film spline basis; Spatiotemporal maps; Tensor product smooth. 
+\noindent \textbf{Key Words:} Generalized additive model; Incidence of resident foreigners; Policy-making; Soap film spline basis; Spatiotemporal maps; Tensor product smoother. 
 
 
 \end{abstract}
 
 \section{Introduction \label{IN}}
-Increased political interest as well as academic interest has led to a large amount of research into international migration, both theoretical and empirical, exploring its causes and consequences. Several theories of migration have been proposed, from both a macro- and microeconomic point of view, based on different schools of thought. Among these are the neoclassical economic theory (e.g., Borjas 1989; Massey et al. 1993), the assumptions regarding the new economics of migration (e.g., Stark and Bloom 1985; Massey et al. 1993), dual labor markets (e.g., Piore 1979; Massey et al. 1993) and world systems theory (e.g., Wallerstein 1974; Hooghe et al. 2008). In addition to theoretical work, many empirical studies have taken place. Examples include studies investigating: the impact of resident foreigners on the labor market of the host country (e.g., Borjas 2003, 2005; Borjas, Freeman and Katz 1996; Card 2005; Fullin and Reyneri 2010), underemployment (Slack and Jensen 2007), possible connections between immigration and nations' poverty rates (Raphael and Smolensky 2009), transfer of identity from first to second generation immigrants (Casey and Dustmann 2010), difference in education, earnings and employment between first and second generation immigrants (Algan et al. 2010), problems relating to the integration of different cultures and languages (e.g., Lazear 1999; Contucci and Ghirlanda 2007), and the tendency for immigrants to live in ethnic ``enclaves'' (Edin, Fredriksson and Aslund 2003). 
+Increased political interest as well as academic interest has led to a large amount of research into international migration, both theoretical and empirical, exploring its causes and consequences. Several theories of migration have been proposed, from both a macro- and microeconomic point of view, based on different schools of thought. Among these are the neoclassical economic theory (e.g., Borjas 1989; Massey et al. 1993), the assumptions regarding the new economics of migration (e.g., Stark and Bloom 1985; Massey et al. 1993), dual labor markets (e.g., Piore 1979; Massey et al. 1993) and world systems theory (e.g., Wallerstein 1974; Hooghe et al. 2008). In addition to theoretical work, many empirical studies have taken place. Examples include studies investigating: the impact of resident foreigners on the labor market of the host country (e.g., Borjas 2003, 2005; Borjas, Freeman and Katz 1996; Card 2005; Fullin and Reyneri 2011), underemployment (Slack and Jensen 2007), possible connections between immigration and nations' poverty rates (Raphael and Smolensky 2009), transfer of identity from first to second generation immigrants (Casey and Dustmann 2010), difference in education, earnings and employment between first and second generation immigrants (Algan et al. 2010), problems relating to the integration of different cultures and languages (e.g., Lazear 1999; Contucci and Ghirlanda 2007), and the tendency for immigrants to live in ethnic ``enclaves'' (Edin, Fredriksson and Aslund 2003). 
   
 Manning (2010) has pointed out that many European countries have recently experienced a substantial increase in the proportion of immigrants in the population. Given a specific area such as municipality, province, region, or nation, a measure of density of resident foreign population is the percentage incidence of resident foreigners (IRF), given as the ratio of the number of resident foreigners to the total resident population multiplied by 100 (e.g., Lowell 2007; Coleman 2008; Miguet 2008). This gives a simple, well-known, demographic indicator for comparing different regions of a country in terms of number of resident foreigners per 100 resident inhabitants (e.g., OECD 2004). 
 
-Here we consider the Italian case. According to the Italian National Statistical Office (ISTAT), the IRF has grown substantially, from 2.7\% in 2002 to 6.5\% in 2008. This phenomenon has had an impact on the population, especially from a socio-demographic point of view (see Section \ref{DEM} for details). The IRF calculated on a national level does not tell us anything specific about the spatial distribution of the phenomenon. Demographers, economists, sociologists, and policy makers should find information on how the distribution of the IRF changes over time and space useful during the process of studying and formulating adequate policies supporting, e.g., the process of integration of resident foreigners in a host country.
+Here we consider the Italian case. According to the Italian National Statistical Office (ISTAT), the IRF has grown substantially, from 2.7\% in 2002 to 6.5\% in 2008. This phenomenon has had an impact on the population, especially from a socio-demographic point of view (see Section \ref{DEM} for details). The IRF calculated on a national level does not tell us anything specific about the local spatial distribution of the phenomenon. Demographers, economists, sociologists, and policy makers should find local information on how the distribution of the IRF changes over time and space useful during the process of studying and formulating adequate policies supporting, e.g., the process of integration of resident foreigners in a host country. 
 
-To the best of our knowledge, no studies have attempted to model the spatiotemporal distribution of the IRF in a country. Our study uses annual Italian data for the period 2003-2008. Since 2003, ISTAT has provided a new public database with annual frequency of the number of resident foreigners at a municipal level. This represents the current maximum spatial and temporal detail available. Our emphasis is to suggest a tool for practitioners to provide spatiotemporal maps representing, in space, the distribution of the IRF in the territory, and over time, changes in spatial trends. The results of our investigation complement previous findings in the literature.
+\begin{figure}[tbp]
+	\centering
+		\includegraphics[width=0.85\textwidth, angle=270]{Raw.ps}
+	\caption{Empirical maps of the percentage incidence of resident foreigners in Italy over the years 2003--2008. These were obtained using data at a municipal level.	\textbf{DAVE Define colour scale}.}
+	\label{Rd}
+\end{figure}
 
-To assess what draws resident foreigners to one particular area over another, it is useful to have some quantitative measure of the ``attractiveness'' of each area to resident foreigners. Here, we focus on economic and labor market factors, construct a composite indicator that we have named `Indicator of Spatial Economic Attractiveness' (ISEA) and produce spatiotemporal maps of this. Three important variables constitute the composite indicator: (i) added value per capita at constant price (base year 2000), (ii) unemployment rate and (iii) employment rate. Since these are typically readily available, this composite indicator can be easily constructed for many countries. The results can be analyzed in the light of the spatiotemporal maps of the IRF.
+To the best of our knowledge, no studies have attempted to model the spatiotemporal distribution of the IRF in a country. Our study uses annual Italian data for the period 2003-2008. Since 2003, ISTAT has provided a new public database with annual frequency of the number of resident foreigners at a municipal level. This represents the current maximum spatial and temporal detail available. \textbf{Figure \ref{Rd} shows the empirical maps of the IRF at a municipal level over the years 2003--2008. The features that stand out clearly are the marked difference between north and south, and the increase in the IRF over time. However, these maps make it really hard to detect the existence of important local spatial patterns. For example, in 2008, in the Po Valley, which is located in northern Italy, we observe that the whole area is characterized by medium-high IRF levels but it is not really possible to identify the existence of polarization patterns. This is problematic because, at a local level, policy makers would most probably allocate economic resources in an indistinct way given that, based on the empirical maps, it does not seem that there exist particular differences in this geographical area.} Our emphasis is to suggest a tool for practitioners to provide clearer spatiotemporal maps representing the distribution of the IRF in the territory and changes in spatial trends over time, at a local level. 
 
-A number of methodologies have been proposed for spatiotemporal modeling (see, e.g., Augustin et al. (2009) and references therein). We opt for the spline approach to perform smoothing over some bounded domain $\Omega\subseteq\mathbb{R}^2$, over time (e.g., Hastie and Tibshirani 1990; Ruppert, Wand, and Carroll 2003; Wood 2006). Because currently no relevant economic data are available at municipal level, the response (IRF) is only modeled as a smooth function of spatial coordinates and time. The model is then used to create smooth maps of the geographical area of interest over time. Two points are noteworthy here. First, when a geographical region has complex boundaries, as in many applied contexts, features from one part of the domain can unduly influence other parts giving rise to a phenomenon known as \textit{leakage} (Ramsay 2002). Leakage typically occurs when a smoother inappropriately links two parts of a domain causing the fitted surface to be mis-estimated, leading to incorrect inference (e.g., biased incidence estimates), which is clearly not desirable. This issue can be overcome if the smoother used can account for the structure of the domain that is under investigation; several solutions have been proposed (e.g., Ramsay 2002; Wood, Bravington and Hedley 2008, and references therein). Second, because it is unlikely that the IRF occurs at similar strengths and patterns over the territory, the employed approach should account for a space-time interaction. These two goals can be jointly achieved by using a scale-invariant three-dimensional tensor product smoother combining a cubic regression spline basis function for the temporal trend and a soap film spline basis for the spatial component (Wood 2006; Wood, Bravington and Hedley 2008).
+Methods for spatiotemporal modelling involves mainly hierarchical Bayes models, geostatistical models and generalized additive models (e.g., Augustin et al. 2009; Banerjee, Carlin, and Gelfand 2004; Hastie and Tibshirani 1990; Kamman and Wand 2003; Kneib and Fahrmeir 2006; Osei, Duker, and Stein 2011; Ruppert, Wand, and Carroll 2003; Sahu, Gelfand, and Holland 2007; Wood 2006). Here we opt for generalized additive models since they allow a wide range of possibilities for representing the model component functions, which is crucial in our case study to fulfill the model requirements, as briefly detailed below. Because currently no relevant economic data are available at municipal level, the response (IRF) is only modelled using a smoother which is function of the spatial coordinates and time. The model is then used to create smoothed maps of the geographical area of interest over time. Two points are noteworthy here. First, when a geographical region has complex boundaries, such as Italy for example, a phenomenon known as \textit{leakage} typically occurs (Ramsay 2002). In this case, a smoother would inappropriately link two parts of a domain causing the fitted surface to be mis-estimated, leading to incorrect inference (e.g., biased incidence estimates), which is clearly not desirable. This issue can be overcome if the smoother used can account for the structure of the domain that is under investigation; several solutions have been proposed (e.g., Ramsay 2002; Wood, Bravington and Hedley 2008, and references therein). Second, because it is unlikely that the IRF occurs at similar strengths and patterns over the territory, the employed approach should account for a space-time interaction. These two goals can be achieved by using a generalized additive model incorporating a scale-invariant three-dimensional tensor product smoother combining a cubic regression spline basis function for the temporal trend and a soap film spline basis for the spatial component (Wood 2006; Wood, Bravington and Hedley 2008).
 
 
 \section{The structure and nature of the data on resident foreign population in Italy\label{SDC}}
@@ -163,7 +177,7 @@ As for the low fertility rate, the latest data from ISTAT puts the average numbe
 
 According to a descriptive analysis of ISTAT data, in 2008 the resident foreign population in Italy was made up of 53.6\% individuals from Europe, 22.4\% from Africa, 15.8\% from Asia, 8.1\% from America, and 0.1\% from Oceania.
 
-\section{Spatiotemporal modeling \label{METH}}
+\section{Spatiotemporal modelling \label{METH}}
 
 \subsection{Model specification \label{MS}}
 
@@ -172,17 +186,17 @@ The model we employ belongs to the class of generalized additive models (GAMs, H
 \text{log}\left\{\E(\texttt{irf}_{it})\right\} = f(\texttt{year}_t,\texttt{n}_i,\texttt{e}_i), \ \texttt{irf}_{it} \sim \text{Tweedie}\left(\E(\texttt{irf}_{it}),\phi \E(\texttt{irf}_{it})^{p}\right),          
 \label{PropM}
 \eeq
-at municipality $i=1,\ldots,8094$ and year $t=2003,\ldots,2008$. $\phi$ is a dispersion parameter and the log link function ensures positive fitted values. $\texttt{irf}_{it}$, $\texttt{n}_i$, and $\texttt{e}_i$ represent the variables percentage IRF, Northing, and Easting, respectively. Tweedie distributions are a special case of an exponential dispersion model and include, for example, the normal ($p=0$), Poisson ($p=1$) and gamma ($p=2$) distributions (e.g., J\o rgensen 1987). For $1<p<2$ Tweedie distributions can be represented as Poisson mixtures of gamma distributions, with mass at zero but otherwise continuous on the positive reals. These are especially appealing for modeling continuous positive observations when exact zeros occur. Dunn and Smyth (2005) provides a survey of published applications stressing the utility and flexibility of this class of distributions. The function $f$ is a multidimensional smooth of \texttt{year}, \texttt{n}, and \texttt{e} which models the joint effect of these variables on \texttt{irf}. The use of a three-dimensional smoother for time and space is crucial in that the temporal trend of the IRF is expected to occur at different strengths and patterns depending on the spatial location, because of differing site characteristics in the territory. Northing and Easting are simply offsets in kilometres from a set point (in our case, 11.5 longitude, 44 latitude), thus ensuring that the spatial part of the smooth is isotropic (as opposed to using latitude and longitude). We want both the spatial and temporal components to have an optimal degree of smoothness in terms of the bias-variance trade-off; the smoother must be invariant to the relative scaling of space (km) and time (years). In addition, the smoother has to allow for combinations of different basis functions most suitable for the spatial and temporal components. This can be achieved by using a multidimensional tensor product smooth combining a cubic regression spline basis for \texttt{year} and a soap film spline basis for the two spatial dimensions \texttt{n} and \texttt{e}, thus accounting for the structure of the geographical domain under investigation (details are given in the next two sections). The smooth component in (\ref{PropM}) is subject to some identifiability constraint; see Wood (2006) for more details.
+at municipality $i=1,\ldots,8094$ and year $t=2003,\ldots,2008$. $\phi$ is a dispersion parameter and the log link function ensures positive fitted values. $\texttt{irf}_{it}$, $\texttt{n}_i$, and $\texttt{e}_i$ represent the variables percentage IRF, Northing, and Easting, respectively. Tweedie distributions are a special case of an exponential dispersion model and include, for example, the normal ($p=0$), Poisson ($p=1$) and gamma ($p=2$) distributions (e.g., J\o rgensen 1987). For $1<p<2$ Tweedie distributions can be represented as Poisson mixtures of gamma distributions, with mass at zero but otherwise continuous on the positive reals. These are especially appealing for modelling continuous positive observations when exact zeros occur. Dunn and Smyth (2005) provides a survey of published applications stressing the utility and flexibility of this class of distributions. $f$ is a multidimensional smooth function of \texttt{year}, \texttt{n}, and \texttt{e} which models the joint effect of these variables on \texttt{irf}. The use of a three-dimensional smoother for time and space is crucial in that the temporal trend of the IRF is expected to occur at different strengths and patterns depending on the spatial location, because of differing site characteristics in the territory. Northing and Easting are simply offsets in kilometres from a set point (in our case, 11.5 longitude, 44 latitude), thus ensuring that the spatial part of the smoother is isotropic (as opposed to using latitude and longitude). We want both the spatial and temporal components to have an optimal degree of smoothness in terms of the bias-variance trade-off; the smoother must be invariant to the relative scaling of space (km) and time (years). In addition, the smoother has to allow for combinations of different basis functions most suitable for the spatial and temporal components. This can be achieved by using a multidimensional tensor product smoother combining a cubic regression spline basis for \texttt{year} and a spline basis for the two spatial dimensions \texttt{n} and \texttt{e}. The smooth component in (\ref{PropM}) is subject to some identifiability constraint; see Wood (2006) for more details.
 
 The next two sections cover the technical details of the construction of the smoothers. We first show how in general a three-dimensional tensor product smoother can be constructed using a one-dimensional temporal smoother and a two-dimensional spatial smoother. We then go into the details of the construction of the two-dimensional smoother.
 
 \subsection{A three-dimensional tensor product smoother for time and space \label{3D}}
 
-The construction of a three-dimensional scale invariant tensor product smoother of time and space is based on a marginal one-dimensional spline basis for time and a two-dimensional marginal smooth for space, with associated quadratic penalties measuring their roughness. We omit the subscripts $i$ and $t$ for simplicity. Let us assume that we have two low-rank regression spline bases of any type to represent the smooth functions $f_\text{year}$ and $f_\text{space}$, we can write (e.g., Ruppert, Wand and Carroll 2003; Wood 2006)
+The construction of a three-dimensional scale invariant tensor product smoother of time and space is based on a marginal one-dimensional spline basis for time and a two-dimensional marginal smooth function for space, with associated quadratic penalties measuring their roughness. We omit the subscripts $i$ and $t$ for simplicity. Let us assume that we have two low-rank regression spline bases of any type to represent the smooth functions $f_\text{year}$ and $f_\text{space}$, we can write (e.g., Ruppert, Wand and Carroll 2003; Wood 2006)
 $$
 f_\text{year}(\texttt{year})=\sum_{l=1}^L \xi_l b_l(\texttt{year})=\textbf{X}_\text{year}\bm\xi \ \ \text{and} \ \ f_\text{space}(\texttt{n},\texttt{e})=\sum_{r=1}^R \varphi_r d_r(\texttt{n},\texttt{e})=\textbf{X}_\text{space}\bm\varphi,
 $$
-where the $b_l(\texttt{year})$ and $d_r(\texttt{n},\texttt{e})$ are known cubic regression spline and soap film basis functions, with corresponding parameters $\xi_l$ and $\varphi_r$ and spline dimensions $L$ and $R$. $\textbf{X}_\text{year}$ and $\textbf{X}_\text{space}$ are marginal model matrices evaluating the basis functions with parameter vectors $\bm\xi$ and $\bm\varphi$. The expansion for $f_\text{space}$ and its roughness penalty do not correspond exactly to the expressions used to set up the model since, in this section, we are concerned with illustrating the construction of a three-dimensional scale invariant tensor product smoother. It is therefore convenient to keep the description of the two-dimensional marginal smooth for space and its quadratic penalty as simple as possible; a rigorous description will be given in the next section. 
+where the $b_l(\texttt{year})$ and $d_r(\texttt{n},\texttt{e})$ are known cubic regression spline and soap film basis functions, with corresponding parameters $\xi_l$ and $\varphi_r$ and spline dimensions $L$ and $R$. $\textbf{X}_\text{year}$ and $\textbf{X}_\text{space}$ are marginal model matrices evaluating the basis functions with parameter vectors $\bm\xi$ and $\bm\varphi$. The expansion for $f_\text{space}$ and its roughness penalty do not correspond exactly to the expressions used to set up the model since, in this section, we are concerned with illustrating the construction of a three-dimensional scale invariant tensor product smoother. It is therefore convenient to keep the description of the two-dimensional marginal smoother for space and its quadratic penalty as simple as possible; a rigorous description will be given in the next section. 
 
 In order to set up a three-dimensional tensor product smoother for time and space we need $f_\text{year}(\texttt{year})$ to vary smoothly within the space dimensions. This can be achieved by allowing the parameters $\xi_l$ to vary smoothly with \texttt{n} and \texttt{e}. Using the spline set-up for $f_\text{space}(\texttt{n},\texttt{e})$ we may write (e.g., Wood 2006, p. 163)
 $$
@@ -192,13 +206,13 @@ which results in
 $$
 f(\texttt{year},\texttt{n},\texttt{e})=\sum_{l=1}^L \sum_{r=1}^R \varphi_{lr} d_r(\texttt{n},\texttt{e}) b_l(\texttt{year}). 
 $$
-For any particular set of observations of \texttt{year}, \texttt{n}, and \texttt{e}, there exists a simple relationship between the matrix $\textbf{X}$ evaluating the tensor product smooth at these observations, and the model matrices $\textbf{X}_\text{year}$ and $\textbf{X}_\text{space}$ evaluating the marginal smooths at the same observations. Ordering appropriately the parameters $\varphi_{lr}$ into a vector $\bm\theta$, the $i^{th}$ row of $\textbf{X}$ is given by $\textbf{X}_{i}=\textbf{X}_\text{year,i}\otimes\textbf{X}_\text{space,i}$, where $\otimes$ is the Kronecker product. 
+For any particular set of observations of \texttt{year}, \texttt{n}, and \texttt{e}, there exists a simple relationship between the matrix $\textbf{X}$ evaluating the tensor product smoother at these observations, and the model matrices $\textbf{X}_\text{year}$ and $\textbf{X}_\text{space}$ evaluating the marginal smooths at the same observations. Ordering appropriately the parameters $\varphi_{lr}$ into a vector $\bm\theta$, the $i^{th}$ row of $\textbf{X}$ is given by $\textbf{X}_{i}=\textbf{X}_\text{year,i}\otimes\textbf{X}_\text{space,i}$, where $\otimes$ is the Kronecker product. 
 
 In the GAM context, it is necessary to quantify the roughness of the smooth functions in the model so that over-fitting can be accounted for and hence avoided during the parameter estimation process (e.g., Marra and Radice 2010). As for the penalty associated with this tensor product basis, it is possible to start from roughness measures associated with the marginal smooths $f_\text{year}(\texttt{year})$ and $f_\text{space}(\texttt{n},\texttt{e})$. Suppose that functionals $J$ measuring the roughness of the smooth terms are available, and that these can be written as quadratic forms in the marginal parameters, we have that
 $$
 J_\text{year}(f_\text{year})=\bm\xi\ts\textbf{S}_\text{year}\bm\xi \ \ \text{and} \ \ J_\text{space}(f_\text{space})=\bm\varphi\ts\textbf{S}_\text{space}\bm\varphi,
 $$
-where the $\textbf{S}$ matrices contain known coefficients whose values depend on the chosen bases for time and space. For instance, the second-order cubic spline penalty for $f_\text{year}(\texttt{year})$ evaluates $J_\text{year}(f_\text{year})=\int\left( \partial^2 f_\text{year}/\partial \texttt{year}^2 \right)^2 \text{d}\texttt{year}$, but it may be more complex (Wood 2006). Following, e.g., Augustin (2009), an overall penalty for the tensor product smooth can be obtained by applying the penalties of $f_\text{space}(\texttt{n},\texttt{e})$ to the varying coefficients of the marginal smooth $f_\text{year}(\texttt{year})$, $\xi_l(\texttt{n},\texttt{e})$,
+where the $\textbf{S}$ matrices contain known coefficients whose values depend on the chosen bases for time and space. For instance, the second-order cubic spline penalty for $f_\text{year}(\texttt{year})$ evaluates $J_\text{year}(f_\text{year})=\int\left( \partial^2 f_\text{year}/\partial \texttt{year}^2 \right)^2 \text{d}\texttt{year}$, but it may be more complex (Wood 2006). Following, e.g., Augustin et al. (2009), an overall penalty for the tensor product smoother can be obtained by applying the penalties of $f_\text{space}(\texttt{n},\texttt{e})$ to the varying coefficients of the marginal smooth $f_\text{year}(\texttt{year})$, $\xi_l(\texttt{n},\texttt{e})$,
 $$
 \sum_{l=1}^L J_\text{space}\left\{  \xi_l(\texttt{n},\texttt{e}) \right\},
 $$ 
@@ -217,7 +231,7 @@ which can also be written as
 \eeq
 where, once again, the vector $\bm\theta$ contains the tensor product smooth parameters. The $\lambda$ are smoothing parameters controlling the trade-off between model fit and model smoothness. The next section shows how $f_\text{space}$ and $\textbf{S}_\text{space}$ can be constructed.   
 
-Expression (\ref{TensProd}) gives the tensor product penalty in the most general terms. However, in order to have an expression which can be later related to the soap film smoother, we re-express the penalty as
+Expression (\ref{TensProd}) gives the tensor product penalty in the most general terms. However, in order to have an expression which can be later related to the spatial smoother described in the next section, we re-express the penalty as
 $$
 \bm\theta\ts \textbf{I}_L \otimes \textbf{S}^*_\text{space} \bm\theta + \bm\theta\ts \textbf{S}^*_\text{year} \otimes \textbf{I}_R  \bm\theta,
 $$
@@ -226,9 +240,9 @@ where $\textbf{S}^*_\text{space}=\lambda_\text{space} \textbf{S}_\text{space}$ a
 
 \subsubsection{Soap film \label{SF}}
 
-As alluded to above, the smoother used for the spatial part of the model must take into account of the fact that the borders of Italy represent both physical and administrative boundaries. Clearly a rather na\"ive model would smooth over the bounding box encompassing all of the region we wish to draw inference on, this is not useful; first, because there are no resident foreigners in the sea (at best there are merely potential resident foreigners) and second, because smoothing over this whole area could cause leakage, as mentioned in the introduction.
+As alluded to in the introduction, the smoother used for the spatial part of the model must take into account of the fact that the borders of Italy represent both physical and administrative boundaries. Clearly a simple spatial smoother would smooth over the bounding box encompassing all of the region we wish to draw inference on. This is not useful; first, because there are no resident foreigners in the sea (at best there are merely potential resident foreigners) and second, because smoothing over this whole area could cause leakage, as mentioned in the introduction and illustrated in Section \ref{ER}.
 
-Leakage occurs when a smoother inappropriately links two parts of a domain, this can happen when a two peninsulae jut out into the sea with different population densities on either side. Say one side has a very high density, whereas the other is significantly lower. Most smoothers will not respect that the two areas are different and should be treated so. Rather, the model will ``smooth across'' this gap, causing the high functional values to ``leak'' into the low valued peninsula and vice versa. There are, of course, situations in which leakage is appropriate. For example, in a study of the propagation of a chemical through a river system, there are several mechanisms to transport the chemical (e.g., surface water flow, animals) other than the river itself. Therefore there must be a motivation for why we wish to use a model that specifically prevents leakage. This is the case here, as there is no particular reason we should believe that the resident foreign population should be continuous across physical boundaries such as the Mediterranean Sea. Although there is no reason \textit{a priori} to believe that there will be particularly troublesome leakage in our study, we believe strongly that mitigating against the issue by use of appropriate basis function choice is the most sensible course of action.
+Leakage occurs when a smoother inappropriately links two parts of a domain, this can happen when a two peninsulae jut out into the sea with different population densities on either side. Say one side has a very high density, whereas the other is significantly lower. Most smoothers will not respect that the two areas are different and should be treated so. Rather, the model will ``smooth across'' this gap, causing the high functional values to ``leak'' into the low valued peninsula and vice versa. There are, of course, situations in which leakage is appropriate. For example, in a study of the propagation of a chemical through a river system, there are several mechanisms to transport the chemical (e.g., surface water flow, animals) other than the river itself. Therefore there must be a motivation for why we wish to use a model that specifically prevents leakage. This is the case here, as there is no particular reason we should believe that the resident foreign population should be continuous across physical boundaries such as the Mediterranean Sea. 
 
 The soap film smoother uses a rather simple physical model to prevent leakage from occurring (Wood, Bravington and Hedley 2008). First, consider the domain boundary to be made of wire, then dip this wire into a bucket of soapy water, you will then have a soap film with the same shape as the boundary. Now consider the wire to lie in the $\texttt{n}$-$\texttt{e}$ plane and the height of the soap film at a given point to be the functional value of the model. This film is then distorted smoothly by moving it vertically toward each datum locally, while minimizing the surface tension in the film as a whole. Mathematically, the domain ($\Omega$) is bounded by some polygon ($B$) which, in this case is the coastlines.
 
@@ -236,9 +250,9 @@ In order to perform soap film smoothing, we must first construct two sets of bas
 $$
 f_\text{space}(\texttt{n},\texttt{e})=\sum_{j=1}^J \alpha_j a_j(\texttt{n},\texttt{e}) + \sum_{k=1}^K \gamma_k g_k(\texttt{n},\texttt{e}),
 $$
-where the $\gamma_k$ and $\alpha_j$ are the parameters to be estimated. One can think of the $a_j(\texttt{n},\texttt{e})$ as an offset dictated by the estimated boundary conditions on $B$ (although it is important to note that they are not planes) and the sum of the $g_k(\texttt{n},\texttt{e})$ as the smooth to the data inside $\Omega$. For convenience later, we label the second sum as $f_\text{int}$. We now show how these bases are constructed.
+where the $\gamma_k$ and $\alpha_j$ are the parameters to be estimated. One can think of the $a_j(\texttt{n},\texttt{e})$ as an offset dictated by the estimated boundary conditions on $B$ (although it is important to note that they are not planes) and the sum of the $g_k(\texttt{n},\texttt{e})$ as the smooth function to the data inside $\Omega$. For convenience later, we label the second sum as $f_\text{int}$. We now show how these bases are constructed.
 
-For the internal part of the smooth we first find a set of functions $\rho_k(\texttt{n},\texttt{e})$, which are each solutions to the Laplace's equation in two dimensions
+For the internal part of the smoother we first find a set of functions $\rho_k(\texttt{n},\texttt{e})$, which are each solutions to the Laplace's equation in two dimensions
 $$
 \frac{\partial^2\rho}{\partial \texttt{n}^2} + \frac{\partial^2\rho}{\partial \texttt{e}^2} = 0
 $$
@@ -247,7 +261,7 @@ except at one of the knots ($\texttt{n}^*_k,\texttt{e}^*_k$). Then, we solve Poi
 \frac{\partial^2 g_k}{\partial \texttt{n}^2} + \frac{\partial^2 g_k}{\partial \texttt{e}^2} = \rho_k(\texttt{n},\texttt{e})
 \label{soap-poisson}
 \eeq
-for $k$ indexing the $K$ knots. When the boundary condition $\rho_k(\texttt{n},\texttt{e})=0$ is applied, the set of basis functions for the soap film smoother, $g_k(\texttt{n},\texttt{e})$ are found.  The PDEs are solved numerically using successive overrelaxation (see the appendix of Wood, Bravington and Hedley (2008) for further details).
+for $k$ indexing the $K$ knots. When the boundary condition $\rho_k(\texttt{n},\texttt{e})=0$ is applied, the set of basis functions for the soap film smoother, $g_k(\texttt{n},\texttt{e})$ are found.  The PDEs are solved numerically using successive over-relaxation (see the appendix of Wood, Bravington and Hedley (2008) for further details).
 
 To find the boundary basis we first take a `boundary function', $f_\text{bnd}(r)$, using cyclic splines. The function evaluates the height of the function at each point around the boundary. $f_\text{bnd}(r)$ will have the expansion
 \beq
@@ -258,7 +272,7 @@ where $r$ is the distance along the boundary, the $\alpha_j$ are parameters and 
 
 We have now found the set of basis functions for the inside of the domain and also the boundary-induced-smooth which acts as a base for the soap film smoother. Although this seems like a rather esoteric setup, all the procedure above is effectively doing is setting up a basis in order that we can use standard penalized regression techniques. Just as we might chose one spline basis over another for some property it possesses, the soap film basis has the property that it obeys the (estimated) boundary conditions of the region we are smoothing over.
 
-As with the basis, the penalty is split into two parts: one for the cyclic smooth around the boundary and one for the internal smooth. Writing $\bm\beta$ as the vector of all smooth coefficients for the soap film, $\bm\gamma$ for the boundary smooth parameters and $\bm\alpha$ for the interior, we have
+As with the basis, the penalty is split into two parts: one for the cyclic smoother around the boundary and one for the internal smoother. Writing $\bm\beta$ as the vector of all smooth coefficients for the soap film, $\bm\gamma$ for the boundary smooth parameters and $\bm\alpha$ for the interior, we have
 $$
 \bm\beta^\text{T}\textbf{S}^*_\text{space}\bm{\beta} = \lambda_\text{bnd} \bm\gamma^\text{T}\textbf{S}_\text{bnd}\bm{\gamma} + \lambda_\text{int} \bm{\alpha}^\text{T}\textbf{S}_\text{int}\bm{\alpha},
 $$
@@ -266,22 +280,19 @@ where
 $$
 \textbf{S}^*_\text{space} = \lambda_\text{bnd} \textbf{S}_\text{bnd} + \lambda_\text{int} \textbf{S}_\text{int}.
 $$
-$\textbf{S}^*_\text{space}$ is the total penalty for the spatial part of the smooth, $\textbf{S}_\text{int}$ is the interior penalty and $\textbf{S}_\text{bnd}$ is the cyclic spline boundary penalty. Both are matrices of known coefficients depending on the chosen basis functions. The $\lambda$ are the smoothing parameters for the boundary and interior smooths respectively. As in the previous section, an asterisk indicates that the penalty matrices have been multiplied by the appropriate smoothing parameters, this is done for mathematical convenience. We now look at the two parts of the penalty individually. 
+$\textbf{S}^*_\text{space}$ is the total penalty for the spatial part of the smoother, $\textbf{S}_\text{int}$ is the interior penalty and $\textbf{S}_\text{bnd}$ is the cyclic spline boundary penalty. Both are matrices of known coefficients depending on the chosen basis functions. The $\lambda$ are the smoothing parameters for the boundary and interior smooth terms respectively. As in the previous section, an asterisk indicates that the penalty matrices have been multiplied by the appropriate smoothing parameters, this is done for mathematical convenience. We now look at the two parts of the penalty individually. 
 
 The isotropic interior penalty term is calculated as
 $$
 \textbf{S}_\text{int} = \int_\Omega \Big(\frac{\partial^2 f_\text{int}}{\partial \texttt{n}^2}+\frac{\partial^2 f_\text{int}}{\partial \texttt{e}^2} 
-\Big)^2\text{d}\texttt{n}\text{d}\texttt{e},
+\Big)^2\text{d}\texttt{n}\text{d}\texttt{e}.
 $$
-Note that the integration occurs only over $\Omega$, rather than over the whole of $\mathbb{R}^2$ as would usually be the case. Also, there is no mixed derivative term, and the whole integrand is squared rather than each term individually (in contrast with, say, a thin plate regression spline, see Wood (2006)). This allows the $\texttt{n}$ and $\texttt{e}$ terms' derivatives to be traded off against each other so the nullspace of the penalty is infinite dimensional. This allows those functions in the nullspace to be sufficiently wiggly to meet any boundary conditions. The penalty for the cyclic spline running about the boundary, used to estimate the $\alpha_j$ is calculated as
+Note that the integration occurs only over $\Omega$, rather than over the whole of $\mathbb{R}^2$ as would usually be the case. Also, there is no mixed derivative term, and the whole integrand is squared rather than each term individually (in contrast with, say, a thin plate regression spline, see Wood (2006)). This allows the $\texttt{n}$ and $\texttt{e}$ terms' derivatives to be traded off against each other so the nullspace of the penalty is infinite dimensional, hence permitting those functions in the nullspace to be sufficiently wiggly to meet any boundary conditions. The penalty for the cyclic spline running about the boundary, used to estimate the $\alpha_j$ is calculated as (e.g., Wood 2006)
 $$
 \textbf{S}_\text{bnd} = \int_B \Big(\frac{\partial^2 f_\text{bnd}}{\partial r^2}\Big)^2 \text{d}r.
 $$
-See Wood (2006) for further details.
 
-The solution of the PDEs above, yielding the basis and penalty, is the most computationally expensive part of the procedure. Knots to use for $\texttt{n}_k^*$ and $\texttt{e}_k^*$ must be specified, here we use a grid (further detail on our exact setup is given in Section \ref{ER}). In summary, we now have both the basis functions $a_j(\texttt{n}_i,\texttt{e}_i)$ and $g_j(\texttt{n}_i,\texttt{e}_i)$, and the penalties $\textbf{S}_\text{bnd}$ and $\textbf{S}_\text{int}$, forming $\textbf{S}^*_\text{space}$, for the soap film smoother. 
-
-Soap basis functions and penalties can be obtained using the the \texttt{R} package \texttt{soap} which implements the ideas discussed in this section.
+The solution of the PDEs above, yielding the basis and penalty, is the most computationally expensive part of the procedure. Knots to use for $\texttt{n}_k^*$ and $\texttt{e}_k^*$ must be specified, here we use a grid (further detail on our exact setup is given in Section \ref{ER}). In summary, we now have both the basis functions $a_j(\texttt{n}_i,\texttt{e}_i)$ and $g_j(\texttt{n}_i,\texttt{e}_i)$, and the penalties $\textbf{S}_\text{bnd}$ and $\textbf{S}_\text{int}$, forming $\textbf{S}^*_\text{space}$, for the soap film smoother. Soap basis functions and penalties can be obtained using the the \texttt{R} package \texttt{soap} which implements the ideas discussed in this section.
 
 \subsection{Parameter estimation \label{PE}}
 
@@ -290,14 +301,14 @@ In model (\ref{PropM}), replacing $f$ with its tensor product expression yields 
 D(\bm\theta) + \bm\theta\ts\textbf{S}^*\bm\theta \ \  \text{w.r.t.} \ \  \bm\theta,
 \label{Dev}
 \eeq
-where $\bm\theta$ contains all tensor product smooth parameters associated with the one-dimensional spline basis for time and two-dimensional smooth for space, and $\textbf{S}^*=\sum_i \lambda_i \textbf{S}_i$, where the $\textbf{S}_i$ are matrices of known coefficients properly defined according to the results of the previous sections with associated smoothing parameters $\lambda_i$. The model deviance, $D$, is defined as $2\phi(l_{\text{sat}}-l)$, where $\phi$ is a dispersion parameter, $l$ is the log-likelihood of the model and $l_{\text{sat}}$ the maximum value for the log-likelihood of the model with one parameter per datum. 
+where $\bm\theta$ contains all tensor product smooth parameters associated with the one-dimensional spline basis for time and two-dimensional smoother for space, and $\textbf{S}^*=\sum_i \lambda_i \textbf{S}_i$, where the $\textbf{S}_i$ are matrices of known coefficients properly defined according to the results of the previous sections with associated smoothing parameters $\lambda_i$. The model deviance, $D$, is defined as $2\phi(l_{\text{sat}}-l)$, where $\phi$ is a dispersion parameter, $l$ is the log-likelihood of the model and $l_{\text{sat}}$ the maximum value for the log-likelihood of the model with one parameter per datum. 
 
 Given values for the $\lambda_i$, minimization of (\ref{Dev}) is straightforward. However, smoothing parameter estimation has to be addressed. This can be achieved by minimization of a prediction error estimate, such as the generalized cross-validation (GCV) (Craven and Wahba 1979), or by approximate restricted ML (REML) estimation (Wood 2011). Smoothing parameter selection via the GCV consists of minimizing 
 \beq
 V(\bm\lambda)=\frac{nD(\hat{\bm\theta})}{\left\{n-\text{tr}(\textbf{F})\right\}^2},
 \label{GCV1}
 \eeq
-where $n$ is the sample size, $\textbf{F}$ the usual hat matrix, and $\text{tr}(\textbf{F})$ represents the effective degrees of freedom (EDF) or number of estimated parameters of the penalized model. Wood (2006) described a computational procedure to estimate smoothing parameters on the basis of criterion (\ref{GCV1}). As an alternative, approximate REML can be employed. Within this framework, the penalized likelihood estimates, $\hat{\bm\theta}$, can be seen as the posterior modes of the distribution of $\bm\theta|{\bf y}$ if $\bm\theta \sim N(\textbf{0},\textbf{S}^{*-1}\phi)$, where $\textbf{S}^{*-1}$ is an appropriate generalized inverse. Viewing the spline parameters as random effects allows for the possibility to estimate the $\lambda_i$ via REML (Wahba 1985). The recent work by Reiss and Ogden (2009) shows that at finite sample sizes GCV is prone to undersmoothing and is more likely to develop multiple minima than REML. Furthermore, it is well known that smoothing methods based on prediction error criteria, such as (\ref{GCV1}), are more affected by the presence of correlated errors than maximum likelihood–-based smoothing procedures, such as REML (e.g., Krivobokova and Kauermann 2007). Given the arguments above we opt for REML smoothing parameter selection, and use the \texttt{gam()} function of the \texttt{R} package \texttt{mgcv} since approximate REML optimization for GAMs is reliably and efficiently implemented (Wood 2011). 
+where $n$ is the sample size, $\textbf{F}$ the usual hat matrix, and $\text{tr}(\textbf{F})$ represents the effective degrees of freedom (EDF) or number of estimated parameters of the penalized model. Wood (2006) described a computational procedure to estimate smoothing parameters on the basis of criterion (\ref{GCV1}). As an alternative, approximate REML can be employed. Within this framework, the penalized likelihood estimates, $\hat{\bm\theta}$, can be seen as the posterior modes of the distribution of $\bm\theta|{\bf y}$ if $\bm\theta \sim N(\textbf{0},\textbf{S}^{*-1}\phi)$, where $\textbf{S}^{*-1}$ is an appropriate generalized inverse. Viewing the spline parameters as random effects allows for the possibility to estimate the $\lambda_i$ via REML (Wahba 1985). The recent work by Reiss and Ogden (2009) shows that at finite sample sizes GCV is prone to under-smoothing and is more likely to develop multiple minima than REML. Furthermore, it is well known that smoothing methods based on prediction error criteria, such as (\ref{GCV1}), are more affected by the presence of correlated errors than maximum likelihood-based smoothing procedures, such as REML (e.g., Krivobokova and Kauermann 2007). Given the arguments above we opt for approximate REML, and use the \texttt{R} package \texttt{mgcv} for smoothing parameter selection (Wood 2011). 
 
 \subsection{Variance and trend estimation \label{VE}}
 
@@ -325,7 +336,7 @@ Small values for $N_b$ are typically tolerable. In practice, $N_b$ can be set to
 
 \section{Estimation results \label{ER}}
 
-The model was implemented using the basis sizes (for the cubic and cyclic regression splines) and interior knots (for the soap film) given in Table \ref{soap-basis-table}. Note that separate models were used for each of main land, Sicily and Sardinia since the numerical routine used does not currently support tensor product smooths with multiple penalties. 
+The model was implemented using the basis sizes (for the cubic and cyclic regression splines) and interior knots (for the soap film) given in Table \ref{soap-basis-table}. Note that separate models were used for each of main land, Sicily and Sardinia since the numerical routine used does not currently support tensor product smoothers with multiple penalties. 
 
 \begin{table}[htbp]
 \centering
@@ -344,64 +355,89 @@ Sicily & 12 (6x6) & 10 & 6\\
 \label{soap-basis-table}
 \end{table}
 
-The parameter $p$ in (\ref{PropM}) was set to $1.2$. It was chosen by trial and error to produce the best possible residual plots. The estimate for $\phi$ was equal to $0.905$. Before employing the class of Tweedie models, we used the simpler gamma distribution; diagnostic plots suggested the presence of substantial structure in the residuals. Residual analysis was carried out following an approach similar to that of Chandler (2005). Figure \ref{Resid} gives some diagnostics for the proposed model. Overall, the first two sets of boxplots do not show long-term trends, but suggest the presence of some spatial residual structure. The normal Q-Q plot shows some curvature in the upper tail. The scale-location plot indicates the presence of some heteroscedasticity, although the LOESS smoothed estimate does not indicate a relationship between absolute residuals and predicted values. The presence of extreme values in all diagnostic plots suggest under-estimation of the IRF on occasion. Descriptive analysis revealed that some municipalities register considerably higher IRF levels as compared to those registered in neighboring municipalities. This is mainly due to the specific socio-economic features of attractiveness of each municipality which need to be accounted for in order to avoid under-estimation. Unfortunately, as pointed out in the introduction, currently no relevant economic data are available at municipal level and hence such information can not be incorporated in the model.
+The parameter $p$ in (\ref{PropM}) was set to $1.2$. It was chosen by trial and error to produce the best possible residual plots. The estimate for $\phi$ was equal to $0.905$. Before employing the class of Tweedie models, we used the simpler gamma distribution; diagnostic plots suggested the presence of substantial structure in the residuals. Residual analysis was carried out following an approach similar to that of Chandler (2005). Figure \ref{Resid} gives some diagnostics for the proposed model. Overall, the first two sets of boxplots do not show long-term trends, but suggest the presence of some spatial residual structure. The normal Q-Q plot shows some curvature in the upper tail. The scale-location plot indicates the presence of some heteroscedasticity, although the LOESS smoothed estimate does not indicate a relationship between absolute residuals and predicted values. The presence of extreme values in all diagnostic plots suggest under-estimation of the IRF on occasion. Descriptive analysis revealed that some municipalities register considerably higher IRF levels as compared to those registered in neighboring municipalities. This is mainly due to the specific socio-economic features of attractiveness of each municipality which need to be accounted for in order to avoid under-estimation. Unfortunately, as pointed out in the introduction, currently no relevant economic data are available at municipal level and hence such information can not be incorporated in the model. The deviance explained was 57\%. 
 
 \begin{figure}[tbp]
 	\centering
-		\includegraphics[width=0.73\textwidth, angle=270]{Resid.eps}%Resid.eps
+		\includegraphics[width=0.75\textwidth, angle=270]{Resid.eps}
 	\caption{Deviance residual diagnostics from the final model. Row-wise from top: (i) yearly distributions, (ii) distributions of residuals grouped according to squares on a 10x10 grid which fell inside the boundary, (iii) normal Q-Q plot, (iv) absolute residuals versus predicted values, with LOESS curve (grey line).}
 	\label{Resid}
 \end{figure}
 
-To account for the presence of the moderate spatial residual structure highlighted in Figure \ref{Resid}, which might have had a detrimental impact on the final smoothed maps, we attempted to employ a generalized additive mixed model (GAMM; Lin and Zhang 1999), which can handle smooth function estimation and a number of error correlation structures simultaneously. Since a GAMM can be seen a generalized linear mixed model, estimation can be achieved by using penalized quasi-likelihood (Breslow and Clayton 1993). We used the \texttt{gamm()} function of \texttt{mgcv}, which iteratively calls the \texttt{lme()} function of the \texttt{nlme} package for maximization (Pinheiro et al. 2009). No models could be fitted due to convergence failures (see, e.g., Ruppert, Wand, and Carroll (2003) and Wood (2006) for problems and limitations with this approach). Alternatively, we tried a fixed effect approach (e.g., Wooldridge 2002) but there was no significant change in the spatiotemporal maps of the IRF. As a last check, we fitted the proposed model but replacing the response variable with the deviance residuals and suppressing the intercept. The resulting maps suggested the presence of some residual structure in those municipalities characterized by very high IRF levels; this was expected given the presence of extreme residuals evidenced in the diagnostic plots. Finally, sensitivity analysis showed that the results do not change if we use slightly fewer or more basis functions for the smooth term in the model, hence supporting the theoretical result that REML smoothing parameter selection is not sensitive to moderate misspecifications of the correlation structure (see Section \ref{PE}).  
+To account for the presence of the moderate spatial residual structure highlighted in Figure \ref{Resid}, which might have had a detrimental impact on the final smoothed maps, we attempted to employ a generalized additive mixed model (GAMM; Lin and Zhang 1999), which can handle smooth function estimation and a number of error correlation structures simultaneously. Since a GAMM can be seen a generalized linear mixed model, estimation can be achieved by using, for instance, penalized quasi-likelihood (Breslow and Clayton 1993). We used \texttt{mgcv}, which iteratively calls the \texttt{lme()} function of the \texttt{nlme} package for maximization (Pinheiro et al. 2009). No models could be fitted due to convergence failures (see, e.g., Ruppert, Wand, and Carroll (2003) and Wood (2006) for problems and limitations with this approach). Alternatively, we tried a fixed effect approach (e.g., Wooldridge 2002) but there was no significant change in the spatiotemporal maps of the IRF. As a last check, we fitted the proposed model but replacing the response variable with the deviance residuals and suppressing the intercept. The resulting maps suggested the presence of some residual structure in those municipalities characterized by very high IRF levels; this was expected given the presence of extreme residuals evidenced in the diagnostic plots. Finally, sensitivity analysis showed that the results do not change if we use more basis functions for the smooth term in the model, hence supporting the theoretical result that REML smoothing parameter selection is not sensitive to moderate misspecifications of the correlation structure (e.g., Krivobokova and Kauermann 2007). 
 
 Using the classic Schwarz's Bayesian criterion (SBC), we compared the proposed model with one in which the spatial effect was assumed to be additive in time; the latter yielded an increased SBC. We also compared the results obtained under the two cases. As compared to the results obtained using the proposed model (see next section), the model not accounting for a space-time interaction produced maps whose certain key features/trends could not be revealed. 
 
+Despite the lack of fit corresponding to those municipalities characterized by very high levels of the IRF, the analysis above suggests that the proposed model is able to capture the overall spatiotemporal structure present in the data. Should some relevant economic variables become available at municipal level, the model specification and, as a consequence, its explanatory power could be considerably improved. 
+
+
+\subsection{Spatiotemporal maps \label{STT}}
+
+As mentioned in the introductory section, the IRF in Italy was 6.5\% in 2008. Obviously, this number tells us nothing about specific local areas with particularly high or low levels of resident foreigners. As we move to smaller aggregations (e.g., regional or provincial level) the same argument holds: some information is lost. This kind of low resolution statistic can mask smaller-scale heterogeneity in the population. Our aim here is to capture exactly this spatial heterogeneity using the approach described in the previous sections, and annual data on the number of resident foreigners at a municipal level.
+
 \begin{figure}[tbp]
 	\centering
-		\includegraphics[width=0.85\textwidth, angle=270]{SmoothPlot.ps}
-	\caption{Spatial distribution of the IRF in Italy over the years 2003--2008. Predictions were made over those points lying inside the study region from a 100 by 100 grid.}
+		\includegraphics[width=0.85\textwidth, angle=270]{maps-Soap.ps}
+	\caption{Spatiotemporal maps of the percentage incidence of resident foreigners in Italy over the years 2003--2008. These were obtained using model (\ref{PropM}) with a tensor product smoother based on a cubic regression spline basis for time and a soap film spline basis for space, and data at a municipal level. Predictions were made over those points lying inside the study region from a 100 by 100 grid.}
 	\label{fig1}
 \end{figure}
 
-Despite the lack of fit corresponding to those municipalities characterized by very high levels of the IRF, the analysis above suggests that the proposed model is able to capture the overall spatiotemporal structure present in the data. Should some relevant economic variables become available at municipal level, the model specification and, as a consequence, its explanatory power could be considerably improved. 
+\textbf{Figure \ref{fig1} shows smoothed spatiotemporal maps of the IRF in Italy for the period 2003-2008, obtained using the approach described in the previous sections. As in Figure \ref{Rd}, we can see that the distribution of the IRF is not homogeneous over space and varies over time, and that there is a striking difference in incidence between north and south. However, as pointed out in the introduction, smoothed maps can describe with a much greater accuracy the distribution of the IRF in the territory and changes in spatial trends over time, at a local level.} From Figure \ref{fig1}, we can see that in 2003 northern and central Italy show the highest IRF. Over the subsequent years (2004-2008), the incidence spreads, forming four main areas where resident foreigners tend to live. Focusing on 2008, the most popular areas are in north Italy, specifically the Emilia-Romagna and Lombardy regions. These, although popular in 2003, appear to have greatly expanded. The second most attractive area is made up of the central Italian regions of Tuscany, Umbria, Marche and Lazio. The final two areas are composed of Liguria and Piedmont, and Veneto, Friuli-Venezia Giulia and Trentino-Alto Adige. These are located in the northwest and northeast of the country, respectively. There is also an interesting growth in the incidence at the Swiss and Austrian borders (from about 2\% in 2003 to about 4-5\% in 2008). Resident foreigners seem less attracted by the regions and islands of southern Italy. \textbf{Referring to the case of the Po Valley discussed in the introduction, the maps in Figure \ref{fig1} allow us to identify the presence of two main well defined polarization patterns of the IRF, the first in the centre of the Po Valley and the second near Venice. The maps in Figure \ref{Rd} can not reveal the patterns described above.} 
 
-We now present the results of the empirical analysis. We first look at the results of the model for the IRF, then the model for the constructed composite indicator. Finally, we discuss the possible interconnection between these two sets of maps.
-
-\subsection{Spatiotemporal trends \label{STT}}
+The spatiotemporal patterns shown in Figure \ref{fig1} can be useful for policy-makers to decide the allocation of resources at local level, supporting policies and services needed for the process of integration of resident foreigners. In this regard, we would expect an area with a high density of resident foreigners to require more resources than an area with a lower density. Such policies relate to a number of services such as: admission to education, access to the public health service, professional training, services supporting the match of labor supply and demand (e.g., Zincone 2006). For sociologists and demographers these maps may represent a new way to model spatiotemporal demographic changes and display the results graphically. \textbf{Interpreting the usefulness of the proposed tool in a metaphorical way, it is as if the scholar has the opportunity to read the empirical maps in Figure \ref{Rd} wearing ``special spectacles'', that allows him/her to see in a more clear and sharp manner the spatial and temporal patterns of the IRF.}
 
 \begin{figure}[tbp]
 	\centering
 		\includegraphics[width=0.6\textwidth, angle=270]{trends.ps}
-	\caption{Temporal trends in incidence over the study period for Italy (top left), followed by trend estimates for north, central and south and islands areas with 95\% confidence intervals. North was defined as those points in the prediction grid above -20 km north, central as between -20 km and -300, south and islands and below that, including Sardinia and Sicily.}
+	\caption{Temporal trends in incidence of resident foreigners over the study period for Italy (top left), followed by trend estimates for north, central and south and islands areas with 95\% confidence intervals. North was defined as those points in the prediction grid above -20 km north, central as between -20 km and -300, south and islands and below that, including Sardinia and Sicily.}
 	\label{trends}
 \end{figure}
 
-As mentioned in the introductory section, the IRF in Italy was 6.5\% in 2008. This number tells us nothing about areas with particularly high or low levels of resident foreigners. Clearly, as we move to smaller aggregations (e.g., regional or provincial level) the same argument holds: some information is lost. This kind of low resolution statistic can mask smaller-scale heterogeneity in the population. Our aim here is to capture exactly this spatial heterogeneity. Figure \ref{fig1} shows the spatiotemporal trend of the incidence of resident foreign population in Italy for the period 2003-2008. Two features stand out: 1) the distribution of the IRF is not homogeneous over space and varies over time, and 2) the striking difference in incidence between north and south. Clearly this inhomogeneity is not captured in the above, national, statistic.
+Figure \ref{trends}, shows the estimated temporal trends for both the full Italian territory and broken down by area with 95\% confidence intervals. The trends for northern and central Italy are similar. However, those for southern Italy and the islands are much flatter. Northern and central Italy also show a faster growth in incidence, this difference is supported by the confidence intervals. Overall, these trends reflect what we see in the maps in Figure \ref{fig1}, that there is a significant difference between northern/central Italy and the south of the country and its islands. Note that, since the approach outlined in Section \ref{VE} can not take into account the presence of residual correlation structure, we expect the obtained confidence intervals not to be exactly representative than those that might be produced using some adjusted version of them. As in Augustin et al. (2009), the most obvious approach would be to fit a GAMM with a carefully chosen correlation structure and use the resulting posterior covariance matrix in place of that reported in Section \ref{VE}. Unfortunately, as pointed out in the previous section, convergence problems prevented us from doing this. However, we doubt the conclusions would change.
 
-From Figure \ref{fig1}, we can see that in 2003 northern and central Italy show the highest IRF. Over the subsequent years (2004-2008), the incidence spreads, forming four main areas where resident foreigners tend to live. Focusing on 2008, the most popular areas are in north Italy, specifically the Emilia-Romagna and Lombardy regions. These, although popular in 2003, appear to have greatly expanded. The second most attractive area is made up of the central Italian regions of Tuscany, Umbria, Marche and Lazio. The final two areas are composed of Liguria and Piedmont, and Veneto, Friuli-Venezia Giulia and Trentino-Alto Adige. These are located in the northwest and northeast of the country, respectively. There is also an interesting growth in the incidence at the Swiss and Austrian borders (from about 2\% in 2003 to about 4-5\% in 2008). Resident foreigners seem less attracted by the regions and islands of southern Italy. Raw maps (available upon request) could not reveal the patterns described above. 
+\textbf{Figure \ref{fig1TPRS} shows the spatiotemporal maps obtained when using model (\ref{PropM}) with a tensor product smoother based on a cubic regression spline basis for time and a thin plate regression spline (TPRS) basis for space (e.g., Augustin 2009; Ruppert, Wand, and Carroll 2003; Wood 2006). Basis sizes for the TPRS and cubic regression spline bases were the same as those reported in the last two columns of Table \ref{soap-basis-table}. The main issue with this simpler approach is that a TPRS basis for the spatial dimension can not take into account the physical and administrative boundaries of the geographical area of interest; this can have a detrimental impact on the resulting estimates since such an approach would suffer from the problem of leakage (e.g., Wood, Bravington and Hedley 2008).}
 
-Figure \ref{trends}, shows the estimated temporal trends for both the full Italian territory and broken down by area with 95\% confidence intervals. The trends for northern and central Italy are similar. However, those for southern Italy and the islands are much flatter. Northern and central Italy also show a faster growth in incidence, this difference is supported by the confidence intervals. Overall, these trends reflect what we see in the maps in Figure \ref{fig1}, that there is a significant difference between northern/central Italy and the south of the country and its islands. Note that, since the approach outlined in Section \ref{VE} can not take into account the presence of residual correlation structure, we expect the obtained confidence intervals not to be exactly representative than those that might be produced using some adjusted version of them. As in Augustin et al. (2009), the most obvious approach would be to fit a GAMM with a carefully chosen correlation structure and use the resulting posterior covariance matrix in place of that reported in Section \ref{VE}. Unfortunately, as pointed out in the previous section, convergence problems prevented us from doing this. Alternatively, one could employ either the appraoch of Bowman, Giannitrapani and Scott (2009) or that of Chandler (2005); these are not pursued here since we doubt the conclusions would change.
+\begin{figure}[tbp]
+	\centering
+		\includegraphics[width=0.85\textwidth, angle=270]{maps-TPRS.ps}
+	\caption{Spatiotemporal maps of the percentage incidence of resident foreigners in Italy over the years 2003--2008. These were obtained using model (\ref{PropM}) with a tensor product smoother based on a cubic regression spline basis for time and a thin plate regression spline basis for space, and data at a municipal level. Predictions were made over those points lying inside the study region from a 100 by 100 grid.}
+	\label{fig1TPRS}
+\end{figure}
 
-The spatiotemporal patterns shown in Figure \ref{fig1} could be useful for policy-makers to decide the allocation of resources at local level; supporting policies and services needed for the process of integration of resident foreigners. In this regard, we would expect an area with a high density of resident foreigners to require more resources than an area with a lower density. Such policies relate to a number of services such as: admission to education, access to the public health service, professional training, services supporting the match of labor supply and demand (e.g., Zincone 2006). For sociologists and demographers these maps may represent a new way to model spatiotemporal demographic changes and display the results graphically.
+\textbf{Comparing the maps in Figure \ref{fig1} with those in Figure \ref{fig1TPRS}, we see that the use of the approach based on a TPRS basis masks several important features highlighted in the maps obtained using a soap film spline basis. This is problematic; the maps in Figure \ref{fig1TPRS} can lead to an incorrect interpretation of the demographic phenomenon over space as well as time, hence biasing the decision of the allocation of economic resources at local level. As an example, referring again to the case of the Po valley, the maps in Figure \ref{fig1} show two main well defined polarization patterns of the IRF and a detailed representation over space of its different levels. These considerations can not be drawn from the maps in Figure \ref{fig1TPRS}. This suggests that, for this case study, the use of a simple approach does not represent a valid solution to capture important features of the local spatial distribution of the IRF. We also fitted model (\ref{PropM}) incorporating a tensor product smoother based on three cubic regression spline bases for time, longitude and latitude, but the conclusions did not change.}
 
-\subsection{IRF and spatial economic attractiveness \label{NEX}}
 
-We now try to explain the considerable observed difference in incidence between north and south. We first briefly describe the construction of a composite indicator of spatial economic attractiveness (ISEA), before moving onto a discussion of whether there is a connection in the spatiotemporal distribution of the IRF and ISEA.
+\subsection{Spatial economic attractiveness \label{diss}}
 
-\subsubsection{Construction of the indicator of spatial economic attractiveness (ISEA) \label{ISEA}}
+In the literature it is well known that among the main reasons that encourage individuals to move to another country is the search of employment for improving, e.g., the personal and/or family members well-being status (e.g., Fullin and Reyneri 2011). In light of this consideration, the main indicators of the labor market and of income could help to explain the spatial heterogeneity of the IRF observed in Figure \ref{fig1}. Unfortunately, economic indicators such as unemployment and employment rates, and gross domestic product (GDP) per capita are not available at a municipal level. This is an important limitation of the official statistics. For this reason, we can not incorporate this information into model (\ref{PropM}) given the differing spatial resolution of the quantities being modelled; the IRF is available at a municipality level (this means that for the IRF there are about 8000 observations available per year), while the economic indicators at a provincial level (about 100 observations per year).
+
+As a descriptive analysis, we constructed a simple indicator of spatial economic attractiveness (ISEA) based on the unemployment and employment rates, and real GDP per capita using provincial data (the maximum spatial resolution available for these indicators). Further details are given in the Appendix. We then produced a boxplot of this indicator for each typical Italian macro-area (see Figure \ref{fig3}). We show only the boxplots for macro-area relative to 2008 because there were not significant differences across the different years. 
 
 \begin{figure}[tbp]
 \centering
-	\includegraphics[width=0.65\textwidth, angle=270]{sensitivity.eps}
-\caption{Scatter plots of the ISEA against each of its constituent economic variables. The years shown here are representative samples of all years 2003-2008. The plots show the stability of the relationships between the ISEA and its components.}
-	\label{fig4}
-\end{figure}
+	\includegraphics[width=0.55\textwidth, angle=270]{boxplot.eps}
+\caption{Boxplots of the indicator of spatial economic attractiveness (ISEA) by macro-area. The ISEA was constructed using provincial data. The macro-areas are: North West (made up of the following regions: Piedmont, Valle d'Aosta, Lombardy, Liguria), North East (Trentino Alto-Adige, Veneto, Friuli-Venezia Giulia, Emilia-Romagna), Centre (Tuscany, Umbria, Marche, Lazio), South (Abruzzo, Molise, Campania, Puglia, Basilicata, Calabria), and Islands (Sicily and Sardinia).}
+	\label{fig3}
+\end{figure} 
 
-We construct a simple composite indicator using three economic variables chosen for their relevance, accuracy, frequency of update and accessibility, as well as coherence with our overall purpose. These variables are:
+Figure \ref{fig4}'s scatterplots, in the Appendix, support the reading of the boxplots in Figure \ref{fig3}. For example, values of the ISEA above 80 (primarily located in the north of the country) are associated to an added value per capita around 20-30000 euros, an employment rate higher than 60\%, and an unemployment rate lower than 6-7\%. The opposite is found for values of the ISEA below 30 (primarily located in the south of the country and in the islands). Specifically, the employment rates of most Italian southern provinces registered levels below 50\%. These are quite far from the target of 70\% by 2010 as specified by the Lisbon Strategy in March 2000. In addition, despite a more flexible labor market in recent years (e.g., Zanin and Marra 2011), which led to a reduction in the unemployment at national level, the southern provinces continue to register the highest and most persistent levels of unemployment. This suggests that the southern regions have a greater difficulty in absorbing the labor supply. Other empirical studies on the dynamics of the added value (e.g., Luciano 2004; Petacchini 2008), employment (e.g., Guisan and Aguayo 2002) and unemployment (e.g., Brunello, Lupi and Ordine 2001; Cracolici, Cuffaro and Nijkamp 2009) suggest that these gaps between north and south Italy have a structural nature. 
+
+In summary, the spatial differences highlighted by the boxlots of the ISEA are consistent with the spatial heterogeneity of the IRF in the country. This indicator can help understand some of the observed spatial patterns, but it represents only one of many possible avenues to explore.
+
+
+\section{Conclusions}
+
+We suggested a tool for practitioners to provide accurate spatiotemporal maps showing the distribution of the IRF in a territory over time and space, at a local level. We also discussed which economic factors might explain some of the observed spatial heterogeneity. Our results complement previous findings in the literature and can help policy makers to decide the allocation at local level of economic resources supporting, e.g., the process of integration of resident foreigners in a host country. Should some relevant economic variables become available at municipal level, logical extensions incorporating covariate effects could be considered. Here we analyzed Italian data but the same analysis can be reproduced for other regions (at both an inter- and intra-national scale) as well as for different situations.
+
+
+\section*{Appendix \label{NEX}}
+
+\subsection*{Construction of the indicator of spatial economic attractiveness (ISEA) \label{ISEA}}
+
+We constructed a simple composite indicator using three economic variables chosen for their relevance, accuracy, frequency of update and accessibility, as well as coherence with our overall purpose. These variables are:
 
 \begin{itemize}
-\item \textbf{Added value per capita at constant prices (base year 2000):} computed as the ratio of added value at constant prices and number of inhabitants. This variable is typically considered as a proxy measure of standard of living and welfare (e.g., Segre, Rondinella and Mascherini 2010), although Kuznets (1934) states that ``the welfare of a nation can scarcely be inferred from a measurement of national income''. 
+\item \textbf{Added value per capita at constant prices (base year 2000):} computed as the ratio of added value at constant prices and number of inhabitants. This variable is typically considered as a proxy measure of standard of living and welfare (e.g., Segre, Rondinella and Mascherini 2011), although Kuznets (1934) states that ``the welfare of a nation can scarcely be inferred from a measurement of national income''. 
 
 \item \textbf{Unemployment rate:} calculated as the ratio between unemployed workers and total labor force multiplied by 100. This measures the tension in the labor market due to an excess of labor supply (by workers) with respect to labor demand (by companies).
 
@@ -409,52 +445,47 @@ We construct a simple composite indicator using three economic variables chosen 
 \end{itemize}
 
 Data were provided by ISTAT, at province level (the highest resolution available). As in OECD (2008), the composite indicator was constructed using principal component analysis (PCA) to define weights for the aggregation of indicators (Hair et al. 2006). The high correlation between the economic variables listed above, further emphasizes the need for such an approach. Before performing PCA, outlier presence was checked. PCA was performed for each year in the period 2003-2008 using the \texttt{princomp()} function in \texttt{R}. In agreement with both our expectations and the economic theory, coefficients in the first principal component for the added value per capita and employment rate were positive, and negative for unemployment rate. Sign and magnitude of the coefficients were stable for the years investigated. The eigenvalue of the first principal component was greater than unity and explains more than 90\% of the variance. We therefore conclude that the first component accurately represents the composite indicator of interest ISEA. Since there were no outliers in the standardised scores, they were normalised using a `min-max' procedure (OECD 2008, p. 85), ranking them between 0 to 100. To save space, further details on the results of PCA are available upon request.
- 
+  
 \begin{figure}[tbp]
-	\centering
-		\includegraphics[width=0.85\textwidth, angle=270]{index.ps}
-	\caption{Spatial distribution of the ISEA for the years 2003--2008. Predictions were made over those points lying inside the study region from a 100 by 100 grid.}
-	\label{fig5}
-\end{figure} 
- 
-Scatterplots of the composite indicator against its components (see Figure \ref{fig4}) can reveal relationships between the individual indicators and the composite index (OECD 2008, p. 35). In our case a value of ISEA close to 100 corresponds to the highest levels of added value per capita and employment rate and to the lowest levels of unemployment rate. For low values of the indicator we observe the opposite. The proposed composite indicator ranks the Italian provinces from most to least attractive, year-by-year, from both an economic and labor market standpoint.
+\centering
+	\includegraphics[width=0.65\textwidth, angle=270]{ISEAsens.eps}
+\caption{Scatter plots of the indicator of spatial economic attractiveness (ISEA) against each of its constituent economic variables. The years shown here are representative samples of all years 2003-2008. The plots show the stability of the relationships between the ISEA and its components.}
+	\label{fig4}
+\end{figure}   
+  
+Scatterplots of the composite indicator against its components (see Figure \ref{fig4}) can reveal relationships between the individual indicators and the composite index (OECD 2008, p. 35). In our case a value of the ISEA close to 100 corresponds to the highest levels of added value per capita and employment rate and to the lowest levels of unemployment rate. For low values of the indicator we observe the opposite. The proposed composite indicator ranks the Italian provinces from most to least attractive, year-by-year, from both an economic and labor market standpoint.
 
 We have also tested how the province's ranking changes if we construct the composite indicator excluding either unemployment rate or employment rate. The resulting indicators rank the Italian provinces in a fairly similar manner as the composite index presented above. Here we consider both the employment and unemployment rates to fully account for labor market characteristics at territorial level.
 
-\subsubsection{Is there a connection between ISEA and IRF? \label{nexus}}
 
-Figure \ref{fig5} shows spatiotemporal maps of the ISEA, obtained using the methodology detailed in Section \ref{METH}. Results for Sardinia and Sicily are not available due to the low number of observations available to fit the model. Given the smaller dataset, the basis size and interior knots were taken to be about $1/3$ of those used for the IRF model. The parameter $p$ was set to $1.7$ and the estimate for $\phi$ was equal to $0.128$. The maps show a clear gradient running from the highest levels in the north to the lowest in the south. 
 
-Figure \ref{fig4}'s scatterplots support the reading of the maps in Figure \ref{fig5}. For example, values of ISEA above 80 (primarily located in the north of the country) are associated to an added value per capita around 20-30000 euros. A much lower added value is given for values of ISEA below 30 (primarily located in the south of the country). Over the period of observation, the employment rates of most Italian southern provinces registered levels below 50\%. These are quite far from the target of 70\% by 2010 as specified by the Lisbon Strategy in March 2000. In addition, despite a more flexible labor market in recent years, which led to a reduction in the unemployment at national level, the southern provinces continue to register the highest and most persistent levels of unemployment (e.g., Zanin and Marra 2010). This suggests that the southern regions have a greater difficulty in absorbing the labor supply. Other empirical studies on the dynamics of the added value (e.g., Luciano 2004; Petacchini 2008), employment (e.g., Guisan and Aguayo 2002) and unemployment (e.g., Brunello, Lupi and Ordine 2001; Cracolici, Cuffaro and Nijkamp 2009) suggest that these gaps between north and south Italy have a structural nature. In this regard, we would expect a higher IRF in areas with high ISEA values and vice versa. This is supported by the primary reason for a resident foreigner's presence in Italy: employment (Fullin and Reyneri 2010). Following this logic, resident foreigners should take up residence in places where jobs are available to them. If we overlay Figure \ref{fig1} onto Figure \ref{fig5}, we can see that there is a clear connection between the IRF and the ISEA's values: areas with a higher level of the composite indicator have the highest IRF, and vice versa. 
 
-As a possible extension to a qualitative analysis, this relationship could be tested statistically adding the composite indicator as an exogenous variable in model (\ref{PropM}). However, given the differing spatial resolution of the quantities being modeled (the IRF is available at a municipality level, while the composite indicator at a provincial level), we have considered the two analyses separately. The main aim of this study is to model the spatiotemporal distribution of the incidence of resident foreign population. The proposed indicator can contribute to explain some of the observed spatial heterogeneity, but it represents only one of many possible avenues to explore.
 
-\section{Conclusions}
-
-We suggested a tool for practitioners to provide spatiotemporal maps modeling the distribution of the IRF in a territory over time and space, and time trends with confidence bands. We also constructed a composite indicator representing economic and labor market factors to explain some of the observed spatial heterogeneity. Our results complement previous findings in the literature and can help policy makers to decide the allocation at local level of economic resources supporting, e.g., the process of integration of resident foreigners in a host country. Should some relevant economic variables become available at municipal level, logical extensions incorporating covariate effects could be considered. Here we analysed Italian data but the same analysis can be reproduced for other regions (at both an inter- and intra-national scale) as well as for different situations.
 
 
 \begin{thebibliography}{99}
 
-\bibitem{} Algan, Y., Dustmann, C., Glitz, A., and Manning, A. (2010). The economic situation of first- and second-generation immigrants in France, Germany, and the UK. \textit{The Economic Journal}, 120, F4--F30.
+\bibitem{} Algan, Y., Dustmann, C., Glitz, A. and Manning, A. (2010). The economic situation of first- and second-generation immigrants in France, Germany, and the UK. \textit{The Economic Journal}, 120, F4--F30.
 
-\bibitem{} Augustin, N. H., Musio, M., Wilpert, K., Kublin, E., Wood, S. N., and Schumacher, M. (2009). Modeling spatiotemporal forest health monitoring data. \textit{Journal of the American Statistical Association}, 104, 899--911.
+\bibitem{} Augustin, N. H., Musio, M., Wilpert, K., Kublin, E., Wood, S. N. and Schumacher, M. (2009). Modeling spatiotemporal forest health monitoring data. \textit{Journal of the American Statistical Association}, 104, 899--911.
 
 \bibitem{} Ban, C. (2009). Economic transnationalism and its ambiguities: the case of Romanian Migration to Italy. \textit{International Migration}, DOI: 10.1111/j.1468-2435.2009.00556.x.
 
-\bibitem{} Bijak, J., Kupiszewska, D., Kupiszewski, M., Saczuk, K., and Kicinger, A. (2007). Population and labour force projections for 27 European countries, 2002--2052: impact of international migration on population ageing. \textit{European Journal of Population}, 23, 1--31.
+\bibitem{} Banerjee, S., Carlin, B. and Gelfand, A. (2004). Hierarchical Modeling and Analysis for Spatial Data. London: Chapman \& Hall.
+
+\bibitem{} Bijak, J., Kupiszewska, D., Kupiszewski, M., Saczuk, K. and Kicinger, A. (2007). Population and labour force projections for 27 European countries, 2002--2052: impact of international migration on population ageing. \textit{European Journal of Population}, 23, 1--31.
 
 \bibitem{} Borjas, J. G. (1989). Economic theory and international migration. \textit{International Migration Review}, 23, 457--85.
 
-\bibitem{} Borjas, J. G., Freeman, R. B., and Katz, L. F. (1996). Searching for the effect of immigration on the labor market. \textit{American Economic Review}, 86, 246--51.
+\bibitem{} Borjas, J. G., Freeman, R. B. and Katz, L. F. (1996). Searching for the effect of immigration on the labor market. \textit{American Economic Review}, 86, 246--51.
 
 \bibitem{} Borjas, J. G. (2003). The labor demand curve IS downward sloping: reexamining the impact of immigration on the labor market. \textit{The Quaterly Journal of Economics}, 118, 1335--74.
 
 \bibitem{} Borjas, J. G. (2005). The labor market impact of high-skill immigration. \textit{American Economic Review}, 92, 56--60.
 
-\bibitem{} Bowman, A. W., Giannitrapani, M., Scott, E. M. (2005). Spatiotemporal smoothing and sulphur dioxide trends over Europe. \textit{Journal of the Royal Statistical Society Series C}, 58, 737--752.
+%\bibitem{} Bowman, A. W., Giannitrapani, M., Scott, E. M. (2005). Spatiotemporal smoothing and sulphur dioxide trends over Europe. \textit{Journal of the Royal Statistical Society Series C}, 58, 737--752.
 
-\bibitem{} Breslow, N. E., and Clayton, D. G. (1993). Approximate inference in generalized linear mixed models. \textit{Journal of the American Statistical Association}, 88, 9--25.
+\bibitem{} Breslow, N. E. and Clayton, D. G. (1993). Approximate inference in generalized linear mixed models. \textit{Journal of the American Statistical Association}, 88, 9--25.
 
 \bibitem{} Broeders, D. (2007). The new digital borders of Europe: EU database and the surveillance of irregular migrants. \textit{International Sociology}, 22, 71--92.
 
@@ -462,49 +493,53 @@ We suggested a tool for practitioners to provide spatiotemporal maps modeling th
 
 \bibitem{} Cangiano, A. (2008). Foreign migrants in Southern European countries: evaluation of recent data. In \textit{International Migration in Europe. Data, Models, and Estimates}, Editors: Raymer, J. and Willekens, F., 89--112, Wiley.
 
-\bibitem{} Casey, T., and Dustmann, C. (2010). Immigrants' identity, economic outcomes and the trasmission of identity across generations. \textit{The Economic Journal}, 120, F31--F51.
+\bibitem{} Casey, T. and Dustmann, C. (2010). Immigrants' identity, economic outcomes and the trasmission of identity across generations. \textit{The Economic Journal}, 120, F31--F51.
 
 \bibitem{} Card, D. (2005). Is the new immigration really so bad? \textit{The Economic Journal}, 115, 300--323.
 
 \bibitem{} Carter, T. J. (1999). Illegal immigration in a efficiency wage model. \textit{Journal of International Economics}, 49, 385--401.
 
-\bibitem{} Chandler, R. E. (2005). On the use of generalized linear models for interpreting climate variability. \textit{Environmetrics}, 16, 699--715.
+%\bibitem{} Chandler, R. E. (2005). On the use of generalized linear models for interpreting climate variability. \textit{Environmetrics}, 16, 699--715.
 
 \bibitem{} Coleman, D. (2008). The demographic effects of international migration Europe. \textit{Oxford Review of Economic Policy}, 24, 452--76.
 
-\bibitem{} Contucci, P., and Ghirlanda, S. (2007). Modelling society with statistical mechanics: an application to cultural contact and immigration. \textit{Quality and Quantity}, 41, 569--78.
+\bibitem{} Contucci, P. and Ghirlanda, S. (2007). Modelling society with statistical mechanics: an application to cultural contact and immigration. \textit{Quality and Quantity}, 41, 569--78.
 
 \bibitem{} Cracolici M.F., Cuffaro M. and Nijkamp, P. (2009). A spatial analysis on Italian unemployment differences. \textit{Statistical Methods \& Applications}, 18, 275--291.
 
-\bibitem{} Craven, P., and Wahba, G. (1979). Smoothing noisy data with spline functions. \textit{Numerische Mathematik}, 31, 377--403.
+\bibitem{} Craven, P. and Wahba, G. (1979). Smoothing noisy data with spline functions. \textit{Numerische Mathematik}, 31, 377--403.
 
-\bibitem{} Dunn, P. K., and Smyth, G. K. (2005). Series evaluation of Tweedie exponential dispersion models densities. \textit{Statistics and Computing}, 15, 267–-280.
+\bibitem{} Dunn, P. K. and Smyth, G. K. (2005). Series evaluation of Tweedie exponential dispersion models densities. \textit{Statistics and Computing}, 15, 267–-280.
 
-\bibitem{} Edin, Per-A., Fredriksson, P., and Aslund, O. (2003). Ethnic enclaves and the economic success of immigrants - evidence from a natural experiment. \textit{The Quarterly Journal of Economics}, 118, 329--57.
+\bibitem{} Edin, Per-A., Fredriksson, P. and Aslund, O. (2003). Ethnic enclaves and the economic success of immigrants - evidence from a natural experiment. \textit{The Quarterly Journal of Economics}, 118, 329--57.
 
-\bibitem{} Fullin, G., and Reyneri, E. (2010). Low unemployment and bad jobs for new immigrants in Italy. \textit{International Migration}, DOI: 10.1111/j.1468-2435.2009.00594.x.
+\bibitem{} Fullin, G. and Reyneri, E. (2011). Low unemployment and bad jobs for new immigrants in Italy. \textit{International Migration}, 49, 118--147.
 
-\bibitem{} Gu, C., and Wahba, G. (1993). Smoothing Spline ANOVA with Component-Wise Bayesian Confidence Intervals. \textit{Journal of Computational and Graphical Statistics}, 2, 97--117.
+\bibitem{} Gu, C. and Wahba, G. (1993). Smoothing Spline ANOVA with Component-Wise Bayesian Confidence Intervals. \textit{Journal of Computational and Graphical Statistics}, 2, 97--117.
 
 \bibitem{} Guisan, M.C. and Aguayo, E. (2002). Employment and regional development in Italy. \textit{Applied Econometric and International Development}, 2, 41--72.
 
-\bibitem{} Hair, J.F., Black, W.C., Babin, B.J., Anderson, R.E., and Tatham, R.L. (2006). \textit{Multivariate data analysis}. Pearson Prentice Hall, Upper Saddle River, New York.
+\bibitem{} Hair, J.F., Black, W.C., Babin, B.J., Anderson, R.E. and Tatham, R.L. (2006). \textit{Multivariate data analysis}. Pearson Prentice Hall, Upper Saddle River, New York.
 
-\bibitem{} Hastie, T., and Tibshirani, R. (1990). \textit{Generalized Additive Models}. London: Chapman \& Hall.
+\bibitem{} Hastie, T. and Tibshirani, R. (1990). \textit{Generalized Additive Models}. London: Chapman \& Hall.
 
-\bibitem{} Hillman, A. L., and Weiss, A. (1999). A theory of permissible illegal immigration. \textit{European Journal of Political Economy}, 15, 585--604.
+\bibitem{} Hillman, A. L. and Weiss, A. (1999). A theory of permissible illegal immigration. \textit{European Journal of Political Economy}, 15, 585--604.
 
-\bibitem{} Hooghe, M., Trappers, A., Meuleman, B., and Reeskens, T. (2008). Migration to European countries: a structural explanation of patterns 1980--2004. \textit{International Migration Review}, 42, 476--504.
+\bibitem{} Hooghe, M., Trappers, A., Meuleman, B. and Reeskens, T. (2008). Migration to European countries: a structural explanation of patterns 1980--2004. \textit{International Migration Review}, 42, 476--504.
 
 \bibitem{} J\o rgensen, B. (1987). Exponential dispersion models. \textit{Journal of the Royal Statistical Society Series B}, 49, 127-–162.
 
-\bibitem{} Krivobokova, T. and Kauermann, G. (2007) A Note on Penalized Spline Smoothing With Correlated Errors. \textit{Journal of the American Statistical Association}, 480, 1328-–1337.
+\bibitem{} Kamman, E. E. and Wand, M. P. (2003). Geoadditive Models. \textit{Journal of the Royal Statistical Society Series C}, 52, 1--18.
+
+\bibitem{} Kneib, T. and Fahrmeir, L. (2006). Structured Additive Regression for Categorical Space–Time Data: A Mixed Model Approach. \textit{Biometrics}, 62, 109--118.
+
+\bibitem{} Krivobokova, T. and Kauermann, G. (2007). A Note on Penalized Spline Smoothing With Correlated Errors. \textit{Journal of the American Statistical Association}, 480, 1328-–1337.
 
 \bibitem{} Kuznet, S. (1934). National income, 1929--1932. Second session Senate document no. 124, 73rd US Congress.
 
 \bibitem{} Lazear, E. P. (1999). Culture and language. \textit{Journal of Political Economy}, 107, S95--S126.
 
-\bibitem{} Lin, X., and Zhang, D. (1999). Inference in Generalized Additive Mixed Models by Using Smoothing Splines. \textit{Journal of the Royal Statistical Society Series B}, 61, 381--400.
+\bibitem{} Lin, X. and Zhang, D. (1999). Inference in Generalized Additive Mixed Models by Using Smoothing Splines. \textit{Journal of the Royal Statistical Society Series B}, 61, 381--400.
 
 \bibitem{} Lowell, L. B. (2007). Trends in international migration flows and stocks, 1975-2005. OECD Social, Employment and Migration Working Paper 58, OECD, Paris.
 
@@ -512,11 +547,11 @@ We suggested a tool for practitioners to provide spatiotemporal maps modeling th
 
 \bibitem{} Manning, A. (2010). Feature: the integration of immigrants and their children in Europe: introduction. \textit{The Economic Journal}, 120, F1--F3. 
 
-\bibitem{} Marra, G, and Radice, R. (2010). Penalised regression splines: theory and application to medical research. \textit{Statistical Methods in Medical Research}, 19, 107--125.
+\bibitem{} Marra, G. and Radice, R. (2010). Penalised regression splines: theory and application to medical research. \textit{Statistical Methods in Medical Research}, 19, 107--125.
 
-\bibitem{} Massey, D. S., Arago, J., Hugo, G., Kouaouci, A., Pellegrino, A., and Taylor, J. E. (1993). Theory of international migration: a review and appraisal. \textit{Population and Development Review}, 19, 431--66.
+\bibitem{} Massey, D. S., Arago, J., Hugo, G., Kouaouci, A., Pellegrino, A. and Taylor, J. E. (1993). Theory of international migration: a review and appraisal. \textit{Population and Development Review}, 19, 431--66.
 
-\bibitem{} McCullagh, P., and Nelder, J. A. (1989). \textit{Generalized Linear Models}. London: Chapman \& Hall.
+\bibitem{} McCullagh, P. and Nelder, J. A. (1989). \textit{Generalized Linear Models}. London: Chapman \& Hall.
 
 \bibitem{} Miguet, F. (2008). Voting about immigration policy: What does the Swiss experience tell us? \textit{European Journal of Political Economy}, 24, 628--41.
 
@@ -526,27 +561,31 @@ We suggested a tool for practitioners to provide spatiotemporal maps modeling th
 
 \bibitem{} OECD (2008). Handbook on constructing composite indicators: methodology and user guide. OECD, Paris.
 
+\bibitem{} Osei, F. B., Duker, A. A. and Stein, A. (2011). Hierarchical Bayesian modeling of the space-time diffusion patterns of cholera epidemic in Kumasi, Ghana. \textit{Statistica Neerlandica}, 65, 84--100.
+
 \bibitem{} Petacchini, E. (2008). Local analysis of economic disparities in Italy: a spatial statistics approach. \textit{Statistical Methods \& Applications}, 17, 85--112.
 
-\bibitem{} Pinheiro, J., Bates, D., DebRoy, S., Sarkar, D., and the R Core Team (2009). \textit{nlme: Linear and Nonlinear Mixed Effects Models}. R package version 3.1--96.
+\bibitem{} Pinheiro, J., Bates, D., DebRoy, S., Sarkar, D. and the R Core Team (2009). \textit{nlme: Linear and Nonlinear Mixed Effects Models}. R package version 3.1--96.
 
 \bibitem{} Piore, M. J. (1979). \textit{Birds of Passage: Migrant Labor in Industrial Societies}. Cambridge: Cambridge University Press.
 
 \bibitem{} Ramsay, T. (2002). Spline smoothing over difficult regions. \textit{Journal of the Royal Statistical Society Series B}, 64, 307--19.
 
-\bibitem{} Raphael, S., and Smolensky, E. (2009). Immigration and poverty in the United States. \textit{American Economic Review}, 99, 41--4.
+\bibitem{} Raphael, S. and Smolensky, E. (2009). Immigration and poverty in the United States. \textit{American Economic Review}, 99, 41--4.
 
-\bibitem{} Reiss, P. T., and Ogden, R. T. (2009). Smoothing parameter selection for a class of semiparametric linear models. \textit{Journal of the Royal Statistical Society Series B}, 71, 505--524.
+\bibitem{} Reiss, P. T. and Ogden, R. T. (2009). Smoothing parameter selection for a class of semiparametric linear models. \textit{Journal of the Royal Statistical Society Series B}, 71, 505--524.
 
-\bibitem{} Ruppert, D., Wand, M. P., and Carroll, R. J. (2003). \textit{Semiparametric Regression}. London: Cambridge University Press.
+\bibitem{} Ruppert, D., Wand, M. P. and Carroll, R. J. (2003). \textit{Semiparametric Regression}. London: Cambridge University Press.
 
-\bibitem{} Segre, E., Rondinella, T., and Mascherini, M. (2010). Well-being in Italian Regions. Measures, civil society consultation and evidence. \textit{Social Indicators Research}, DOI: 10.1007/s11205-010-9722-4.
+\bibitem{} Sahu, S., Gelfand, A. and Holland, D. (2007). High Resolution Space–Time Ozone Modeling for Assessing Trends. \textit{Journal of the American Statistical Association}, 102, 109--118.
+
+\bibitem{} Segre, E., Rondinella, T. and Mascherini, M. (2011). Well-being in Italian Regions. Measures, civil society consultation and evidence. \textit{Social Indicators Research}, 102, 47--69.
 
 \bibitem{} Silverman, B. W. (1985). Some Aspects of the Spline Smoothing Approach to Non-Parametric Regression Curve Fitting. \textit{Journal of the Royal Statistical Society Series B}, 47, 1--52.
 
-\bibitem{} Slack, T., and Jensen, L. (2007). Underemployment across immigrant generations. \textit{Social Science Research}, 36, 1415--30.
+\bibitem{} Slack, T. and Jensen, L. (2007). Underemployment across immigrant generations. \textit{Social Science Research}, 36, 1415--30.
 
-\bibitem{} Stark, O., and Bloom, E.D. (1985). The new economics of labor migration. \textit{American Economic Review}, 75, 173--78.
+\bibitem{} Stark, O. and Bloom, E.D. (1985). The new economics of labor migration. \textit{American Economic Review}, 75, 173--78.
 
 \bibitem{} Strozza, S. (2004). Estimates of the illegal foreigners in Italy: a review of the literature. \textit{International Migration Review}, 38, 309--331.
 
@@ -556,17 +595,17 @@ We suggested a tool for practitioners to provide spatiotemporal maps modeling th
 
 \bibitem{} Wallerstein, I. (1974). \textit{The Modern World System, Capitalist Agricolture and the Origins of the European World Economy in the Sixteenth Century}. New York: Academic Press.
 
-\bibitem{} Wang, Y., and Wahba, G. (1995). Bootstrap Confidence Intervals for Smoothing Splines and Their Comparison to Bayesian Confidence Intervals. \textit{Journal of Statistical Computation and Simulation}, 51, 263--279.
+\bibitem{} Wang, Y. and Wahba, G. (1995). Bootstrap Confidence Intervals for Smoothing Splines and Their Comparison to Bayesian Confidence Intervals. \textit{Journal of Statistical Computation and Simulation}, 51, 263--279.
 
 \bibitem{} Wood, S. N. (2006). \textit{Generalized Additive Models: An Introduction with R}. London: Chapman \& Hall.
 
-\bibitem{} Wood, S. N. (2011). Fast stable restricted maximum likelihood and marginal likelihood estimation of semiparametric generalized linear models. \textit{Journal of the Royal Statistical Society Series B}, DOI: 10.1111/j.1467-9868.2010.00749.x.
+\bibitem{} Wood, S. N. (2011). Fast stable restricted maximum likelihood and marginal likelihood estimation of semiparametric generalized linear models. \textit{Journal of the Royal Statistical Society Series B}, 73, 3--36.
 
-\bibitem{} Wood, S. N., Bravington, M. V., and Hedley, S. L. (2008). Soap film smoothing. \textit{Journal of the Royal Statistical Society Series B}, 70, 931--55.
+\bibitem{} Wood, S. N., Bravington, M. V. and Hedley, S. L. (2008). Soap film smoothing. \textit{Journal of the Royal Statistical Society Series B}, 70, 931--55.
 
 \bibitem{} Wooldridge, J. M. (2002). \textit{Econometric Analysis of Cross Section and Panel Data}. Cambridge: MIT Press.
 
-\bibitem{} Zanin, L. and Marra, G. (2010). Rolling regression versus time-varying coefficient modelling: an empirical investigation of the Okun's law in some Euro area countries. \textit{Bulletin of Economic Research}, in press.
+\bibitem{} Zanin, L. and Marra, G. (2011). Rolling regression versus time-varying coefficient modelling: an empirical investigation of the Okun's law in some Euro area countries. \textit{Bulletin of Economic Research}, DOI: 10.1111/j.1467-8586.2010.00376.x.
 
 \bibitem{} Zincone, G. (2006). The making of policies: immigration and immigrants in Italy. \textit{Journal of Ethnic and Migration Studies}, 32, 347--75.
 
